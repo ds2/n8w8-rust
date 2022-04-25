@@ -6,14 +6,28 @@ include:
     file:
       - '/templates/stages.yaml'
       - '/templates/build-rust.yaml'
+  - template: Security/SAST.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/Container-Scanning.gitlab-ci.yml
 
 
+
+cache:
+  key: "${CI_COMMIT_REF_SLUG}" # the branch name
+  paths:
+    - target
+    - .cargo
 default:
-  cache:
-     key: "${CI_COMMIT_REF_SLUG}" # the branch name
-     paths:
-       - target
-       - .cargo
   before_script:
     - apt-get update -yqq
     - apt-get install -yqq --no-install-recommends capnproto
+before_script:
+  - apt-get update -yqq
+  - apt-get install -yqq --no-install-recommends capnproto
+
+sast:
+  stage: test
+
+container_scanning:
+  variables:
+    CS_ANALYZER_IMAGE: registry.gitlab.com/security-products/container-scanning/grype:4
