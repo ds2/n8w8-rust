@@ -1,3 +1,5 @@
+mod schema_capnp;
+
 use std::io;
 
 use actix_files::{Files, NamedFile};
