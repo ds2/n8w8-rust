@@ -7,7 +7,7 @@ include:
       - '/templates/stages.yaml'
       - '/templates/build-rust.yaml'
 
- cache:
+cache:
    key: "${CI_COMMIT_REF_SLUG}" # the branch name
    paths:
      - target
