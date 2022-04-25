@@ -1,18 +1,15 @@
 image: "rust:latest"
-
+cache:
+   key: "${CI_COMMIT_REF_SLUG}" # the branch name
+   paths:
+     - target
+     - .cargo
+before_script:
+  - apt-get update -yqq
+  - apt-get install -yqq --no-install-recommends capnproto
 include:
   - project: 'ds_2/ci-templates'
     ref: v0.1.3
     file:
       - '/templates/stages.yaml'
       - '/templates/build-rust.yaml'
-
-cache:
-   key: "${CI_COMMIT_REF_SLUG}" # the branch name
-   paths:
-     - target
-     - .cargo
-
-before_script:
-  - apt-get update -yqq
-  - apt-get install -yqq --no-install-recommends capnproto
