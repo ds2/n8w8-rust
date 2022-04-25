@@ -21,9 +21,9 @@ default:
   before_script:
     - apt-get update -yqq
     - apt-get install -yqq --no-install-recommends capnproto
-before_script:
-  - apt-get update -yqq
-  - apt-get install -yqq --no-install-recommends capnproto
+#before_script:
+#  - apt-get update -yqq
+#  - apt-get install -yqq --no-install-recommends capnproto
 
 sast:
   stage: test
