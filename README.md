@@ -6,4 +6,32 @@ The frontend server for simple n8w8 stuff.
 
 Run:
 
-    cargo build
+    cargo clean
+    cargo build --package nachtwacht-rust --bin nachtwacht-rust
+
+or via Dapper:
+
+    dapper -m bind
+
+## How to run
+
+via
+
+    cargo run --package nachtwacht-rust --bin nachtwacht-rust
+
+It will bind on http://localhost:8080/
+
+Some urls to test:
+
+* http://localhost:8080/welcome
+* http://localhost:8080/index.html
+* http://localhost:8080/static/
+* http://localhost:8080/1234/papa/index.html
+* http://localhost:8080/favicon
+
+## Build Docker image
+
+After the cargo build run, you can use:
+
+    docker build -t nachtwacht-fe:latest .
+    docker run -it --rm -p 8080:8080 nachtwacht-fe:latest

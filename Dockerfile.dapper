@@ -1,0 +1,6 @@
+FROM rust:latest as builder
+RUN apt-get update -yqq; apt-get install -yqq --no-install-recommends capnproto protobuf-compiler
+ENV DAPPER_OUTPUT target
+ENV DAPPER_SOURCE /src
+WORKDIR ${DAPPER_SOURCE}
+ENTRYPOINT ["./build.sh"]

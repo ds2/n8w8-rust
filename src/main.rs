@@ -1,4 +1,8 @@
-mod schema_capnp;
+mod n8w8_capnp;
+mod models;
+mod controllers;
+mod checks;
+mod tests;
 
 use std::io;
 
