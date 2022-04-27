@@ -1,5 +1,7 @@
 # DS/2 Nachtwacht Frontend
 
+![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline-status/ds_2/n8w8-rust-fe?branch=main&style=flat-square)
+
 The frontend server for simple n8w8 stuff.
 
 ## How to build
