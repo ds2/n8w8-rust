@@ -1,3 +1,4 @@
 target
 .*
-!target/debug/nachtwacht-rust
+!target/debug/nachtwacht-*
+!target/release/nachtwacht-*
