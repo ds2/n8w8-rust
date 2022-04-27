@@ -11,13 +11,14 @@ Run:
 
 or via Dapper:
 
-    dapper -m bind
+    dapper
+    # be aware that this installs the target directory as root user!!
 
 ## How to run
 
 via
 
-    cargo run --package nachtwacht-rust --bin nachtwacht-rust
+    cargo run --package nachtwacht-rust --bin nachtwacht-fe
 
 It will bind on http://localhost:8080/
 

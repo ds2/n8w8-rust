@@ -65,9 +65,10 @@ async fn default_handler(req_method: Method) -> Result<impl Responder> {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    std::env::set_var("RUST_LOG", "actix_web=info");
+    println!("Init..");
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
     log::info!("starting HTTP server at http://localhost:8080");
+    println!("Server should start soon");
     HttpServer::new(|| {
         App::new()
             // enable automatic response compression - usually register this first
@@ -93,7 +94,7 @@ async fn main() -> std::io::Result<()> {
             //.service(web::resource("/").to(index))
             .default_service(web::to(default_handler))
     })
-        .bind(("127.0.0.1", 8080))?
+        .bind(("0.0.0.0", 8080))?
         .workers(2)
         .run()
         .await

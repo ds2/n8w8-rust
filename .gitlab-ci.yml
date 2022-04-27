@@ -1,29 +1,14 @@
 image: "rust:latest"
 
-include:
-  - project: 'ds_2/ci-templates'
-    ref: v0.1.3
-    file:
-      - '/templates/stages.yaml'
-      - '/templates/build-rust.yaml'
-  - template: Security/SAST.gitlab-ci.yml
-  - template: Security/Dependency-Scanning.gitlab-ci.yml
-  - template: Security/Container-Scanning.gitlab-ci.yml
+variables:
+  RUST_BEFORESCRIPT: "apt-get update -yqq; apt-get install -yqq --no-install-recommends capnproto protobuf-compiler"
 
-
-
-cache:
-  key: "${CI_COMMIT_REF_SLUG}" # the branch name
-  paths:
-    - target
-    - .cargo
 default:
-  before_script:
-    - apt-get update -yqq
-    - apt-get install -yqq --no-install-recommends capnproto
-#before_script:
-#  - apt-get update -yqq
-#  - apt-get install -yqq --no-install-recommends capnproto
+  cache:
+    key: "${CI_COMMIT_REF_SLUG}" # the branch name
+    paths:
+      - target
+      - .cargo
 
 sast:
   stage: test
@@ -31,3 +16,14 @@ sast:
 container_scanning:
   variables:
     CS_ANALYZER_IMAGE: registry.gitlab.com/security-products/container-scanning/grype:4
+
+include:
+  - project: 'ds_2/ci-templates'
+    ref: develop
+    file:
+      - '/templates/stages.yaml'
+      - '/templates/build-rust.yaml'
+  - template: Security/SAST.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/Container-Scanning.gitlab-ci.yml
+  - template: Security/Secret-Detection.gitlab-ci.yml
