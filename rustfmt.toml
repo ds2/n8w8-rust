@@ -1,1 +1,8 @@
 reorder_imports = true
+indent_style = "Block"
+reorder_modules = true
+group_imports = "StdExternalCrate"
+space_after_colon = true
+spaces_around_ranges = true
+tab_spaces = 4
+license_template_path="license-header.txt"

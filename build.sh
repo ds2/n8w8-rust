@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
-cargo build --package nachtwacht-rust --bin nachtwacht-rust
+cargo fmt
+cargo build --workspace
 cargo test
 #cargo install --path .
