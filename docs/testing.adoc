@@ -1,0 +1,25 @@
+== Testing
+
+Unit tests are run via cargo:
+
+[,shell]
+----
+cargo test
+----
+
+To "test" the frontend, you can run:
+
+[,shell]
+----
+cargo run --package nachtwacht-frontend --bin nachtwacht-frontend
+----
+
+The frontend will bind on http://localhost:8080/
+
+Some urls to test:
+
+* http://localhost:8080/welcome
+* http://localhost:8080/index.html
+* http://localhost:8080/static/
+* http://localhost:8080/1234/papa/index.html
+* http://localhost:8080/favicon

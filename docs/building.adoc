@@ -1,0 +1,28 @@
+== How to build the whole project
+
+First, update your rust implementation via:
+
+[,shell]
+----
+rustup self update # to update rustup itself
+rustup update stable
+----
+
+Now, we can build the project. We offer several ways: one for CI, one for your local machine.
+
+For the local machine, run:
+
+[,shell]
+----
+cargo clean
+cargo fmt
+cargo build --workspace
+cargo test
+----
+
+To build the project via Dapper, you simply run:
+
+[,shell]
+----
+dapper
+----
