@@ -11,13 +11,14 @@ on:
 
 jobs:
   build:
-    name: build 2
+    name: build the project
     runs-on: ubuntu-22.04
     env:
       # Share the target dir to try to cache a few build-time deps.
       CARGO_TARGET_DIR: target
     steps:
       - uses: actions/checkout@v2
+        name: checking out project
       - uses: actions/cache@v3
         name: install cache
         with:
@@ -31,10 +32,13 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+        name: install latest stable rust toolchain
       - name: install Protocol Buffers
         run: |
           sudo apt-get install -yqq --no-install-recommends protobuf-compiler
           protoc --version
           rm -rf protoc.zip
       - run: cargo build --workspace
+        name: build the workspace
       - run: cargo test
+        name: run unit tests
