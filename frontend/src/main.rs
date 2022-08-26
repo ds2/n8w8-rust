@@ -4,14 +4,10 @@ use actix_files::{Files, NamedFile};
 use actix_session::{CookieSession, Session};
 use actix_web::{
     error, get,
-    http::{
-        header::{ContentType},
-        Method, StatusCode,
-    },
+    http::{header::ContentType, Method, StatusCode},
     middleware, web, App, Either, HttpRequest, HttpResponse, HttpServer, Responder, Result,
 };
 //use async_stream::stream;
-
 
 /// simple index handler
 #[get("/welcome")]
@@ -34,7 +30,6 @@ async fn welcome(req: HttpRequest, session: Session) -> Result<HttpResponse> {
         .body(include_str!("../static/welcome.html")))
 }
 
-
 #[get("/{id}/{name}/index.html")]
 async fn index(params: web::Path<(u32, String)>) -> impl Responder {
     let (id, name) = params.into_inner();
@@ -44,13 +39,14 @@ async fn index(params: web::Path<(u32, String)>) -> impl Responder {
 /// favicon handler
 #[get("/favicon")]
 async fn favicon() -> Result<impl Responder> {
-    Ok(NamedFile::open("static/favicon.ico")?)
+    Ok(NamedFile::open("frontend/static/favicon.ico")?)
 }
 
 async fn default_handler(req_method: Method) -> Result<impl Responder> {
     match req_method {
         Method::GET => {
-            let file = NamedFile::open("static/404.html")?.set_status_code(StatusCode::NOT_FOUND);
+            let file =
+                NamedFile::open("frontend/static/404.html")?.set_status_code(StatusCode::NOT_FOUND);
             Ok(Either::Left(file))
         }
         _ => Ok(Either::Right(HttpResponse::MethodNotAllowed().finish())),
@@ -83,13 +79,13 @@ async fn main() -> std::io::Result<()> {
                 )
             }))
             // static files
-            .service(Files::new("/static", "static").show_files_listing())
+            .service(Files::new("/static", "frontend/static").show_files_listing())
             .service(index)
             //.service(web::resource("/").to(index))
             .default_service(web::to(default_handler))
     })
-        .bind(("0.0.0.0", 8080))?
-        .workers(2)
-        .run()
-        .await
+    .bind(("0.0.0.0", 8080))?
+    .workers(2)
+    .run()
+    .await
 }
