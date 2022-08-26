@@ -23,7 +23,7 @@ jobs:
           toolchain: stable
       - name: install Protocol Buffers
         run: |
-          apt-get install -yqq --no-install-recommends protobuf-compiler
+          sudo apt-get install -yqq --no-install-recommends protobuf-compiler
           protoc --version
           rm -rf protoc.zip
       - run: cargo build --workspace
