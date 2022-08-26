@@ -38,7 +38,9 @@ jobs:
           sudo apt-get install -yqq --no-install-recommends protobuf-compiler
           protoc --version
           rm -rf protoc.zip
+      - name: install cross
+        run: cargo install cross --git https://github.com/cross-rs/cross
       - run: cargo build --workspace
         name: build the workspace
-      - run: cargo test
+      - run: cargo test --all-features --all-targets --workspace
         name: run unit tests
