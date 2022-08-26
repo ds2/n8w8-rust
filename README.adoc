@@ -12,4 +12,4 @@ include::docs/building.adoc[]
 
 include::docs/testing.adoc[]
 
-include::docs/docker.adoc[]
+include::docs/container.adoc[]

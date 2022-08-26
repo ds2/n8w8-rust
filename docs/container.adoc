@@ -1,0 +1,30 @@
+== Building the frontend image
+
+We use Podman for now in order to build the frontend image. After the cargo build run, you can use:
+
+[,shell]
+----
+# set the build target directory
+CARGO_TARGET_DIR="$(pwd)/target"
+export CARGO_TARGET_DIR
+
+# build the project(s)
+cargo clean
+cargo build --workspace
+
+file $CARGO_TARGET_DIR/debug/nachtwacht-frontend
+
+# create the container image
+podman build -t nachtwacht-fe:latest .
+
+# run the container image
+podman run -it --rm -p 8080:8080 nachtwacht-fe:latest
+----
+
+Regarding Docker: since the _Containerfile_ is compatible with Docker, you can use the docker builder as well:
+
+[,shell]
+----
+docker build -t nachtwacht-fe:latest -f Containerfile .
+docker run -it --rm -p 8080:8080 nachtwacht-fe:latest
+----

@@ -1,9 +1,0 @@
-== Building the frontend image
-
-We use Docker for now in order to build the frontend image. After the cargo build run, you can use:
-
-[,shell]
-----
-docker build -t nachtwacht-fe:latest .
-docker run -it --rm -p 8080:8080 nachtwacht-fe:latest
-----

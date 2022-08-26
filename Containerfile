@@ -1,4 +1,4 @@
-FROM debian:buster-slim
+FROM debian:bookworm-slim
 EXPOSE 8080
 RUN apt-get clean; apt-get update && apt-get install -y bash ca-certificates openssl curl && rm -rf /var/lib/apt/lists/*
 COPY target/debug/nachtwacht-frontend /usr/local/bin/nachtwacht-fe
