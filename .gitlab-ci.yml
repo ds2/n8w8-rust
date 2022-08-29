@@ -1,14 +1,7 @@
 image: "rust:latest"
 
 variables:
-  RUST_BEFORESCRIPT: "apt-get update -yqq; apt-get install -yqq --no-install-recommends capnproto protobuf-compiler"
-
-default:
-  cache:
-    key: "${CI_COMMIT_REF_SLUG}" # the branch name
-    paths:
-      - target
-      - .cargo
+  RUST_BEFORESCRIPT: "apt-get update -yqq; apt-get install -yqq --no-install-recommends protobuf-compiler"
 
 sast:
   stage: test
@@ -19,10 +12,11 @@ container_scanning:
 
 include:
   - project: 'ds_2/ci-templates'
-    ref: develop
+    ref: v0.1.9
     file:
       - '/templates/stages.yaml'
       - '/templates/build-rust.yaml'
+      - '/templates/deploy-adoc.yaml'
   - template: Security/SAST.gitlab-ci.yml
   - template: Security/Dependency-Scanning.gitlab-ci.yml
   - template: Security/Container-Scanning.gitlab-ci.yml
