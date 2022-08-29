@@ -39,7 +39,7 @@ jobs:
           protoc --version
           rm -rf protoc.zip
       - name: install cross
-        run: cargo install cross --git https://github.com/cross-rs/cross
+        run: cargo install --force cross --git https://github.com/cross-rs/cross
       - run: cargo build --workspace
         name: build the workspace
       - run: cargo test --all-features --all-targets --workspace
