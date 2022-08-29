@@ -1,6 +1,14 @@
 = Nachtwacht (N8w8) Rust Implementations
+Author Dirk Strauss <author@email.org>
 
+image:https://gitlab.com/ds_2/n8w8-rust-fe/badges/main/pipeline.svg[link="https://gitlab.com/ds_2/n8w8-rust-fe/-/commits/main",title="pipeline status"]
+image:https://gitlab.com/ds_2/n8w8-rust-fe/-/badges/release.svg[link="https://gitlab.com/ds_2/n8w8-rust-fe/-/releases",title="Latest Release"]
+
+
+[.lead]
 This project contains all subprojects to perform the n8w8 tests.
+
+:toc:
 
 == The name
 

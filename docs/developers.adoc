@@ -1,0 +1,16 @@
+== For developers
+
+This section is for contributing developers.
+
+=== New modules
+
+You can create new modules by executing:
+
+[,shell]
+----
+cargo new --lib MYMODULE
+----
+
+You can also use _--bin_ to create a binary/binaries.
+
+After that you may edit the _Cargo.toml_ file and add the subproject as a workspace member to the list of subprojects.
