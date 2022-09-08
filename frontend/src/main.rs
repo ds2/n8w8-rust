@@ -45,9 +45,9 @@ async fn favicon() -> Result<impl Responder> {
 async fn default_handler(req_method: Method) -> Result<impl Responder> {
     match req_method {
         Method::GET => {
-            let file =
-                NamedFile::open("frontend/static/404.html")?.set_status_code(StatusCode::NOT_FOUND);
-            Ok(Either::Left(file))
+            let file = NamedFile::open("frontend/static/404.html")?;
+            let resp = Responder::customize(file).with_status(StatusCode::NOT_FOUND);
+            Ok(Either::Left(resp))
         }
         _ => Ok(Either::Right(HttpResponse::MethodNotAllowed().finish())),
     }
