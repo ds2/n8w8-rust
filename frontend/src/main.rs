@@ -1,7 +1,8 @@
 use std::io;
 
 use actix_files::{Files, NamedFile};
-use actix_session::{CookieSession, Session};
+use actix_session::{storage::CookieSessionStore, Session, SessionMiddleware};
+use actix_web::cookie::Key;
 use actix_web::{
     error, get,
     http::{header::ContentType, Method, StatusCode},
@@ -53,20 +54,28 @@ async fn default_handler(req_method: Method) -> Result<impl Responder> {
     }
 }
 
+// The secret key would usually be read from a configuration file/environment variables.
+fn get_secret_key() -> Key {
+    Key::generate()
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     println!("Init..");
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
     log::info!("starting HTTP server at http://localhost:8080");
     println!("Server should start soon");
-    HttpServer::new(|| {
+    let secret_key = get_secret_key();
+    HttpServer::new(move || {
         App::new()
             // enable automatic response compression - usually register this first
             .wrap(middleware::Compress::default())
-            // cookie session middleware
-            .wrap(CookieSession::signed(&[0; 32]).secure(false))
             // enable logger - always register Actix Web Logger middleware last
             .wrap(middleware::Logger::default())
+            .wrap(SessionMiddleware::new(
+                CookieSessionStore::default(),
+                secret_key.clone(),
+            ))
             // register favicon
             .service(favicon)
             // register simple route, handle all methods
