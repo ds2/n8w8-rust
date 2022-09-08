@@ -14,8 +14,7 @@ mod tests {
                 &AuthBasicCredentials {
                     username: "".to_string(),
                     password: "".to_string(),
-                    unknown_fields: Default::default(),
-                    cached_size: Default::default()
+                    special_fields: Default::default()
                 }
             )
             .not_successful(),

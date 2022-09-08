@@ -1,19 +1,27 @@
-pub mod n8w8;
-
-use std::error::Error;
-
-pub type BoxResult<T> = Result<T, Box<dyn Error>>;
-
-use crate::n8w8::AuthBasicCredentials;
 use std::collections::HashMap;
+use std::error::Error;
 use std::fmt;
 use std::fmt::Display;
 
+use crate::n8w8::AuthBasicCredentials;
+
+pub mod n8w8;
+
+pub type BoxResult<T> = Result<T, Box<dyn Error>>;
+
+/// by default, ParameterData is just another word for HashMap.
 pub type ParameterData = HashMap<String, String>;
 
-pub trait N8w8Test<T> {
-    fn set_params(&mut self, params: &ParameterData);
+/// The contracts for a N8w8 test.
+pub trait N8w8Test<P, T> {
+    /// set parameters to the test.
+    /// * `params` - some parameters to configure this test.
+    fn set_params(&mut self, params: P);
+    /// run the test.
+    ///
+    /// * `probe_count` the maximum count of probes to take
     fn run_test(&mut self, probe_count: u8) -> BoxResult<()>;
+    /// get the results from the test
     fn get_result(&self) -> N8w8TestResultValues<T>;
 }
 
@@ -55,12 +63,19 @@ impl Display for HttpTestResponse {
     }
 }
 
+/// The parameters for a Http test.
 #[derive(PartialEq, Clone, Default)]
 pub struct HttpTestParams {
+    /// the url under test
     pub url: ::std::string::String,
+    /// some basic auth data if required
     pub basic_auth: AuthBasicCredentials,
+    /// the connect timeout.
     pub connect_timeout: u32,
+    /// the read timeout to wait for the server to respond.
     pub read_timeout: u32,
+    /// the http method to use for testing.
     pub http_method: String,
+    /// if required, the payload to send.
     pub http_payload: String,
 }

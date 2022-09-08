@@ -1,5 +1,5 @@
 use clap::Parser;
-use nachtwacht_checks::http::{create_parameter_map_from_params, HttpCheckImpl};
+use nachtwacht_checks::http::HttpCheckImpl;
 use nachtwacht_models::n8w8::AuthBasicCredentials;
 use nachtwacht_models::{HttpTestParams, HttpTestResponse, N8w8Test};
 use std::process::exit;
@@ -53,18 +53,17 @@ fn main() {
         basic_auth = AuthBasicCredentials {
             username: args.username,
             password: args.password,
-            unknown_fields: Default::default(),
-            cached_size: Default::default(),
+            special_fields: Default::default(),
         };
     }
-    http_test.set_params(&create_parameter_map_from_params(HttpTestParams {
+    http_test.set_params(HttpTestParams {
         url: args.url,
         basic_auth,
         connect_timeout: args.connect_timeout,
         read_timeout: args.read_timeout,
         http_method: "GET".to_string(),
         http_payload: "".to_string(),
-    }));
+    });
     let http_result = http_test.run_test(2);
     if http_result.is_err() {
         let http_error = http_result.err().unwrap();

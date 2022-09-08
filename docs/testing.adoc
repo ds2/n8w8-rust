@@ -23,3 +23,20 @@ Some urls to test:
 * http://localhost:8080/static/
 * http://localhost:8080/1234/papa/index.html
 * http://localhost:8080/favicon
+
+== Setting up the test database
+
+We use postgresql as our main database.
+For testing purpose, we have a sample database in place:
+
+[,shell]
+----
+podman build -t n8w8db:latest -f orm/db.Containerfile
+----
+
+To start it, run:
+
+----
+mkdir -p $(pwd)/testdb-data
+podman run -it --rm -v $(pwd)/testdb-data:/db-data -p 5432:5432 n8w8db:latest
+----
