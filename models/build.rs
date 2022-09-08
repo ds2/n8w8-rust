@@ -1,10 +1,10 @@
-extern crate protoc_rust;
+extern crate protobuf_codegen;
 
 fn main() {
-    protoc_rust::Codegen::new()
+    protobuf_codegen::Codegen::new()
+        .protoc_path(&protoc_bin_vendored::protoc_bin_path().unwrap())
         .out_dir("src")
+        .includes(&["."])
         .inputs(&["n8w8.proto"])
-        //.include("protos")
-        .run()
-        .expect("Running protoc failed.");
+        .run_from_script();
 }

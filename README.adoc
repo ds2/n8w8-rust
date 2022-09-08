@@ -1,8 +1,8 @@
 = Nachtwacht (N8w8) Rust Implementations
 Author Dirk Strauss <author@email.org>
 
-image:https://gitlab.com/ds_2/n8w8-rust-fe/badges/main/pipeline.svg[link="https://gitlab.com/ds_2/n8w8-rust-fe/-/commits/main",title="pipeline status"]
-image:https://gitlab.com/ds_2/n8w8-rust-fe/-/badges/release.svg[link="https://gitlab.com/ds_2/n8w8-rust-fe/-/releases",title="Latest Release"]
+image:https://gitlab.com/ds_2/n8w8-rust-fe/badges/main/pipeline.svg[Static,100,link="https://gitlab.com/ds_2/n8w8-rust-fe/-/commits/main",title="pipeline status"]
+image:https://gitlab.com/ds_2/n8w8-rust-fe/-/badges/release.svg[Static,100,link="https://gitlab.com/ds_2/n8w8-rust-fe/-/releases",title="Latest Release"]
 
 
 [.lead]
@@ -21,3 +21,14 @@ include::docs/building.adoc[]
 include::docs/testing.adoc[]
 
 include::docs/container.adoc[]
+
+== Documentation
+
+You can start the local doc server via:
+
+[,shell]
+----
+cargo doc --open
+----
+
+This will open your default browser with the documentation of the project.

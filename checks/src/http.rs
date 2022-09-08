@@ -12,48 +12,43 @@ use nachtwacht_models::{
     TEST_PARAM_NAME_CONNECTT0, TEST_PARAM_NAME_READT0, TEST_PARAM_NAME_URL,
 };
 
+/// The structure for a simple Http check.
 pub struct HttpCheckImpl {
+    /// the utc timestamp when the test started
     pub start_time: u64,
+    /// the utc timestamp when the test finished
     pub end_time: u64,
+    /// a possible error message
     pub error_msg: String,
+    /// the test parameters
     pub local_params: HttpTestParams,
+    /// the test response
     pub local_result: HttpTestResponse,
 }
 
-impl N8w8Test<HttpTestResponse> for HttpCheckImpl {
-    fn set_params(&mut self, params: &ParameterData) {
-        self.local_params.url = params.get(TEST_PARAM_NAME_URL).unwrap().to_string();
-        if params.contains_key(TEST_PARAM_NAME_CONNECTT0) {
-            self.local_params.connect_timeout = params
-                .get(TEST_PARAM_NAME_CONNECTT0)
-                .unwrap()
-                .to_string()
-                .parse::<u32>()
-                .unwrap();
+/// Implementations for the http check structure.
+impl HttpCheckImpl {
+    /// instantiates the http check structure.
+    pub fn new() -> HttpCheckImpl {
+        HttpCheckImpl {
+            start_time: 0,
+            end_time: 0,
+            error_msg: "".to_string(),
+            local_params: Default::default(),
+            local_result: Default::default(),
         }
-        if params.contains_key(TEST_PARAM_NAME_READT0) {
-            self.local_params.read_timeout = params
-                .get(TEST_PARAM_NAME_READT0)
-                .unwrap()
-                .to_string()
-                .parse::<u32>()
-                .unwrap();
-        }
-        if params.contains_key(TEST_PARAM_NAME_BASICAUTHUSERNAME) {
-            let basic_auth = AuthBasicCredentials {
-                username: params
-                    .get(TEST_PARAM_NAME_BASICAUTHUSERNAME)
-                    .unwrap()
-                    .to_string(),
-                password: params
-                    .get(TEST_PARAM_NAME_BASICAUTHPW)
-                    .unwrap_or(&"".to_string())
-                    .to_string(),
-                unknown_fields: Default::default(),
-                cached_size: Default::default(),
-            };
-            self.local_params.basic_auth = basic_auth;
-        }
+    }
+    pub fn get_params(&self) -> ParameterData {
+        let rc = ParameterData::new();
+
+        rc
+    }
+}
+
+/// the implementations for a N8w8Test using HttpCheckImpl.
+impl N8w8Test<HttpTestParams, HttpTestResponse> for HttpCheckImpl {
+    fn set_params(&mut self, params: HttpTestParams) {
+        self.local_params = params;
     }
 
     fn run_test(&mut self, probe_count: u8) -> BoxResult<()> {
