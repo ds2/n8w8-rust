@@ -15,9 +15,9 @@ For the local machine, run:
 [,shell]
 ----
 cargo clean
-cargo fmt
 cargo build --workspace
 cargo test
+cargo fmt --all -- --check
 ----
 
 To build the project via Dapper, you simply run:
