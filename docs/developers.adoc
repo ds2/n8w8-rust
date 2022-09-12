@@ -2,6 +2,24 @@
 
 This section is for contributing developers.
 
+=== Installing the hooks
+
+We use pre-commit hooks to set up some rules upfront. Please install https://pre-commit.com/[pre-commit] first, and then run the configuration installation:
+
+[,shell]
+----
+pre-commit install
+----
+
+Now, everytime when you commit something, some local checks will be done before the commit finally gets accepted.
+
+To test your commit with the hooks, you can run:
+
+[,shell]
+----
+pre-commit run --all-files
+----
+
 === New modules
 
 You can create new modules by executing:
