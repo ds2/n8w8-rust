@@ -9,7 +9,7 @@ edition = "2021"
 nachtwacht-checks = { path = "../checks" }
 nachtwacht-models = { path = "../models" }
 log = "0.4.17"
-clap = { version = "3.2.20", features = ["derive"] }
+clap = { version = "3.2.21", features = ["derive"] }
 http_req = "0.8.1"
 env_logger = "0.9.0"
 
