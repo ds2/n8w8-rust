@@ -75,3 +75,10 @@ jobs:
         run: |
           cd agent
           cargo generate-rpm
+      - name: publish rpm package
+        uses: actions/upload-artifact@v3
+        with:
+          name: n8w8-agent
+          path: |
+            target/generate-rpm/n8w8-agent*.rpm
+          retention-days: 5
