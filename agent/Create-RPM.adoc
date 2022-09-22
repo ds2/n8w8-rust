@@ -32,6 +32,7 @@ In the container, you can install it now:
 
 [,shell]
 ----
+rpm -qi /agent/*.rpm
 dnf update
 dnf install procps
 dnf localinstall /agent/*.rpm

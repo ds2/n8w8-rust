@@ -69,6 +69,8 @@ jobs:
         name: install latest stable rust toolchain
       - name: install rpm generator
         run: cargo install cargo-generate-rpm
+      - name: build the workspace
+        run: cargo build -p n8w8-agent --release
       - name: generate rpm
         run: |
           cd agent
