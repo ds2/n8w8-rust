@@ -272,6 +272,15 @@ dependencies = [
 [[package]]
 name = "agent"
 version = "0.1.0"
+dependencies = [
+ "chrono",
+ "clap",
+ "daemonize",
+ "env_logger",
+ "http_req",
+ "log",
+ "nachtwacht-models",
+]
 
 [[package]]
 name = "ahash"
@@ -432,6 +441,12 @@ checksum = "0bf7fe51849ea569fd452f37822f606a5cabb684dc918707a0193fd4664ff324"
 dependencies = [
  "generic-array",
 ]
+
+[[package]]
+name = "boxfnonce"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5988cb1d626264ac94100be357308f29ff7cbdd3b36bda27f450a4ee3f713426"
 
 [[package]]
 name = "brotli"
@@ -670,6 +685,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "049bb91fb4aaf0e3c7efa6cd5ef877dbbbd15b39dad06d9948de4ec8a75761ea"
 dependencies = [
  "cipher",
+]
+
+[[package]]
+name = "daemonize"
+version = "0.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "70c24513e34f53b640819f0ac9f705b673fcf4006d7aab8778bee72ebfc89815"
+dependencies = [
+ "boxfnonce",
+ "libc",
 ]
 
 [[package]]
