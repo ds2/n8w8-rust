@@ -1,2 +1,2 @@
 [workspace]
-members = ["models", "frontend", "cli", "orm", "checks", "executor"]
+members = ["models", "frontend", "cli", "orm", "checks", "executor", "agent"]
