@@ -2,6 +2,8 @@
 name = "agent"
 version = "0.1.0"
 edition = "2021"
+license = "GPLv3"
+description = "A host service to retrieve local health data and send it to N8w8"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -15,3 +17,13 @@ daemonize = "0.4.1"
 chrono = "0.4.22"
 sysinfo = "0.26.2"
 thiserror = "1.0.35"
+
+[[bin]]
+name="nachtwacht-agent"
+path= "src/main.rs"
+
+
+[package.metadata.generate-rpm]
+assets =[
+    {source= "../target/release/nachtwacht-agent", dest="/usr/local/bin/nachtwacht-agent", mode="755"},
+]

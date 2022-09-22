@@ -1,0 +1,8 @@
+== Create Debian Image
+
+To create a deb file we need to create a release first:
+
+[source,shell]
+----
+export CARGO_TARGET_DIR="$(pwd)/target"
+----
