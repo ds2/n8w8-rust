@@ -1,0 +1,42 @@
+== Creating RPMs
+
+To create an rpm of the agent, install some tools before:
+
+[,shell]
+----
+cargo install cargo-generate-rpm
+----
+
+To create the RPM, run:
+
+[source,shell]
+----
+export CARGO_TARGET_DIR="$(pwd)/target"
+cargo clean
+cargo build -p n8w8d --release
+#strip -s ${CARGO_TARGET_DIR}/release/n8w8d
+cargo generate-rpm -p agent
+----
+
+The final RPM file can be found in the target directory _${CARGO_TARGET_DIR}/generate-rpm_.
+
+To test the rpm, use an RHEL distro, like AlmaLinux in our example:
+
+[,shell]
+----
+podman run -it --rm -v $(pwd)/target/generate-rpm/:/agent almalinux:9
+----
+
+In the container, you can install it now:
+
+[,shell]
+----
+rpm -qilvp /agent/*.rpm
+dnf update
+dnf install procps
+dnf localinstall /agent/*.rpm
+nachtwacht-agent --user root
+cat /tmp/n8w8-agent-error.log # which sould be empty!
+cat /tmp/n8w8-agent.pid # this should contain the pid where the agent now runs
+less -n +F /tmp/n8w8-agent.log # this should now show all the details of the node
+----

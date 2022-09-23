@@ -1,8 +1,43 @@
 [package]
-name = "agent"
+name = "n8w8d"
 version = "0.1.0"
 edition = "2021"
+license = "GPLv3"
+description = "A host service to retrieve local health data and send it to N8w8"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+nachtwacht-models = { path = "../models" }
+log = "0.4.17"
+clap = { version = "3.2.22", features = ["derive"] }
+http_req = "0.8.1"
+env_logger = "0.9.0"
+daemonize = "0.4.1"
+chrono = "0.4.22"
+sysinfo = "0.26.2"
+thiserror = "1.0.35"
+
+[package.metadata.generate-rpm]
+assets = [
+    { source = "target/release/n8w8d", dest = "/usr/local/bin/n8w8d", mode = "755" },
+]
+
+[package.metadata.generate-rpm.requires]
+alternative = "*"
+filesystem = ">= 3"
+
+[package.metadata.deb]
+maintainer = "DS/2 <info@ds-2.de>"
+copyright = "2022, Dirk Strauss <info@ds-2.de>"
+license-file = ["../LICENSE", "4"]
+extended-description = """\
+A simple subcommand for the Cargo package manager for \
+building Debian packages from Rust projects."""
+depends = "$auto"
+section = "utility"
+priority = "optional"
+assets = [
+    ["target/release/n8w8d", "usr/bin/", "755"],
+    ["README.md", "usr/share/doc/n8w8d/README", "644"],
+]

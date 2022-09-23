@@ -26,3 +26,13 @@ To build the project via Dapper, you simply run:
 ----
 dapper
 ----
+
+== Build for different target architecture
+
+You can set up your local build to build against a different target architecture. Export the environment var _RUSTUP_TOOLCHAIN_ and check:
+
+[,shell]
+----
+# To get all architecture targets
+rustc --print target-list
+----
