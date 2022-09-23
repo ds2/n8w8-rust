@@ -83,7 +83,42 @@ jobs:
       - name: publish rpm package
         uses: actions/upload-artifact@v3
         with:
-          name: n8w8-agent
+          name: n8w8-agent-rpm
           path: |
             target/generate-rpm/n8w8d-*.rpm
+          retention-days: 5
+  deb:
+    name: generate Debian
+    runs-on: ubuntu-22.04
+    needs:
+      - build
+    steps:
+      - uses: actions/checkout@v3
+        name: checking out project
+      - uses: actions/cache@v3
+        name: install cache
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+        name: install latest stable rust toolchain
+      - name: install rpm generator
+        run: cargo install cargo-deb
+      - name: build the workspace
+        run: cargo build -p n8w8d --release
+      - name: generate deb package
+        run: cargo deb -p n8w8d
+      - name: publish deb package
+        uses: actions/upload-artifact@v3
+        with:
+          name: n8w8-agent-deb
+          path: |
+            target/debian/n8w8d-*.deb
           retention-days: 5
