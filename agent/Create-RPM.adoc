@@ -13,26 +13,25 @@ To create the RPM, run:
 ----
 export CARGO_TARGET_DIR="$(pwd)/target"
 cargo clean
-cargo build --workspace --release
-strip -s ${CARGO_TARGET_DIR}/release/nachtwacht-*
-cd agent
-cargo generate-rpm
+cargo build -p n8w8d --release --target x86_64-unknown-linux-gnu
+strip -s ${CARGO_TARGET_DIR}/release/n8w8d
+cargo generate-rpm -p agent --target x86_64-unknown-linux-gnu
 ----
 
 The final RPM file can be found in the target directory _${CARGO_TARGET_DIR}/generate-rpm_.
 
-To test the rpm, use ubuntu:
+To test the rpm, use an RHEL distro, like AlmaLinux in our example:
 
 [,shell]
 ----
-podman run -it --rm -v $(pwd)/../target/generate-rpm/:/agent almalinux:9
+podman run -it --rm -v $(pwd)/target/generate-rpm/:/agent almalinux:9
 ----
 
 In the container, you can install it now:
 
 [,shell]
 ----
-rpm -qi /agent/*.rpm
+rpm -qilvp /agent/*.rpm
 dnf update
 dnf install procps
 dnf localinstall /agent/*.rpm

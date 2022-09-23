@@ -76,13 +76,11 @@ jobs:
       - name: build the workspace
         run: cargo build -p n8w8-agent --release
       - name: generate rpm
-        run: |
-          cd agent
-          cargo generate-rpm
+        run: cargo generate-rpm -p agent
       - name: publish rpm package
         uses: actions/upload-artifact@v3
         with:
           name: n8w8-agent
           path: |
-            target/generate-rpm/n8w8-agent*.rpm
+            target/generate-rpm/n8w8d-*.rpm
           retention-days: 5

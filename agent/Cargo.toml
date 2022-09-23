@@ -1,5 +1,5 @@
 [package]
-name = "n8w8-agent"
+name = "n8w8d"
 version = "0.1.0"
 edition = "2021"
 license = "GPLv3"
@@ -18,12 +18,11 @@ chrono = "0.4.22"
 sysinfo = "0.26.2"
 thiserror = "1.0.35"
 
-[[bin]]
-name="nachtwacht-agent"
-path= "src/main.rs"
-
-
 [package.metadata.generate-rpm]
-assets =[
-    {source= "../target/release/nachtwacht-agent", dest="/usr/local/bin/nachtwacht-agent", mode="755"},
+assets = [
+    { source = "../target/release/n8w8d", dest = "/usr/local/bin/n8w8d", mode = "755" },
 ]
+
+[package.metadata.generate-rpm.requires]
+alternative = "*"
+filesystem = ">= 3"
