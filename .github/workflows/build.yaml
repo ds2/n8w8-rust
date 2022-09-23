@@ -13,13 +13,14 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  # Share the target dir to try to cache a few build-time deps.
+  CARGO_TARGET_DIR: target
+
 jobs:
   build:
     name: build the project
     runs-on: ubuntu-22.04
-    env:
-      # Share the target dir to try to cache a few build-time deps.
-      CARGO_TARGET_DIR: target
     steps:
       - uses: actions/checkout@v3
         name: checking out project
@@ -74,7 +75,9 @@ jobs:
       - name: install rpm generator
         run: cargo install cargo-generate-rpm
       - name: build the workspace
-        run: cargo build -p n8w8d --release
+        run: |
+          cargo build -p n8w8d --release
+          ls -alFh target/release/
       - name: generate rpm
         run: cargo generate-rpm -p agent
       - name: publish rpm package
