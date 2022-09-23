@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeLogId: a0d927cf-1c42-44d8-bd76-f2b1d89c5b56
+  - changeSet:
+      id: 1
+      author: Liquibase
+      changes:
+        - createTable:
+            tableName: test_table
+            columns:
+              - column:
+                  name: test_column
+                  type: INT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    tableName: test_table

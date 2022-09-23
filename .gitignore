@@ -5,3 +5,5 @@
 /models/src/n8w8.rs
 /testdb-data
 /out
+
+*.log
