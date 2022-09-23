@@ -5,4 +5,15 @@ To create a deb file we need to create a release first:
 [source,shell]
 ----
 export CARGO_TARGET_DIR="$(pwd)/target"
+cargo install cargo-deb
+cargo clean
+cargo build -p n8w8d --release
+cargo deb -p n8w8d
+----
+
+To check the debian package, run:
+
+----
+dpkg --info target/debian/n8w8d*.deb
+dpkg --contents target/debian/n8w8d*.deb
 ----

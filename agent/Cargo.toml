@@ -26,3 +26,18 @@ assets = [
 [package.metadata.generate-rpm.requires]
 alternative = "*"
 filesystem = ">= 3"
+
+[package.metadata.deb]
+maintainer = "DS/2 <info@ds-2.de>"
+copyright = "2022, Dirk Strauss <info@ds-2.de>"
+license-file = ["../LICENSE", "4"]
+extended-description = """\
+A simple subcommand for the Cargo package manager for \
+building Debian packages from Rust projects."""
+depends = "$auto"
+section = "utility"
+priority = "optional"
+assets = [
+    ["target/release/n8w8d", "usr/bin/", "755"],
+    ["README.md", "usr/share/doc/n8w8d/README", "644"],
+]
