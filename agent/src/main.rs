@@ -76,7 +76,6 @@ fn main() {
                 sys.refresh_all();
                 let date = format!("UTC now is: {}", now);
                 println!("Date is now {}", date);
-                // We display all disks' information:
                 let mut disk_vec: Vec<AgentDiscData> = Vec::new();
                 for disk in sys.disks() {
                     let this_disk_data = AgentDiscData {
@@ -87,37 +86,8 @@ fn main() {
                         special_fields: Default::default(),
                     };
                     disk_vec.push(this_disk_data);
-                    // println!("{:?}", disk);
                 }
 
-                // Network interfaces name, data received and data transmitted:
-                // println!("=> networks:");
-                // for (interface_name, data) in sys.networks() {
-                //     println!(
-                //         "{}: {}/{} B",
-                //         interface_name,
-                //         data.received(),
-                //         data.transmitted()
-                //     );
-                // }
-
-                // Components temperature:
-                // println!("=> components:");
-                // for component in sys.components() {
-                //     println!("{:?}", component);
-                // }
-
-                // Display system information:
-                // println!(
-                //     "System name: {}-{}",
-                //     sys.name().unwrap(),
-                //     sys.os_version().unwrap(),
-                // );
-
-                // Display processes ID, name na disk usage:
-                // for (pid, process) in sys.processes() {
-                //     println!("[{}] {} {:?}", pid, process.name(), process.disk_usage());
-                // }
                 let cpu_proc_stats = parse_proc_stat().expect("TODO: panic message");
                 info!("This machine has {} cores!", cpu_proc_stats.len());
                 let agent_node_data = AgentNodeData {
