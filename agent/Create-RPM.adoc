@@ -14,7 +14,7 @@ To create the RPM, run:
 export CARGO_TARGET_DIR="$(pwd)/target"
 cargo clean
 cargo build -p n8w8d --release --target x86_64-unknown-linux-gnu
-strip -s ${CARGO_TARGET_DIR}/release/n8w8d
+#strip -s ${CARGO_TARGET_DIR}/release/n8w8d
 cargo generate-rpm -p agent --target x86_64-unknown-linux-gnu
 ----
 

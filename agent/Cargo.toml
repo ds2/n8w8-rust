@@ -20,7 +20,7 @@ thiserror = "1.0.35"
 
 [package.metadata.generate-rpm]
 assets = [
-    { source = "../target/release/n8w8d", dest = "/usr/local/bin/n8w8d", mode = "755" },
+    { source = "target/release/n8w8d", dest = "/usr/local/bin/n8w8d", mode = "755" },
 ]
 
 [package.metadata.generate-rpm.requires]
