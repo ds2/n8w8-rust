@@ -40,7 +40,7 @@ We use SeaORM, so:
 [,shell]
 ----
 cargo install sea-orm-cli
-sea-orm-cli generate entity -u postgresql://n8w8adm:n8w8admpw@localhost:25432/n8w8db -o src --with-serde both
+sea-orm-cli generate entity -u postgresql://n8w8adm:n8w8admpw@localhost:25432/n8w8db -o src/entities --with-serde both
 ----
 
 This will create the entities to be used by SeaOrm.
