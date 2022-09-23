@@ -74,7 +74,7 @@ jobs:
       - name: install rpm generator
         run: cargo install cargo-generate-rpm
       - name: build the workspace
-        run: cargo build -p n8w8-agent --release
+        run: cargo build -p n8w8d --release
       - name: generate rpm
         run: cargo generate-rpm -p agent
       - name: publish rpm package
