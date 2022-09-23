@@ -2,6 +2,8 @@
 name = "nachtwacht-cli"
 version = "0.1.0"
 edition = "2021"
+license = "GPLv3"
+description = "This package contains all the client binaries to run some tests alone without the server."
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
