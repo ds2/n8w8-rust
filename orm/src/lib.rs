@@ -1,15 +1,20 @@
+#![cfg_attr(docsrs, feature(doc_cfg))]
+#![warn(missing_docs)]
 use std::time::Duration;
 
 use sea_orm::*;
 
 pub mod entities;
+use entities::state::Entity as State;
+use entities::state::Model as StateModel;
 pub use entities::{prelude::*, *};
 
 pub struct Query;
 
 impl Query {
-    pub fn get_all_states(db: &DbConn) {
+    pub async fn get_all_states(db: &DbConn) -> Result<Vec<StateModel>, DbErr> {
         // here we would do something
+        State::find().all(db).await
     }
 }
 
