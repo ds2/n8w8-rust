@@ -8,7 +8,7 @@ repos:
       - id: check-added-large-files
       - id: check-toml
       - id: no-commit-to-branch
-        args: [ '--pattern', '^(?!((main|develop)|(((fix|feature)\/[a-z0-9][a-z0-9\-]{1,20}))$)).*' ]
+        args: [ '--pattern', '^(?!((main|develop)|(((fix|feature)\/[a-z0-9][a-z0-9A-Z\-]{1,30}))$)).*' ]
   - repo: https://github.com/doublify/pre-commit-rust
     rev: v1.0
     hooks:
