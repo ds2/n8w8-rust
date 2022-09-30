@@ -1,23 +1,29 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![warn(missing_docs)]
+
 use std::time::Duration;
 
 use sea_orm::*;
 
-pub mod entities;
 use entities::state::Entity as State;
 use entities::state::Model as StateModel;
 pub use entities::{prelude::*, *};
 
+pub mod entities;
+
+/// a dummy placeholder structure for some database queries attached to this structure.
 pub struct Query;
 
+///Some query functions.
 impl Query {
+    /// Should return all states from the database.
     pub async fn get_all_states(db: &DbConn) -> Result<Vec<StateModel>, DbErr> {
         // here we would do something
         State::find().all(db).await
     }
 }
 
+/// a method to return a database connection from the pool.
 pub async fn get_db_connection(conn_string: String) -> Result<DatabaseConnection, DbErr> {
     let mut opt = ConnectOptions::new(conn_string.to_owned());
     opt.max_connections(100)

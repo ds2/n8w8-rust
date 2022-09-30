@@ -15,7 +15,7 @@ For the local machine, run:
 [,shell]
 ----
 cargo clean
-cargo build --workspace
+cargo build --workspace --all-targets
 cargo test
 cargo fmt --all -- --check
 ----
