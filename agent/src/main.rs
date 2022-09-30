@@ -1,48 +1,84 @@
 use std::fs::File;
 use std::path::Path;
+use std::process::exit;
 use std::{thread, time};
 
 use chrono::{DateTime, Utc};
-use clap::Parser;
+use clap::{Parser, ValueEnum};
 use daemonize::Daemonize;
 use log::info;
+use std::string::String;
 use sysinfo::{DiskExt, System, SystemExt};
 
 use nachtwacht_models::n8w8::{AgentDiscData, AgentNodeData};
 
+use crate::errors::AgentErrors;
+use crate::proc_loadavg::parse_proc_loadavg;
 use crate::procstat::parse_proc_stat;
+use crate::zabbix_mode::get_zabbix_value;
 
 mod errors;
+mod proc_loadavg;
 mod procstat;
+mod zabbix_mode;
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
+pub enum ZabbixValue {
+    Load1,
+    Load5,
+    Load15,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
+enum RunMode {
+    Agent,
+    Zabbix,
+}
 
 /// Simple program to greet a person
 #[derive(Parser, Debug)]
-#[clap(author, version, about, long_about = None)]
+#[command(author, version, about, long_about = None)]
 struct Args {
     /// Name of the user who runs the daemon.
-    #[clap(short, long, value_parser)]
+    #[arg(short, long, value_parser, default_value = "")]
     user: String,
     /// Location of the std output file to use
-    #[clap(short, long, value_parser, default_value = "/tmp/n8w8-agent.log")]
+    #[arg(short, long, value_parser, default_value = "/tmp/n8w8-agent.log")]
     outfile: String,
     /// Location of the std err file to use
-    #[clap(short, long, value_parser, default_value = "/tmp/n8w8-agent-error.log")]
+    #[arg(short, long, value_parser, default_value = "/tmp/n8w8-agent-error.log")]
     errfile: String,
     /// Location of the std output file to use
-    #[clap(short, long, value_parser, default_value = "/tmp/n8w8-agent.pid")]
+    #[arg(short, long, value_parser, default_value = "/tmp/n8w8-agent.pid")]
     pidfile: String,
     /// The work dir
-    #[clap(short, long, value_parser, default_value = "/tmp")]
+    #[arg(short, long, value_parser, default_value = "/tmp")]
     workdir: String,
     /// Refresh timeout for the agent query loop.
-    #[clap(short, long, value_parser, default_value_t = 5000)]
+    #[arg(short, long, value_parser, default_value_t = 5000)]
     refresh: u64,
+    /// Which health value should we print out.
+    #[arg(short, long, value_enum, default_value = "load1")]
+    zabbix_value: ZabbixValue,
+    /// defines the run mode for this agent. By default, we run in zabbix mode which means
+    /// we only print out one value at the stdout.
+    /// The other mode is the agent mode where the agent runs continuously in the background
+    /// and sends the health data to a n8w8 endpoint.
+    #[arg(short, long, value_enum, default_value = "zabbix")]
+    mode: RunMode,
 }
 
 #[cfg(not(windows))]
 fn main() {
     // Parse args first ;)
     let args = Args::parse();
+
+    if args.mode == RunMode::Zabbix {
+        let zabbix_val =
+            get_zabbix_value(args.zabbix_value).expect("Error when retrieving the zbx value!");
+        println!("{}", zabbix_val);
+        exit(0);
+    }
     let stdout = File::create(args.outfile.as_str()).unwrap();
     let stderr = File::create(args.errfile.as_str()).unwrap();
     let sleep_time = time::Duration::from_millis(args.refresh);

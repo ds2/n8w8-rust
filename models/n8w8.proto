@@ -38,22 +38,22 @@ message DnsTestParams {
 }
 
 message ProcStatCpu {
-  uint32 id=1;
-  uint32 user=2;
-  uint32 system=3;
-  uint32 nice=4;
-  uint32 idle=5;
-  uint32 iowait=6;
-  uint32 irq=7;
-  uint32 softirq=8;
-  uint32 steal=9;
+  uint32 id = 1;
+  uint32 user = 2;
+  uint32 system = 3;
+  uint32 nice = 4;
+  uint32 idle = 5;
+  uint32 iowait = 6;
+  uint32 irq = 7;
+  uint32 softirq = 8;
+  uint32 steal = 9;
 }
 
 message AgentDiscData {
-  string device=1;
-  string mountpoint=2;
-  uint64 max_storage=3;
-  uint64 free_storage=4;
+  string device = 1;
+  string mountpoint = 2;
+  uint64 max_storage = 3;
+  uint64 free_storage = 4;
 }
 
 message AgentNodeData {
@@ -61,15 +61,24 @@ message AgentNodeData {
   double load1 = 2;
   double load5 = 3;
   double load15 = 4;
-  uint64 totalMemory=5;
-  uint64 usedMemory=6;
-  uint64 freeMemory=7;
-  uint64 totalSwap=8;
-  uint64 usedSwap=9;
-  uint64 freeSwap=10;
-  string kernelversion=11;
-  repeated ProcStatCpu cpudata=12;
-  repeated AgentDiscData disks= 13;
-  string os_name=14;
-  string os_version=15;
+  uint64 totalMemory = 5;
+  uint64 usedMemory = 6;
+  uint64 freeMemory = 7;
+  uint64 totalSwap = 8;
+  uint64 usedSwap = 9;
+  uint64 freeSwap = 10;
+  string kernelversion = 11;
+  repeated ProcStatCpu cpudata = 12;
+  repeated AgentDiscData disks = 13;
+  string os_name = 14;
+  string os_version = 15;
+}
+
+message ProcLoadavg {
+  double load1 = 1;
+  double load5 = 2;
+  double load15 = 3;
+  uint32 runningProcesses = 4;
+  uint64 totalProcesses = 5;
+  uint64 latestProcessId = 6;
 }
