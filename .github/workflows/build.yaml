@@ -1,9 +1,6 @@
 name: build workspace
 
 on:
-  pull_request:
-    branches:
-      - develop
   push:
     branches:
       - main
