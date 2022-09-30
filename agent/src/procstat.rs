@@ -1,11 +1,11 @@
-use crate::errors::DataStoreError;
+use crate::errors::AgentErrors;
 use log::debug;
 use nachtwacht_models::n8w8::ProcStatCpu;
 use std::fs::File;
 use std::io::{BufReader, Read};
 
 #[cfg(unix)]
-pub fn parse_proc_stat() -> Result<Vec<ProcStatCpu>, DataStoreError> {
+pub fn parse_proc_stat() -> Result<Vec<ProcStatCpu>, AgentErrors> {
     let mut str = String::new();
     let file = File::open("/proc/stat").expect("Error in reading /proc/stat");
     let mut buffer_reader = BufReader::new(file);
