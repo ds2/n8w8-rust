@@ -39,14 +39,14 @@ message DnsTestParams {
 
 message ProcStatCpu {
   uint32 id = 1;
-  uint32 user = 2;
-  uint32 system = 3;
-  uint32 nice = 4;
-  uint32 idle = 5;
-  uint32 iowait = 6;
-  uint32 irq = 7;
-  uint32 softirq = 8;
-  uint32 steal = 9;
+  uint64 user = 2;
+  uint64 system = 3;
+  uint64 nice = 4;
+  uint64 idle = 5;
+  uint64 iowait = 6;
+  uint64 irq = 7;
+  uint64 softirq = 8;
+  uint64 steal = 9;
 }
 
 message AgentDiscData {

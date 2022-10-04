@@ -16,20 +16,20 @@ pub fn parse_proc_stat() -> Result<Vec<ProcStatCpu>, AgentErrors> {
     let mut cpuvec: Vec<ProcStatCpu> = Vec::new();
     let mut cpu_id = 0;
     for s in str.lines().filter(|&s| s.starts_with("cpu")) {
-        debug!("cpu line: {}", s);
+        debug!("cpu line to parse is: {}", s);
         let mut line_vals = s.split_whitespace();
         line_vals.next(); //the "cpu" header
         let psc = ProcStatCpu {
             // the first line is an aggregation of all following cpu cores.
             id: cpu_id,
-            user: line_vals.next().unwrap().parse::<u32>().unwrap(),
-            system: line_vals.next().unwrap().parse::<u32>().unwrap(),
-            nice: line_vals.next().unwrap().parse::<u32>().unwrap(),
-            idle: line_vals.next().unwrap().parse::<u32>().unwrap(),
-            iowait: line_vals.next().unwrap().parse::<u32>().unwrap(),
-            irq: line_vals.next().unwrap().parse::<u32>().unwrap(),
-            softirq: line_vals.next().unwrap().parse::<u32>().unwrap(),
-            steal: line_vals.next().unwrap().parse::<u32>().unwrap(),
+            user: line_vals.next().unwrap_or("").parse::<u64>().unwrap_or(0),
+            system: line_vals.next().unwrap_or("").parse::<u64>().unwrap_or(0),
+            nice: line_vals.next().unwrap_or("").parse::<u64>().unwrap_or(0),
+            idle: line_vals.next().unwrap_or("").parse::<u64>().unwrap_or(0),
+            iowait: line_vals.next().unwrap_or("").parse::<u64>().unwrap_or(0),
+            irq: line_vals.next().unwrap_or("").parse::<u64>().unwrap_or(0),
+            softirq: line_vals.next().unwrap_or("").parse::<u64>().unwrap_or(0),
+            steal: line_vals.next().unwrap_or("").parse::<u64>().unwrap_or(0),
             special_fields: Default::default(),
         };
         cpuvec.push(psc);
