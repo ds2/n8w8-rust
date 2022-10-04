@@ -14,12 +14,12 @@ use nachtwacht_models::n8w8::{AgentDiscData, AgentNodeData};
 
 use crate::errors::AgentErrors;
 use crate::proc_loadavg::parse_proc_loadavg;
-use crate::procstat::parse_proc_stat;
+use crate::proc_stat::parse_proc_stat;
 use crate::zabbix_mode::get_zabbix_value;
 
 mod errors;
 mod proc_loadavg;
-mod procstat;
+mod proc_stat;
 mod zabbix_mode;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
@@ -27,6 +27,7 @@ pub enum ZabbixValue {
     Load1,
     Load5,
     Load15,
+    IoWait,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
@@ -124,7 +125,7 @@ fn main() {
                     disk_vec.push(this_disk_data);
                 }
 
-                let cpu_proc_stats = parse_proc_stat().expect("TODO: panic message");
+                let cpu_proc_stats = parse_proc_stat().expect("Could not get /proc/stat details!");
                 info!("This machine has {} cores!", cpu_proc_stats.len());
                 let agent_node_data = AgentNodeData {
                     hostname: sys.host_name().unwrap(),

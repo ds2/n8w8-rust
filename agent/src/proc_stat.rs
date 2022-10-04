@@ -4,6 +4,7 @@ use nachtwacht_models::n8w8::ProcStatCpu;
 use std::fs::File;
 use std::io::{BufReader, Read};
 
+/// Returns the cpu entries from /proc/stat.
 #[cfg(unix)]
 pub fn parse_proc_stat() -> Result<Vec<ProcStatCpu>, AgentErrors> {
     let mut str = String::new();
