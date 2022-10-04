@@ -18,6 +18,10 @@ chrono = "0.4.22"
 sysinfo = "0.26.4"
 thiserror = "1.0.37"
 
+[dev-dependencies]
+env_logger = "0.9.1"
+test-log = "0.2.11"
+
 [package.metadata.generate-rpm]
 assets = [
     { source = "target/release/n8w8d", dest = "/usr/local/bin/n8w8d", mode = "755" },

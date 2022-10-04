@@ -19,15 +19,19 @@ use crate::zabbix_mode::get_zabbix_value;
 
 mod errors;
 mod proc_loadavg;
+mod proc_meminfo;
 mod proc_stat;
 mod zabbix_mode;
 
+/// This enum contains all the values that Zabbix may need.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
 pub enum ZabbixValue {
     Load1,
     Load5,
     Load15,
     IoWait,
+    MemFreePercent,
+    MemFree,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]

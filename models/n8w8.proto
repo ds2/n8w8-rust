@@ -82,3 +82,14 @@ message ProcLoadavg {
   uint64 totalProcesses = 5;
   uint64 latestProcessId = 6;
 }
+
+message ProcMemInfo {
+  uint64 MemTotal = 1;
+  uint64 MemFree = 2;
+  uint64 MemAvailable = 3;
+  uint64 Buffers = 4;
+  uint64 Cached = 5;
+  uint64 SwapCached = 6;
+  uint64 SwapTotal = 9;
+  uint64 SwapFree = 10;
+}
