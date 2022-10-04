@@ -40,13 +40,13 @@ And within it, install Rust and compile it:
 
 ----
 cd /src
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh  -s -- --profile minimal -y
 source "$HOME/.cargo/env"
 dnf -y update; dnf -y install gcc openssl-devel pkg-config
 rustup target add x86_64-unknown-linux-gnu
 cargo clean
 cargo build -p n8w8d --release --target x86_64-unknown-linux-gnu
-cp /tmp/n8w8-rust/x86_64-unknown-linux-gnu/release/n8w8d /out/n8w8d-oraclelinux
+cp /tmp/n8w8-rust/x86_64-unknown-linux-gnu/release/n8w8d /out/n8w8d-oraclelinux8
 ----
 
 This way, the n8w8d binary is compiled solely for this machine type/distro. Now you may create an RPM for this.
