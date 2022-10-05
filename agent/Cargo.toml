@@ -45,9 +45,3 @@ assets = [
     ["target/release/n8w8d", "usr/bin/", "755"],
     ["README.md", "usr/share/doc/n8w8d/README", "644"],
 ]
-
-[profile.dev]
-opt-level = 0
-
-[profile.release]
-opt-level = 3

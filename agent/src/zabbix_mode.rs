@@ -39,6 +39,6 @@ pub fn get_zabbix_value(val: ZabbixValue) -> Result<String, AgentErrors> {
     if zabbix_result_val.len() > 0 {
         Ok(zabbix_result_val)
     } else {
-        Err(FailedToGetLocalInfo())
+        Err(FailedToGetLocalInfo("/proc/meminfo".to_string()))
     }
 }

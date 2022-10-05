@@ -25,22 +25,32 @@ pub fn parse_proc_mem_info() -> Result<ProcMemInfo, AgentErrors> {
         SwapFree: 0,
         special_fields: Default::default(),
     };
-    for l in lines {
-        debug!("Line to parse is: {}", l);
-        let mut splits = l.split_whitespace();
+    for this_line in lines {
+        debug!("Line to parse is: {}", this_line);
+        let mut splits = this_line.split_whitespace();
         match splits.next().unwrap() {
-            "MemTotal:" => mem_info.MemTotal = splits.next().unwrap_or("0").parse().unwrap_or(0),
-            "MemFree:" => mem_info.MemFree = splits.next().unwrap_or("0").parse().unwrap_or(0),
+            "MemTotal:" => {
+                mem_info.MemTotal = splits.next().unwrap_or("0").parse().unwrap_or(0) * 1024
+            }
+            "MemFree:" => {
+                mem_info.MemFree = splits.next().unwrap_or("0").parse().unwrap_or(0) * 1024
+            }
             "MemAvailable:" => {
-                mem_info.MemAvailable = splits.next().unwrap_or("0").parse().unwrap_or(0)
+                mem_info.MemAvailable = splits.next().unwrap_or("0").parse().unwrap_or(0) * 1024
             }
-            "Buffers:" => mem_info.Buffers = splits.next().unwrap_or("0").parse().unwrap_or(0),
-            "Cached:" => mem_info.Cached = splits.next().unwrap_or("0").parse().unwrap_or(0),
+            "Buffers:" => {
+                mem_info.Buffers = splits.next().unwrap_or("0").parse().unwrap_or(0) * 1024
+            }
+            "Cached:" => mem_info.Cached = splits.next().unwrap_or("0").parse().unwrap_or(0) * 1024,
             "SwapCached:" => {
-                mem_info.SwapCached = splits.next().unwrap_or("0").parse().unwrap_or(0)
+                mem_info.SwapCached = splits.next().unwrap_or("0").parse().unwrap_or(0) * 1024
             }
-            "SwapTotal:" => mem_info.SwapTotal = splits.next().unwrap_or("0").parse().unwrap_or(0),
-            "SwapFree:" => mem_info.SwapFree = splits.next().unwrap_or("0").parse().unwrap_or(0),
+            "SwapTotal:" => {
+                mem_info.SwapTotal = splits.next().unwrap_or("0").parse().unwrap_or(0) * 1024
+            }
+            "SwapFree:" => {
+                mem_info.SwapFree = splits.next().unwrap_or("0").parse().unwrap_or(0) * 1024
+            }
             &_ => {}
         }
     }

@@ -1,2 +1,8 @@
 [workspace]
 members = ["models", "frontend", "cli", "orm", "checks", "executor", "agent"]
+
+[profile.dev]
+opt-level = 0
+
+[profile.release]
+opt-level = 3
