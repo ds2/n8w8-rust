@@ -23,8 +23,10 @@ fi
 
 echo "Setting cargo workspace version.."
 cargo set-version --workspace "${SEMVER}" || exit 1
+echo "Testing build.."
+cargo build --workspace
 echo "Committing changed files.."
-git add **/*.toml Cargo.lock
+git add -u
 git commit -m "🔖 [release] create release tag for v${SEMVER}"
 git tag -m "🔖 [release] release tag on ${CURRENTDATE}" v${SEMVER}
 echo "You are free to decide to push this tag or drop it. !!!Please DOUBLE-CHECK THE COMMIT and tag!!!"
