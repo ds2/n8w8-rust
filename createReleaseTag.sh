@@ -14,14 +14,17 @@ else
   while [ true ]; do
     read -t 3 -n 1
     if [ $? = 0 ]; then
-      exit
+      break
     else
       echo "waiting for the keypress"
     fi
   done
 fi
 
-cargo set-version --workspace "${SEMVER}"
+echo "Setting cargo workspace version.."
+cargo set-version --workspace "${SEMVER}" || exit 1
+echo "Committing changed files.."
+git add **/*.toml Cargo.lock
 git commit -m "🔖 [release] create release tag for v${SEMVER}"
 git tag -m "🔖 [release] release tag on ${CURRENTDATE}" v${SEMVER}
 echo "You are free to decide to push this tag or drop it. !!!Please DOUBLE-CHECK THE COMMIT and tag!!!"
