@@ -11,7 +11,7 @@ description = "This package contains all the client binaries to run some tests a
 nachtwacht-checks = { path = "../checks" }
 nachtwacht-models = { path = "../models" }
 log = "0.4.17"
-clap = { version = "4.0.9", features = ["derive"] }
+clap = { version = "4.0.10", features = ["derive"] }
 http_req = "0.8.1"
 env_logger = "0.9.1"
 
