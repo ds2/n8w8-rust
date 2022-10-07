@@ -23,6 +23,6 @@ include:
   - template: Security/Secret-Detection.gitlab-ci.yml
 
 package-n8w8d:
-  extends: package-rpm-ol8-template
+  extends: .package-rpm-ol8-template
   variables:
     WORKSPACE_MEMBER: n8w8d
