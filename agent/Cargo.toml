@@ -1,6 +1,6 @@
 [package]
 name = "n8w8d"
-version = "0.1.1-alpha.2"
+version = "0.1.1-alpha.3"
 edition = "2021"
 license = "GPLv3"
 description = "A host service to retrieve local health data and send it to N8w8"
