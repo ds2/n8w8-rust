@@ -12,7 +12,7 @@ container_scanning:
 
 include:
   - project: 'ds_2/ci-templates'
-    ref: v0.1.9
+    ref: feature/rust-rpm-release
     file:
       - '/templates/stages.yaml'
       - '/templates/build-rust.yaml'
@@ -21,3 +21,8 @@ include:
   - template: Security/Dependency-Scanning.gitlab-ci.yml
   - template: Security/Container-Scanning.gitlab-ci.yml
   - template: Security/Secret-Detection.gitlab-ci.yml
+
+package-n8w8d:
+  extends: package-rpm-ol8-template
+  variables:
+    WORKSPACE_MEMBER: n8w8d
