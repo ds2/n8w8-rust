@@ -25,6 +25,7 @@ echo "Setting cargo workspace version.."
 cargo set-version --workspace "${SEMVER}" || exit 1
 echo "Testing build.."
 cargo build --workspace
+echo "${SEMVER}" >.semver-version
 echo "Committing changed files.."
 git add -u
 git commit -m "🔖 [release] create release tag for v${SEMVER}"
