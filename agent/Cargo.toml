@@ -10,7 +10,7 @@ description = "A host service to retrieve local health data and send it to N8w8"
 [dependencies]
 nachtwacht-models = { path = "../models" }
 log = "0.4.17"
-clap = { version = "4.0.11", features = ["derive"] }
+clap = { version = "4.0.12", features = ["derive"] }
 http_req = "0.8.1"
 env_logger = "0.9.1"
 daemonize = "0.4.1"
