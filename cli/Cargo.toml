@@ -15,6 +15,10 @@ log = "0.4.17"
 clap = { version = "4.0.32", features = ["derive"] }
 http_req = "0.9.0"
 env_logger = "0.10.0"
+kube = { version = "0.75.0", default-features = false, features = ["runtime", "derive", "client", "rustls-tls"] }
+k8s-openapi = { version = "0.16.0", features = ["v1_25"] }
+futures = "0.3.24"
+tokio = { version = "1.21.2", features = ["rt", "macros"] }
 
 [[bin]]
 name="n8w8-http-check"
@@ -23,3 +27,7 @@ path= "src/http-check-bin.rs"
 [[bin]]
 name="n8w8-simple-val"
 path= "src/simple-val-bin.rs"
+
+[[bin]]
+name = "nachtwacht-k8s-check"
+path = "src/k8s-check-bin.rs"
