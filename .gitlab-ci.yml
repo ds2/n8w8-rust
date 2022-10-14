@@ -12,17 +12,36 @@ container_scanning:
 
 include:
   - project: 'ds_2/ci-templates'
-    ref: feature/rust-rpm-release
+    ref: v0.1.10
     file:
       - '/templates/stages.yaml'
+      - '/templates/global-vars.yaml'
       - '/templates/build-rust.yaml'
       - '/templates/deploy-adoc.yaml'
+      - '/templates/deploy-azure.yaml'
   - template: Security/SAST.gitlab-ci.yml
   - template: Security/Dependency-Scanning.gitlab-ci.yml
   - template: Security/Container-Scanning.gitlab-ci.yml
   - template: Security/Secret-Detection.gitlab-ci.yml
 
-package-n8w8d:
-  extends: .package-rpm-ol8-template
+package-debug-rpm:
+  extends: .package-debug-rpm-ol8
   variables:
-    WORKSPACE_MEMBER: n8w8d
+    WORKSPACE_MEMBER: n8w8d # set to ws member, or remove to use root binary
+
+package-release-rpm:
+  extends: .package-release-rpm-ol8
+
+deploy-debug-rpm-azure:
+  extends: .deploy-azure
+  rules:
+    - if: $CI_COMMIT_BRANCH
+  dependencies:
+    - package-debug-rpm
+
+deploy-release-rpm-azure:
+  extends: .deploy-azure
+  rules:
+    - if: $CI_COMMIT_TAG
+  dependencies:
+    - package-release-rpm

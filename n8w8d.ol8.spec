@@ -1,10 +1,11 @@
 %global orig_src_dir %{getenv:SRC_DIR}
 %global rust_target_arch %{getenv:CARGO_BUILD_TARGET}
 %global tgt_src_dir %{getenv:CARGO_TARGET_DIR}
+%global tgt_profile %{getenv:RUST_PROFILE}
 
 Name:           n8w8d
-Version:        %{getenv:SEMVER_VERSION}
-Release:        1%{?dist}
+Version:        %{getenv:RPM_VERSION}
+Release:        %{?getenv:RPM_RELEASE}%{?dist}
 Summary:        A host service to retrieve local health data and send it to N8w8
 
 License:        GPLv3
@@ -20,7 +21,7 @@ A host service to retrieve local health data and send it to N8w8 api server.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -o root -g root -m 0755 -D %{tgt_src_dir}/%{rust_target_arch}/release/n8w8d $RPM_BUILD_ROOT/%{_bindir}/n8w8d
+install -m 0755 -D %{tgt_src_dir}/%{rust_target_arch}/%{tgt_profile}/n8w8d $RPM_BUILD_ROOT/%{_bindir}/n8w8d
 
 
 %files
