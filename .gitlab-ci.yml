@@ -10,7 +10,7 @@ container_scanning:
 
 include:
   - project: 'ds_2/ci-templates'
-    ref: v0.1.10
+    ref: develop
     file:
       - '/templates/stages.yaml'
       - '/templates/global-vars.yaml'
@@ -24,8 +24,6 @@ include:
 
 package-debug-rpm:
   extends: .package-debug-rpm-ol8
-  variables:
-    WORKSPACE_MEMBER: n8w8d # set to ws member, or remove to use root binary
 
 package-release-rpm:
   extends: .package-release-rpm-ol8
