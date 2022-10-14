@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: "cargo"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 20
+    commit-message:
+      prefix: "⬆"
+  - package-ecosystem: "github-actions" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+      day: "sunday" # only when weekly is set!
+      #      time: "18:00"
+      timezone: "Europe/Berlin"
+    labels:
+      - "githubactions"
+      - "updates"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "⬆"

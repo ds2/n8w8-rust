@@ -1,0 +1,47 @@
+name: test Pull request
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Share the target dir to try to cache a few build-time deps.
+  CARGO_TARGET_DIR: target
+
+jobs:
+  build:
+    name: build the project
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        name: checking out project
+      - uses: actions/cache@v3
+        name: install cache
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+        name: install latest stable rust toolchain
+      - name: install Protocol Buffers
+        run: |
+          sudo apt-get install -yqq --no-install-recommends protobuf-compiler
+          protoc --version
+          rm -rf protoc.zip
+      - name: install cross
+        run: cargo install --force cross --git https://github.com/cross-rs/cross
+      - run: cargo build --workspace
+        name: build the workspace
+      - run: cargo test --all-features --all-targets --workspace
+        name: run unit tests

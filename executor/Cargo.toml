@@ -1,0 +1,20 @@
+[package]
+name = "executor"
+version = "0.1.1-rc.1"
+edition = "2021"
+license = "GPLv3"
+description="An executor to execute given tests at specific times."
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+nachtwacht-checks = { path = "../checks" }
+nachtwacht-models = { path = "../models" }
+log = "0.4.17"
+clap = { version = "4.0.9", features = ["derive"] }
+http_req = "0.8.1"
+env_logger = "0.9.1"
+
+[[bin]]
+name="nachtwacht-executor"
+path= "src/main.rs"

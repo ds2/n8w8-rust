@@ -1,3 +1,4 @@
 # v0.1.0
 
-* simple helloworld website, no functions yet
+* simple helloworld website
+* agent n8w8d can retrieve some data like load5, freemem, zabbix mode

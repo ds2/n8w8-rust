@@ -1,0 +1,121 @@
+name: build workspace
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Share the target dir to try to cache a few build-time deps.
+  CARGO_TARGET_DIR: target
+
+jobs:
+  build:
+    name: build the project
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        name: checking out project
+      - uses: actions/cache@v3
+        name: install cache
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+        name: install latest stable rust toolchain
+      - name: install Protocol Buffers
+        run: |
+          sudo apt-get install -yqq --no-install-recommends protobuf-compiler
+          protoc --version
+          rm -rf protoc.zip
+      - name: install cross
+        run: cargo install --force cross --git https://github.com/cross-rs/cross
+      - run: cargo build --workspace
+        name: build the workspace
+      - run: cargo test --all-features --all-targets --workspace
+        name: run unit tests
+
+  rpm:
+    name: generate RPM
+    runs-on: ubuntu-22.04
+    needs:
+      - build
+    steps:
+      - uses: actions/checkout@v3
+        name: checking out project
+      - uses: actions/cache@v3
+        name: install cache
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+        name: install latest stable rust toolchain
+      - name: install rpm generator
+        run: cargo install cargo-generate-rpm
+      - name: build the workspace
+        run: |
+          cargo build -p n8w8d --release
+          ls -alFh target/release/
+      - name: generate rpm
+        run: cargo generate-rpm -p agent
+      - name: publish rpm package
+        uses: actions/upload-artifact@v3
+        with:
+          name: n8w8-agent-rpm
+          path: |
+            target/generate-rpm/n8w8d-*.rpm
+          retention-days: 5
+  deb:
+    name: generate Debian
+    runs-on: ubuntu-22.04
+    needs:
+      - build
+    steps:
+      - uses: actions/checkout@v3
+        name: checking out project
+      - uses: actions/cache@v3
+        name: install cache
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+        name: install latest stable rust toolchain
+      - name: install rpm generator
+        run: cargo install cargo-deb
+      - name: build the workspace
+        run: cargo build -p n8w8d --release
+      - name: generate deb package
+        run: cargo deb -p n8w8d
+      - name: publish deb package
+        uses: actions/upload-artifact@v3
+        with:
+          name: n8w8-agent-deb
+          path: |
+            target/debian/n8w8d-*.deb
+          retention-days: 5

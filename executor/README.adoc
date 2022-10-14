@@ -1,0 +1,7 @@
+== The executor
+
+The executor binary is for executing tests. It can run from inside a container, as well as installed on a linux machine.
+
+When started, it gets a configuration plan about the tests and their configuration to run. It is responsible to execute at the given test's time, note the given parameters and write a report about the outcome. The report can be written to a database, or another sink like Elasticsearch, Kafka etc.
+
+By default, it will write the report to a database.

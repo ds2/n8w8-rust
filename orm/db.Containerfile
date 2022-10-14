@@ -1,0 +1,6 @@
+FROM docker.io/postgres:14
+ENV POSTGRES_USER=n8w8adm
+ENV POSTGRES_PASSWORD=n8w8admpw
+ENV POSTGRES_DB=n8w8db
+ENV PGDATA=/db-data
+RUN mkdir -p $PGDATA
