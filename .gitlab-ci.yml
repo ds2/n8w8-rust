@@ -1,5 +1,3 @@
-image: "rust:latest"
-
 variables:
   RUST_BEFORESCRIPT: "apt-get update -yqq; apt-get install -yqq --no-install-recommends protobuf-compiler"
 
@@ -12,12 +10,34 @@ container_scanning:
 
 include:
   - project: 'ds_2/ci-templates'
-    ref: v0.1.9
+    ref: develop
     file:
       - '/templates/stages.yaml'
+      - '/templates/global-vars.yaml'
       - '/templates/build-rust.yaml'
       - '/templates/deploy-adoc.yaml'
+      - '/templates/deploy-azure.yaml'
   - template: Security/SAST.gitlab-ci.yml
   - template: Security/Dependency-Scanning.gitlab-ci.yml
   - template: Security/Container-Scanning.gitlab-ci.yml
   - template: Security/Secret-Detection.gitlab-ci.yml
+
+package-debug-rpm:
+  extends: .package-debug-rpm-ol8
+
+package-release-rpm:
+  extends: .package-release-rpm-ol8
+
+deploy-debug-rpm-azure:
+  extends: .deploy-azure
+  rules:
+    - if: $CI_COMMIT_BRANCH
+  dependencies:
+    - package-debug-rpm
+
+deploy-release-rpm-azure:
+  extends: .deploy-azure
+  rules:
+    - if: $CI_COMMIT_TAG
+  dependencies:
+    - package-release-rpm
