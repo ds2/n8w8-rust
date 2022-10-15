@@ -1,6 +1,6 @@
 [package]
 name = "nachtwacht-frontend"
-version = "0.1.1-rc.1"
+version = "0.2.0"
 edition = "2021"
 license = "AGPLv3"
 description = "This is the frontend webapp server to configure and inspect N8w8."
