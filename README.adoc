@@ -24,7 +24,9 @@ include::docs/container.adoc[]
 
 include::executor/README.adoc[]
 
+include::docs/releasing.adoc[]
 include::agent/Create-RPM.adoc[]
+include::agent/Create-Debian.adoc[]
 
 == Documentation
 

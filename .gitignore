@@ -5,3 +5,8 @@
 /models/src/n8w8.rs
 /testdb-data
 /out
+
+*.log
+
+orm/postgresql.jar
+out

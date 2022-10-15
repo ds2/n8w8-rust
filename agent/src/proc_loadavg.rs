@@ -20,9 +20,9 @@ pub fn parse_proc_loadavg() -> Result<ProcLoadavg, AgentErrors> {
     let load15: f64 = splits.next().unwrap_or("0.0").parse().unwrap();
     let process_count_str = splits.next().unwrap_or("0/0");
     let mut splits2 = process_count_str.split("/");
-    let running_processes: u32 = splits2.next().unwrap().parse().unwrap();
-    let total_processes: u64 = splits2.next().unwrap().parse().unwrap();
-    let latest_process_id: u64 = splits.next().unwrap_or("0").parse().unwrap();
+    let running_processes: u32 = splits2.next().unwrap().parse().unwrap_or(0);
+    let total_processes: u64 = splits2.next().unwrap().parse().unwrap_or(0);
+    let latest_process_id: u64 = splits.next().unwrap_or("0").parse().unwrap_or(0);
     let load_avg = ProcLoadavg {
         load1,
         load5,

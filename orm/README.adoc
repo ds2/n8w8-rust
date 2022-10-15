@@ -1,0 +1,46 @@
+== Persistence layer
+
+We rely on Postgresql, using Sea-ORM.
+
+=== Starting the developer database
+
+Run this:
+
+[,shell]
+----
+# To build the developer image
+podman build -t n8w8db:latest -f db.Containerfile
+
+# to run it (we start with a clean fresh db!!)
+podman run --detach --rm -p 25432:5432 --name n8w8devdb n8w8db:latest
+----
+
+Perhaps you need to tweak your local database port _25432_ on your machine.
+
+We use Liquibase to set up the database. Please run:
+
+[,shell]
+----
+liquibase --version
+liquibase status # checks if your local schema and the target database schema are the same
+liquibase update-sql # shows the sql DDL to apply
+----
+
+If you are ok with the DDL, then run:
+
+[,shell]
+----
+liquibase update
+----
+
+=== Generating entities for Rust
+
+We use SeaORM, so:
+
+[,shell]
+----
+cargo install sea-orm-cli
+sea-orm-cli generate entity -u postgresql://n8w8adm:n8w8admpw@localhost:25432/n8w8db -o src/entities --with-serde both --expanded-format
+----
+
+This will create the entities to be used by SeaOrm.
