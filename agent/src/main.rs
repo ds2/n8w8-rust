@@ -12,32 +12,12 @@ use sysinfo::{DiskExt, System, SystemExt};
 
 use nachtwacht_models::n8w8::{AgentDiscData, AgentNodeData};
 
-use crate::errors::AgentErrors;
-use crate::proc_loadavg::parse_proc_loadavg;
-use crate::proc_stat::parse_proc_stat;
-use crate::zabbix_mode::get_zabbix_value;
-
-mod errors;
-mod proc_loadavg;
-mod proc_meminfo;
-mod proc_stat;
-mod zabbix_mode;
-
-/// This enum contains all the values that Zabbix may need.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
-pub enum ZabbixValue {
-    Load1,
-    Load5,
-    Load15,
-    IoWait,
-    MemFreePercent,
-    MemFree,
-}
+use nachtwacht_core::proc_stat::parse_proc_stat;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
 enum RunMode {
     Agent,
-    Zabbix,
+    OpenMetrics,
 }
 
 /// Simple program to greet a person
@@ -62,14 +42,11 @@ struct Args {
     /// Refresh timeout for the agent query loop.
     #[arg(short, long, value_parser, default_value_t = 5000)]
     refresh: u64,
-    /// Which health value should we print out.
-    #[arg(short, long, value_enum, default_value = "load1")]
-    zabbix_value: ZabbixValue,
     /// defines the run mode for this agent. By default, we run in zabbix mode which means
     /// we only print out one value at the stdout.
     /// The other mode is the agent mode where the agent runs continuously in the background
     /// and sends the health data to a n8w8 endpoint.
-    #[arg(short, long, value_enum, default_value = "zabbix")]
+    #[arg(short, long, value_enum)]
     mode: RunMode,
 }
 
@@ -78,10 +55,8 @@ fn main() {
     // Parse args first ;)
     let args = Args::parse();
 
-    if args.mode == RunMode::Zabbix {
-        let zabbix_val =
-            get_zabbix_value(args.zabbix_value).expect("Error when retrieving the zbx value!");
-        println!("{}", zabbix_val);
+    if args.mode == RunMode::OpenMetrics {
+        //set up server
         exit(0);
     }
     let stdout = File::create(args.outfile.as_str()).unwrap();

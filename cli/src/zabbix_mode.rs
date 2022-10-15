@@ -1,8 +1,21 @@
+use clap::ValueEnum;
+use nachtwacht_core::errors::AgentErrors;
+use nachtwacht_core::errors::AgentErrors::FailedToGetLocalInfo;
+use nachtwacht_core::proc_loadavg::parse_proc_loadavg;
+use nachtwacht_core::proc_meminfo::parse_proc_mem_info;
+use nachtwacht_core::proc_stat::parse_proc_stat;
 use std::string::String;
 
-use crate::proc_meminfo::parse_proc_mem_info;
-use crate::AgentErrors::FailedToGetLocalInfo;
-use crate::{parse_proc_loadavg, parse_proc_stat, AgentErrors, ZabbixValue};
+/// This enum contains all the values that Zabbix may need.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
+pub enum ZabbixValue {
+    Load1,
+    Load5,
+    Load15,
+    IoWait,
+    MemFreePercent,
+    MemFree,
+}
 
 pub fn get_zabbix_value(val: ZabbixValue) -> Result<String, AgentErrors> {
     let loadavg = parse_proc_loadavg().expect("Error when getting the loadavg!");

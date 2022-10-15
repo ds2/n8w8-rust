@@ -59,7 +59,7 @@ pub fn parse_proc_mem_info() -> Result<ProcMemInfo, AgentErrors> {
     Ok(mem_info)
 }
 
-#[cfg(unix)]
+#[cfg(target_os = "macos")]
 pub fn parse_proc_mem_info() -> Result<ProcMemInfo, AgentErrors> {
     Err(AgentErrors::NotImplemented())
 }

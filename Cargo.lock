@@ -1421,6 +1421,7 @@ dependencies = [
  "env_logger",
  "http_req",
  "log",
+ "nachtwacht-core",
  "nachtwacht-models",
  "sysinfo",
  "test-log",
@@ -1448,7 +1449,21 @@ dependencies = [
  "http_req",
  "log",
  "nachtwacht-checks",
+ "nachtwacht-core",
  "nachtwacht-models",
+]
+
+[[package]]
+name = "nachtwacht-core"
+version = "0.2.0"
+dependencies = [
+ "clap",
+ "env_logger",
+ "log",
+ "nachtwacht-checks",
+ "nachtwacht-models",
+ "test-log",
+ "thiserror",
 ]
 
 [[package]]

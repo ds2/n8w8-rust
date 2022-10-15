@@ -1,0 +1,19 @@
+[package]
+name = "nachtwacht-core"
+version = "0.2.0"
+edition = "2021"
+license = "GPLv3"
+description = "This package contains the core methods. Kind of Business logics."
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+nachtwacht-checks = { path = "../checks" }
+nachtwacht-models = { path = "../models" }
+log = "0.4.17"
+env_logger = "0.9.1"
+thiserror = "1.0.37"
+clap={version="4.0.15", features=["derive"]}
+
+[dev-dependencies]
+test-log = "0.2.11"

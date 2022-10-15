@@ -4,6 +4,8 @@ use nachtwacht_models::n8w8::AuthBasicCredentials;
 use nachtwacht_models::{HttpTestParams, HttpTestResponse, N8w8Test};
 use std::process::exit;
 
+pub mod zabbix_mode;
+
 /*
 das ist ein Commentary
  */

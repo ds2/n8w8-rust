@@ -10,11 +10,16 @@ description = "This package contains all the client binaries to run some tests a
 [dependencies]
 nachtwacht-checks = { path = "../checks" }
 nachtwacht-models = { path = "../models" }
+nachtwacht-core = { path = "../core" }
 log = "0.4.17"
 clap = { version = "4.0.15", features = ["derive"] }
 http_req = "0.8.1"
 env_logger = "0.9.1"
 
 [[bin]]
-name="nachtwacht-http-check"
+name="n8w8-http-check"
 path= "src/http-check-bin.rs"
+
+[[bin]]
+name="n8w8-simple-val"
+path= "src/simple-val-bin.rs"

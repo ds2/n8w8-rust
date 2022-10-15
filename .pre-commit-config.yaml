@@ -14,7 +14,7 @@ repos:
       - id: detect-aws-credentials
       - id: check-ast
       - id: no-commit-to-branch
-        args: [ '--pattern', '^(?!((main|develop)|(fix|feature)\/[a-z0-9][a-z0-9A-Z\-_]{1,30}|(release\/\d\.\d))$).*' ]
+        args: [ '--pattern', '^(?!((main|develop)|(fix|feature)\/[a-zA-Z0-9][a-z0-9A-Z\-_]{1,30}|(release\/\d\.\d))$).*' ]
   - repo: https://github.com/doublify/pre-commit-rust
     rev: v1.0
     hooks:

@@ -38,14 +38,14 @@ pub fn parse_proc_stat() -> Result<Vec<ProcStatCpu>, AgentErrors> {
     Ok(cpuvec)
 }
 
-#[cfg(unix)]
+#[cfg(target_os = "macos")]
 pub fn parse_proc_stat() -> Result<Vec<ProcStatCpu>, AgentErrors> {
     Err(AgentErrors::NotImplemented())
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::parse_proc_stat;
+    use crate::proc_stat::parse_proc_stat;
 
     #[test]
     #[cfg(target_os = "linux")]

@@ -1,5 +1,5 @@
 [workspace]
-members = ["models", "frontend", "cli", "orm", "checks", "executor", "agent"]
+members = ["models", "frontend", "cli", "orm", "checks", "executor", "agent", "core"]
 
 [profile.dev]
 opt-level = 0

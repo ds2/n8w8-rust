@@ -42,7 +42,7 @@ pub fn parse_proc_loadavg() -> Result<ProcLoadavg, AgentErrors> {
 
 #[cfg(test)]
 mod tests {
-    use crate::parse_proc_loadavg;
+    use crate::proc_loadavg::parse_proc_loadavg;
 
     #[test]
     #[cfg(target_os = "linux")]
