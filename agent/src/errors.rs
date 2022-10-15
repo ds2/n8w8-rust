@@ -9,4 +9,6 @@ pub enum AgentErrors {
     FailedToGetLocalInfo(String),
     #[error("data store disconnected")]
     Disconnect(#[from] io::Error),
+    #[error("This flow is not (yet) implemented!")]
+    NotImplemented(),
 }

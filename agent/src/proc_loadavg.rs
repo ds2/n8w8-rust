@@ -4,7 +4,7 @@ use nachtwacht_models::n8w8::ProcLoadavg;
 use std::fs::File;
 use std::io::{BufReader, Read};
 
-#[cfg(unix)]
+#[cfg(target_os = "linux")]
 pub fn parse_proc_loadavg() -> Result<ProcLoadavg, AgentErrors> {
     debug!("Trying to get loadavg..");
     let mut str = String::new();
@@ -35,11 +35,17 @@ pub fn parse_proc_loadavg() -> Result<ProcLoadavg, AgentErrors> {
     Ok(load_avg)
 }
 
+#[cfg(target_os = "macos")]
+pub fn parse_proc_loadavg() -> Result<ProcLoadavg, AgentErrors> {
+    Err(AgentErrors::NotImplemented())
+}
+
 #[cfg(test)]
 mod tests {
     use crate::parse_proc_loadavg;
 
     #[test]
+    #[cfg(target_os = "linux")]
     fn it_works() {
         let result = parse_proc_loadavg();
         assert!(result.is_ok());

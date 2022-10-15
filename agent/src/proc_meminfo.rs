@@ -4,6 +4,7 @@ use nachtwacht_models::n8w8::ProcMemInfo;
 use std::fs::File;
 use std::io::{BufReader, Read};
 
+#[cfg(target_os = "linux")]
 pub fn parse_proc_mem_info() -> Result<ProcMemInfo, AgentErrors> {
     debug!("Starting check for /proc/meminfo..");
     let mut str = String::new();
@@ -58,11 +59,17 @@ pub fn parse_proc_mem_info() -> Result<ProcMemInfo, AgentErrors> {
     Ok(mem_info)
 }
 
+#[cfg(unix)]
+pub fn parse_proc_mem_info() -> Result<ProcMemInfo, AgentErrors> {
+    Err(AgentErrors::NotImplemented())
+}
+
 #[cfg(test)]
 mod tests {
     use crate::proc_meminfo::parse_proc_mem_info;
 
     #[test_log::test]
+    #[cfg(target_os = "linux")]
     fn it_works() {
         let result = parse_proc_mem_info();
         assert!(result.is_ok());

@@ -5,7 +5,7 @@ use std::fs::File;
 use std::io::{BufReader, Read};
 
 /// Returns the cpu entries from /proc/stat.
-#[cfg(unix)]
+#[cfg(target_os = "linux")]
 pub fn parse_proc_stat() -> Result<Vec<ProcStatCpu>, AgentErrors> {
     let mut str = String::new();
     let file = File::open("/proc/stat").expect("Error in reading /proc/stat");
@@ -38,11 +38,17 @@ pub fn parse_proc_stat() -> Result<Vec<ProcStatCpu>, AgentErrors> {
     Ok(cpuvec)
 }
 
+#[cfg(unix)]
+pub fn parse_proc_stat() -> Result<Vec<ProcStatCpu>, AgentErrors> {
+    Err(AgentErrors::NotImplemented())
+}
+
 #[cfg(test)]
 mod tests {
     use crate::parse_proc_stat;
 
     #[test]
+    #[cfg(target_os = "linux")]
     fn it_works() {
         let result = parse_proc_stat();
         assert!(result.is_ok());
