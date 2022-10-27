@@ -16,7 +16,7 @@ http_req = "0.8.1"
 env_logger = "0.9.1"
 daemonize = "0.4.1"
 chrono = "0.4.22"
-sysinfo = "0.26.5"
+sysinfo = "0.26.6"
 thiserror = "1.0.37"
 
 [dev-dependencies]
