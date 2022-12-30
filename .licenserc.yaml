@@ -1,6 +1,6 @@
 header:
   license:
-    spdx-id:  GPL-3.0-or-later
+    spdx-id: GPL-3.0-or-later
     copyright-owner: Dirk Strauss
     software-name: Nachtwacht
     content: | # <5>
@@ -21,29 +21,32 @@ header:
       along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
   paths-ignore:
-    - 'dist'
-    - 'licenses'
-    - '**/*.toml'
-    - '**/Cargo.lock'
-    - '**/*.spec'
-    - '**/target'
-    - '**/*.sh'
-    - '**/*.md'
-    - '**/*.adoc'
-    - '**/*.proto'
-    - '**/*.pb.go'
-    - 'go.mod'
-    - 'go.sum'
-    - '**/LICENSE'
-    - 'NOTICE'
-    - '.github'
-    - '**/.*'
-    - '.*'
-    - '**/Containerfile'
-    - '**/CHANGELOG'
+    - "dist"
+    - "licenses"
+    - "**/*.toml"
+    - "**/Cargo.lock"
+    - "**/*.spec"
+    - "**/target"
+    - "**/*.sh"
+    - "**/*.md"
+    - "**/*.adoc"
+    - "**/*.proto"
+    - "**/*.pb.go"
+    - "go.mod"
+    - "go.sum"
+    - "**/LICENSE"
+    - "NOTICE"
+    - ".github"
+    - "**/.*"
+    - ".*"
+    - "**/Containerfile"
+    - "**/CHANGELOG"
 
   comment: on-failure
 
 dependency:
   files:
     - Cargo.toml
+  licenses:
+    - name: nachtwacht-orm
+      license: GPL-3.0-or-later
