@@ -1,0 +1,14 @@
+== Testing the license headers
+
+We try to use SPDX to address license issues.
+
+=== How to test
+
+Run:
+
+[,bash]
+----
+cargo install spdx-guide; spdx-guide
+spdx-sbom-generator -o .
+./sbom-tool generate -b . -pn "n8w8-rust" -pv 0.1.1  -nsb https://gitlab.com/ds_2/ -ps "Dirk Strauss" # -bc <build components path> 
+----

@@ -1,0 +1,20 @@
+##### Document Information
+SPDXVersion: SPDX-2.3
+DataLicense: CC0-1.0
+SPDXID: SPDXRef-DOCUMENT
+LicenseListVersion: 3.18
+#Update DocumentComment if you make further changes to this document
+DocumentComment: This document only gives licensing information about the package it was created for, not its dependencies.
+Creator: Tool: spdx-guide-0.2.3
+Creator: Person: Dirk Strauss ()
+DocumentName: nachtwacht-rust-v0.1.1-rc.1
+DocumentNamespace: https://spdx.org/spdxdocs/nachtwacht-rust-v0.1.1-rc.1-a03b6348-1ae4-4c86-b3f3-a29f72932714
+
+
+##### Package Information
+SPDXID: SPDXRef-Package-nachtwacht-rust
+PackageName: nachtwacht-rust
+PackageVersion: v0.1.1-rc.1
+PackageSupplier: Person: Dirk Strauss ()
+DownloadLocation: git+git@gitlab.com:ds_2/n8w8-rust-fe.git@refs/heads/feature/spdx-license-check
+DeclaredLicense: GPL-3.0-or-later
