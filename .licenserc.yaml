@@ -23,6 +23,10 @@ header:
   paths-ignore:
     - "dist"
     - "licenses"
+    - "**/*.dapper"
+    - "**/*.spdx"
+    - "**/*.json"
+    - ".cargo/**"
     - "**/*.toml"
     - "**/Cargo.lock"
     - "**/*.spec"
@@ -39,7 +43,8 @@ header:
     - ".github"
     - "**/.*"
     - ".*"
-    - "**/Containerfile"
+    - "**/*Containerfile"
+    - "**/liquibase.*.flow"
     - "**/CHANGELOG"
 
   comment: on-failure
