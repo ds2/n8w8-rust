@@ -1,0 +1,15 @@
+== Testing the license headers
+
+We try to use SPDX to address license issues.
+
+=== How to test
+
+Run:
+
+[,bash]
+----
+cargo install spdx-guide; spdx-guide
+spdx-sbom-generator -o .
+./sbom-tool generate -b . -pn "n8w8-rust" -pv 0.1.1  -nsb https://gitlab.com/ds_2/ -ps "Dirk Strauss" # -bc <build components path> 
+go install sigs.k8s.io/bom/cmd/bom@latest; bom generate --namespace https://gitlab.com/ds_2/n8w8-rust-fe/ -l GPL-3.0-only --name n8w8-rust -o LICENSE.spdx.json --format json -d "models" -d "frontend" -d "cli" -d "orm" -d "checks" -d "executor" -d "agent" -d "core" && bom document outline LICENSE.spdx.json
+----

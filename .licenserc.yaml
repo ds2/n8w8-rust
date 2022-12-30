@@ -1,0 +1,57 @@
+header:
+  license:
+    spdx-id: GPL-3.0-or-later
+    copyright-owner: Dirk Strauss
+    software-name: Nachtwacht
+    content: | # <5>
+      Nachtwacht - A set of servers and client tools to monitor servers and services
+      Copyright (C) 2022  Dirk Strauss
+
+      This program is free software: you can redistribute it and/or modify
+      it under the terms of the GNU General Public License as published by
+      the Free Software Foundation, either version 3 of the License, or
+      (at your option) any later version.
+
+      This program is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU General Public License for more details.
+
+      You should have received a copy of the GNU General Public License
+      along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+  paths-ignore:
+    - "dist"
+    - "licenses"
+    - "**/*.dapper"
+    - "**/*.spdx"
+    - "**/*.json"
+    - ".cargo/**"
+    - "**/*.toml"
+    - "**/Cargo.lock"
+    - "**/*.spec"
+    - "**/target"
+    - "**/*.sh"
+    - "**/*.md"
+    - "**/*.adoc"
+    - "**/*.proto"
+    - "**/*.pb.go"
+    - "go.mod"
+    - "go.sum"
+    - "**/LICENSE"
+    - "NOTICE"
+    - ".github"
+    - "**/.*"
+    - ".*"
+    - "**/*Containerfile"
+    - "**/liquibase.*.flow"
+    - "**/CHANGELOG"
+
+  comment: on-failure
+
+dependency:
+  files:
+    - Cargo.toml
+  licenses:
+    - name: nachtwacht-orm
+      license: GPL-3.0-or-later

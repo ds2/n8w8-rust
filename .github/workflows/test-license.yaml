@@ -1,0 +1,28 @@
+name: test licenses
+
+on:
+  pull_request:
+    branches:
+      - develop
+  # push:
+  #   branches:
+  #     - develop
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-licenses:
+    name: testing licenses
+    runs-on: ubuntu-latest
+    env:
+      GOPROXY: "https://goproxy.io,https://goproxy.dev,direct"
+      CI: "1"
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Check License Header
+        uses: apache/skywalking-eyes/header@v0.4.0
+      - name: Check Dependencies' License
+        uses: apache/skywalking-eyes/dependency@v0.4.0
