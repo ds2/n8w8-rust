@@ -1,0 +1,26 @@
+header:
+  license:
+    spdx-id:  GPL-3.0-or-later
+    copyright-owner: Dirk Strauss
+    software-name: Nachtwacht
+
+  paths-ignore:
+    - 'dist'
+    - 'licenses'
+    - '**/target'
+    - '**/*.md'
+    - '**/*.adoc'
+    - '**/*.proto'
+    - '**/*.pb.go'
+    - 'go.mod'
+    - 'go.sum'
+    - '**/LICENSE'
+    - 'NOTICE'
+    - '.github'
+    - '**/.*'
+
+  comment: on-failure
+
+dependency:
+  files:
+    - Cargo.toml
