@@ -1577,14 +1577,14 @@ dependencies = [
  "env_logger",
  "log",
  "prost",
- "protobuf 2.28.0",
+ "protobuf",
 ]
 
 [[package]]
 name = "nachtwacht-models"
 version = "0.2.0"
 dependencies = [
- "protobuf 3.2.0",
+ "protobuf",
  "protobuf-codegen",
  "protoc-bin-vendored",
 ]
@@ -1917,12 +1917,6 @@ dependencies = [
 
 [[package]]
 name = "protobuf"
-version = "2.28.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "106dd99e98437432fed6519dedecfade6a06a73bb7b2a1e019fdd2bee5778d94"
-
-[[package]]
-name = "protobuf"
 version = "3.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b55bad9126f378a853655831eb7363b7b01b81d19f8cb1218861086ca4a1a61e"
@@ -1940,7 +1934,7 @@ checksum = "0dd418ac3c91caa4032d37cb80ff0d44e2ebe637b2fb243b6234bf89cdac4901"
 dependencies = [
  "anyhow",
  "once_cell",
- "protobuf 3.2.0",
+ "protobuf",
  "protobuf-parse",
  "regex",
  "tempfile",
@@ -1956,7 +1950,7 @@ dependencies = [
  "anyhow",
  "indexmap",
  "log",
- "protobuf 3.2.0",
+ "protobuf",
  "protobuf-support",
  "tempfile",
  "thiserror",
