@@ -14,5 +14,5 @@ actix-session = {version="0.7.2", features=["cookie-session"]}
 log = "0.4.17"
 env_logger = "0.10.0"
 async-stream = "0.3.4"
-prost = "0.11.7"
+prost = "0.11.8"
 protobuf = "2.27.1"
