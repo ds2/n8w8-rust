@@ -88,15 +88,10 @@ fn main() {
     );
     let daemonize = Daemonize::new()
         .pid_file(p) // Every method except `new` and `start`
-        // .chown_pid_file(true) // is optional, see `Daemonize` documentation
         .working_directory(Path::new(args.workdir.as_str())) // for default behaviour.
         .user(args.user.as_str())
-        // .group("adm") // Group name
-        // .group(2) // or group id.
-        // .umask(0o777) // Set umask, `0o027` by default.
         .stdout(stdout) // Redirect stdout to `/tmp/daemon.out`.
         .stderr(stderr) // Redirect stderr to `/tmp/daemon.err`.
-        .exit_action(|| println!("Should be running now. Please check via pid file! :)"))
         .privileged_action(|| println!("Will enter loop now.."));
 
     match daemonize.start() {
