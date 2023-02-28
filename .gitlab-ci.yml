@@ -4,10 +4,6 @@ variables:
 sast:
   stage: test
 
-container_scanning:
-  variables:
-    CS_ANALYZER_IMAGE: registry.gitlab.com/security-products/container-scanning/grype:4
-
 include:
   - project: 'ds_2/ci-templates'
     ref: develop
@@ -19,7 +15,6 @@ include:
       - '/templates/deploy-azure.yaml'
   - template: Security/SAST.gitlab-ci.yml
   - template: Security/Dependency-Scanning.gitlab-ci.yml
-  - template: Security/Container-Scanning.gitlab-ci.yml
   - template: Security/Secret-Detection.gitlab-ci.yml
 
 package-debug-rpm:
