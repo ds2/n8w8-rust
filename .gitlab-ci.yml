@@ -14,7 +14,6 @@ include:
       - '/templates/deploy-adoc.yaml'
       - '/templates/deploy-azure.yaml'
       - '/templates/check-license.yaml'
-      - 'templates/generate-sbom.yaml'
       - 'templates/generate-sbom-cyclonedx.yaml'
   - template: Security/SAST.gitlab-ci.yml
   - template: Security/Dependency-Scanning.gitlab-ci.yml
