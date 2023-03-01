@@ -1,12 +1,13 @@
-// Nachtwacht - A set of servers and client tools to monitor servers and services
-// Copyright (C) 2022  Dirk Strauss
+// Copyright (C) 2023 Dirk Strauss
 //
-// This program is free software: you can redistribute it and/or modify
+// This file is part of Nachtwacht.
+//
+// Nachtwacht is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// This program is distributed in the hope that it will be useful,
+// Nachtwacht is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -16,12 +17,13 @@
 
 use crate::errors::AgentErrors;
 use log::debug;
-use nachtwacht_models::n8w8::ProcLoadavg;
+use nachtwacht_models::generated::n8w8::ProcLoadavg;
 use std::fs::File;
 use std::io::{BufReader, Read};
 
+/// Method to read /proc/loadavg.
 #[cfg(target_os = "linux")]
-pub fn parse_proc_loadavg() -> Result<ProcLoadavg, AgentErrors> {
+pub async fn parse_proc_loadavg() -> Result<ProcLoadavg, AgentErrors> {
     debug!("Trying to get loadavg..");
     let mut str = String::new();
     let file = File::open("/proc/loadavg").expect("Error in reading /proc/loadavg");
@@ -59,11 +61,12 @@ pub fn parse_proc_loadavg() -> Result<ProcLoadavg, AgentErrors> {
 #[cfg(test)]
 mod tests {
     use crate::proc_loadavg::parse_proc_loadavg;
+    use futures::executor::block_on;
 
     #[test]
     #[cfg(target_os = "linux")]
     fn it_works() {
-        let result = parse_proc_loadavg();
+        let result = block_on(parse_proc_loadavg());
         assert!(result.is_ok());
         let result = result.unwrap();
         assert!(result.load1 >= 0.0);

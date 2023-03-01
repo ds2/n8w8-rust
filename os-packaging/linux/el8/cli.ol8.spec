@@ -24,10 +24,8 @@ install -m 0755 -D %{tgt_src_dir}/%{rust_target_arch}/%{tgt_profile}/n8w8-http-c
 
 
 %files
-# %license %{orig_src_dir}/LICENSE
 %{_bindir}/n8w8-simple-val
 %{_bindir}/n8w8-http-check
-# %doc %{orig_src_dir}/agent/README.md
 
 
 

@@ -1,12 +1,13 @@
-// Nachtwacht - A set of servers and client tools to monitor servers and services
-// Copyright (C) 2022  Dirk Strauss
+// Copyright (C) 2023 Dirk Strauss
 //
-// This program is free software: you can redistribute it and/or modify
+// This file is part of Nachtwacht.
+//
+// Nachtwacht is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// This program is distributed in the hope that it will be useful,
+// Nachtwacht is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -14,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use base64::engine::general_purpose::STANDARD;
+use base64::Engine;
 use std::borrow::Borrow;
 use std::thread;
 use std::time::Duration;
@@ -21,7 +24,7 @@ use std::time::Duration;
 use chrono::Local;
 use reqwest::redirect::Policy;
 
-use nachtwacht_models::n8w8::AuthBasicCredentials;
+use nachtwacht_models::generated::n8w8::AuthBasicCredentials;
 use nachtwacht_models::{
     to_u32, BoxResult, HttpTestParams, HttpTestResponse, N8w8Test, N8w8TestResultValues,
     ParameterData, TEST_PARAM_NAME_BASICAUTHPW, TEST_PARAM_NAME_BASICAUTHUSERNAME,
@@ -222,7 +225,7 @@ pub fn test_url(
 
 fn to_base64(p0: &str, p1: &str) -> String {
     let token = format!("{}:{}", p0, p1);
-    base64::encode(token)
+    STANDARD.encode(token)
 }
 
 pub fn create_parameter_map_from_params(params: HttpTestParams) -> ParameterData {
