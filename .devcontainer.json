@@ -1,0 +1,24 @@
+{
+  "name": "OL8 Rust",
+  "image": "quay.io/ds2/enterpriselinux-rust:oraclelinux8",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "asciidoctor.asciidoctor-vscode",
+        "rust-lang.rust-analyzer",
+        "bungcip.better-toml",
+        "zxh404.vscode-proto3",
+        "foxundermoon.shell-format"
+      ]
+    }
+  },
+  "runArgs": [
+    "--userns=keep-id"
+  ],
+  "forwardPorts": [
+    3000
+  ],
+  "containerUser": "rusty",
+  "remoteUser": "rusty"
+}

@@ -1,3 +1,11 @@
+# v0.3.0
+
+* dummy CLI to check a kubernetes cluster
+
+# v0.2.0
+
+* add a prometheus endpoint so that prometheus can query the instance
+
 # v0.1.0
 
 * simple helloworld website

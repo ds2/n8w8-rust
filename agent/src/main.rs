@@ -1,12 +1,13 @@
-// Nachtwacht - A set of servers and client tools to monitor servers and services
-// Copyright (C) 2022  Dirk Strauss
+// Copyright (C) 2023 Dirk Strauss
 //
-// This program is free software: you can redistribute it and/or modify
+// This file is part of Nachtwacht.
+//
+// Nachtwacht is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// This program is distributed in the hope that it will be useful,
+// Nachtwacht is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -16,25 +17,18 @@
 
 use std::fs::File;
 use std::path::Path;
-use std::process::exit;
+use std::string::String;
 use std::{thread, time};
 
 use chrono::{DateTime, Utc};
-use clap::{Parser, ValueEnum};
+use clap::Parser;
 use daemonize::Daemonize;
+use futures::executor::block_on;
 use log::info;
-use std::string::String;
 use sysinfo::{DiskExt, System, SystemExt};
 
-use nachtwacht_models::n8w8::{AgentDiscData, AgentNodeData};
-
 use nachtwacht_core::proc_stat::parse_proc_stat;
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
-enum RunMode {
-    Agent,
-    OpenMetrics,
-}
+use nachtwacht_models::generated::n8w8::{AgentDiscData, AgentNodeData};
 
 /// Simple program to greet a person
 #[derive(Parser, Debug)]
@@ -58,23 +52,13 @@ struct Args {
     /// Refresh timeout for the agent query loop.
     #[arg(short, long, value_parser, default_value_t = 5000)]
     refresh: u64,
-    /// defines the run mode for this agent. By default, we run in zabbix mode which means
-    /// we only print out one value at the stdout.
-    /// The other mode is the agent mode where the agent runs continuously in the background
-    /// and sends the health data to a n8w8 endpoint.
-    #[arg(short, long, value_enum)]
-    mode: RunMode,
 }
 
-#[cfg(not(windows))]
+#[cfg(target_os = "linux")]
 fn main() {
     // Parse args first ;)
     let args = Args::parse();
 
-    if args.mode == RunMode::OpenMetrics {
-        //set up server
-        exit(0);
-    }
     let stdout = File::create(args.outfile.as_str()).unwrap();
     let stderr = File::create(args.errfile.as_str()).unwrap();
     let sleep_time = time::Duration::from_millis(args.refresh);
@@ -115,7 +99,8 @@ fn main() {
                     disk_vec.push(this_disk_data);
                 }
 
-                let cpu_proc_stats = parse_proc_stat().expect("Could not get /proc/stat details!");
+                let cpu_proc_stats =
+                    block_on(parse_proc_stat()).expect("Could not get /proc/stat details!");
                 info!("This machine has {} cores!", cpu_proc_stats.len());
                 let agent_node_data = AgentNodeData {
                     hostname: sys.host_name().unwrap(),

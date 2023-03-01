@@ -1,12 +1,13 @@
-// Nachtwacht - A set of servers and client tools to monitor servers and services
-// Copyright (C) 2022  Dirk Strauss
+// Copyright (C) 2023 Dirk Strauss
 //
-// This program is free software: you can redistribute it and/or modify
+// This file is part of Nachtwacht.
+//
+// Nachtwacht is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// This program is distributed in the hope that it will be useful,
+// Nachtwacht is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -33,8 +34,8 @@ pub enum ZabbixValue {
     MemFree,
 }
 
-pub fn get_zabbix_value(val: ZabbixValue) -> Result<String, AgentErrors> {
-    let loadavg = parse_proc_loadavg().expect("Error when getting the loadavg!");
+pub async fn get_zabbix_value(val: ZabbixValue) -> Result<String, AgentErrors> {
+    let loadavg = parse_proc_loadavg().await?;
     let mut zabbix_result_val: String = "".to_string();
     //request for zabbix mode
     match val {
@@ -48,20 +49,20 @@ pub fn get_zabbix_value(val: ZabbixValue) -> Result<String, AgentErrors> {
             zabbix_result_val = loadavg.load15.to_string();
         }
         ZabbixValue::IoWait => {
-            let proc_stats = parse_proc_stat().unwrap();
+            let proc_stats = parse_proc_stat().await?;
             if proc_stats.len() > 0 {
                 zabbix_result_val = proc_stats.first().unwrap().iowait.to_string();
             }
         }
         ZabbixValue::MemFreePercent => {
-            let mem_info =
-                parse_proc_mem_info().expect("Error when getting the proc/meminfo details!");
+            let mem_info = parse_proc_mem_info()
+                .await
+                .expect("Error when getting the proc/meminfo details!");
             let perc_val: f64 = 100.0 * mem_info.MemFree as f64 / mem_info.MemTotal as f64;
             zabbix_result_val = perc_val.to_string();
         }
         ZabbixValue::MemFree => {
-            let mem_info =
-                parse_proc_mem_info().expect("Error when getting the proc/meminfo details!");
+            let mem_info = parse_proc_mem_info().await?;
             zabbix_result_val = mem_info.MemFree.to_string();
         }
     }

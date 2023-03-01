@@ -1,0 +1,38 @@
+= GPG
+
+This section sets up GPG with you.
+
+== Set up GPG directory with your keys
+
+[,shell]
+----
+export SRC_DIR=$(pwd) # that usually is your workspace directory
+export GNUPGHOME=${SRC_DIR}/repository/gpg
+export GPG_TTY=$(tty)
+install -m 0700 -d $GNUPGHOME
+----
+
+== Create Key to sign everything
+
+[,shell]
+----
+gpg --no-default-keyring --full-generate-key
+# use RSA, 4096
+# use expiry: 2y
+# use name: Test Signing
+# use email: rpmsign@my.domain
+# use comment: just a test signer
+# use pw: whatever you like
+# NOTE THE FINGERPRINT ID AT THE END!!
+export FPR='MYFINGERPRINT'
+
+# restart gpg agent and let it know the terminal size
+gpgconf --kill gpg-agent
+
+# test signing
+echo "test" | gpg --clearsign
+----
+
+The last command should start the pinentry window and ask for the gpg key password. At the end, you should get a gpg signature.
+
+If you get an error message saying that the _Screen or window too small_ simply put the terminal in full window mode and restart gpg-agent.

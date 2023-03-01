@@ -1,0 +1,47 @@
+= Creating a repository for RHEL
+
+There is a script for that: _createLocalRepo.sh_
+
+include::gpg.adoc[leveloffset=1]
+
+To sign the rpms, run:
+
+[,shell]
+----
+echo "%_gpg_name $FPR" >$HOME/.rpmmacros
+echo "%_gpg_path $GNUPGHOME" >>$HOME/.rpmmacros
+
+rpmsign --addsign $SRC_DIR/repository/rpm/el/8/x86_64/*.rpm
+createrepo --update $SRC_DIR/repository/rpm/el/8/x86_64/
+gpg --armor --detach-sign --default-key $FPR $SRC_DIR/repository/rpm/el/8/x86_64/repodata/repomd.xml
+gpg --armor --export $FPR >$SRC_DIR/repository/rpm/gpg-repository-key.asc
+----
+
+== Install local repo
+
+Now we want to test this repo locally. First, we need the public key.
+
+[,shell]
+----
+# install the gpg key
+sudo rpm --import $SRC_DIR/repository/rpm/*.asc
+rpm -q gpg-pubkey
+
+# install the repository definition
+sudo cp $SRC_DIR/repository/rpm/ds2-rpm.repo /etc/yum.repos.d/ds2-local.repo
+# do not forget to edit this file according to your local system!!
+sudo vim /etc/yum.repos.d/ds2-local.repo
+
+# download repository metadata
+sudo dnf clean metadata
+sudo dnf update
+----
+
+Now you should see the packages:
+
+[,shell]
+----
+dnf search n8w8
+# the following command may ask for the gpg key if not already approved
+sudo dnf install n8w8-metrics-server
+----

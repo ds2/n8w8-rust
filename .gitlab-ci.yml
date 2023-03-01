@@ -1,5 +1,6 @@
 variables:
   RUST_BEFORESCRIPT: "apt-get update -yqq; apt-get install -yqq --no-install-recommends protobuf-compiler"
+  PACKAGECLOUD_REPOSITORY: "lexxy23/ds2-rpm"
 
 sast:
   stage: test
@@ -14,7 +15,7 @@ include:
       - '/templates/deploy-adoc.yaml'
       - '/templates/deploy-azure.yaml'
       - '/templates/check-license.yaml'
-      - 'templates/generate-sbom-cyclonedx.yaml'
+      - '/templates/generate-sbom-cyclonedx.yaml'
   - template: Security/SAST.gitlab-ci.yml
   - template: Security/Dependency-Scanning.gitlab-ci.yml
   - template: Security/Secret-Detection.gitlab-ci.yml
@@ -31,6 +32,15 @@ deploy-debug-rpm-azure:
     - if: $CI_COMMIT_BRANCH
   dependencies:
     - package-debug-rpm
+
+#deploy-debug-rpm-ol8-packagecloud:
+#  extends: .deploy-rpm-packagecloud
+#  dependencies:
+#    - package-debug-rpm
+#  rules:
+#    - if: $CI_COMMIT_BRANCH
+#  variables:
+#    PACKAGECLOUD_PUSHSTRING: "ol/8"
 
 deploy-release-rpm-azure:
   extends: .deploy-azure

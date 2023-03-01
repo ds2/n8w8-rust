@@ -1,5 +1,5 @@
 [workspace]
-members = ["models", "frontend", "cli", "orm", "checks", "executor", "agent", "core"]
+members = ["models", "frontend", "cli", "orm", "checks", "executor", "agent", "core", "openmetrics-server"]
 
 [profile.dev]
 opt-level = 0

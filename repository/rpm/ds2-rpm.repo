@@ -1,0 +1,7 @@
+[ds2]
+name=DS/2 RPM Repository RHEL $releasever - $basearch
+baseurl=file:///workspaces/nachtwacht-rust/repository/rpm/el/$releasever/$basearch/
+enabled=1
+gpgcheck=1
+protect=1
+gpgkey=file:///workspaces/nachtwacht-rust/repository/rpm/gpg-repository-key.asc

@@ -5,6 +5,7 @@ First, update your rust implementation via:
 [,shell]
 ----
 rustup self update # to update rustup itself
+rustup toolchain install stable-$CARGO_BUILD_TARGET
 rustup update stable
 ----
 
@@ -18,13 +19,6 @@ cargo clean
 cargo build --workspace --all-targets
 cargo test
 cargo fmt --all -- --check
-----
-
-To build the project via Dapper, you simply run:
-
-[,shell]
-----
-dapper
 ----
 
 == Build for different target architecture

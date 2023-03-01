@@ -381,6 +381,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "atty"
+version = "0.2.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d9b39be18770d11421cdb1b9947a45dd3f37e93092cbf377614828a319d5fee8"
+dependencies = [
+ "hermit-abi 0.1.19",
+ "libc",
+ "winapi",
+]
+
+[[package]]
 name = "autocfg"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -824,6 +835,19 @@ dependencies = [
 
 [[package]]
 name = "env_logger"
+version = "0.9.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a12e6657c4c97ebab115a42dcee77225f7f482cdd841cf7088c657a42e9e00e7"
+dependencies = [
+ "atty",
+ "humantime",
+ "log",
+ "regex",
+ "termcolor",
+]
+
+[[package]]
+name = "env_logger"
 version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "85cdab6a89accf66733ad5a1693a4dcced6aeff64602b634530dd73c1f3ee9f0"
@@ -867,7 +891,7 @@ name = "executor"
 version = "0.2.0"
 dependencies = [
  "clap",
- "env_logger",
+ "env_logger 0.10.0",
  "http_req",
  "log",
  "nachtwacht-checks",
@@ -1505,13 +1529,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "n8w8-openmetrics-server"
+version = "0.2.0"
+dependencies = [
+ "actix-web",
+ "async-stream",
+ "clap",
+ "env_logger 0.9.3",
+ "lazy_static",
+ "log",
+ "nachtwacht-core",
+ "opentelemetry_api",
+ "prometheus",
+ "prost",
+]
+
+[[package]]
 name = "n8w8d"
 version = "0.2.0"
 dependencies = [
  "chrono",
  "clap",
  "daemonize",
- "env_logger",
+ "env_logger 0.10.0",
+ "futures",
  "http_req",
  "log",
  "nachtwacht-core",
@@ -1538,7 +1579,8 @@ name = "nachtwacht-cli"
 version = "0.2.0"
 dependencies = [
  "clap",
- "env_logger",
+ "env_logger 0.10.0",
+ "futures",
  "http_req",
  "log",
  "nachtwacht-checks",
@@ -1551,7 +1593,8 @@ name = "nachtwacht-core"
 version = "0.2.0"
 dependencies = [
  "clap",
- "env_logger",
+ "env_logger 0.10.0",
+ "futures",
  "log",
  "nachtwacht-checks",
  "nachtwacht-models",
@@ -1567,17 +1610,17 @@ dependencies = [
  "actix-session",
  "actix-web",
  "async-stream",
- "env_logger",
+ "env_logger 0.10.0",
  "log",
  "prost",
- "protobuf",
+ "protobuf 3.2.0",
 ]
 
 [[package]]
 name = "nachtwacht-models"
 version = "0.2.0"
 dependencies = [
- "protobuf",
+ "protobuf 3.2.0",
  "protobuf-codegen",
  "protoc-bin-vendored",
 ]
@@ -1725,6 +1768,21 @@ dependencies = [
  "libc",
  "pkg-config",
  "vcpkg",
+]
+
+[[package]]
+name = "opentelemetry_api"
+version = "0.18.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c24f96e21e7acc813c7a8394ee94978929db2bcc46cf6b5014fc612bf7760c22"
+dependencies = [
+ "futures-channel",
+ "futures-util",
+ "indexmap",
+ "js-sys",
+ "once_cell",
+ "pin-project-lite",
+ "thiserror",
 ]
 
 [[package]]
@@ -1886,6 +1944,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "prometheus"
+version = "0.13.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "45c8babc29389186697fe5a2a4859d697825496b83db5d0b65271cdc0488e88c"
+dependencies = [
+ "cfg-if",
+ "fnv",
+ "lazy_static",
+ "memchr",
+ "parking_lot 0.12.1",
+ "protobuf 2.28.0",
+ "thiserror",
+]
+
+[[package]]
 name = "prost"
 version = "0.11.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1910,6 +1983,12 @@ dependencies = [
 
 [[package]]
 name = "protobuf"
+version = "2.28.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "106dd99e98437432fed6519dedecfade6a06a73bb7b2a1e019fdd2bee5778d94"
+
+[[package]]
+name = "protobuf"
 version = "3.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b55bad9126f378a853655831eb7363b7b01b81d19f8cb1218861086ca4a1a61e"
@@ -1927,7 +2006,7 @@ checksum = "0dd418ac3c91caa4032d37cb80ff0d44e2ebe637b2fb243b6234bf89cdac4901"
 dependencies = [
  "anyhow",
  "once_cell",
- "protobuf",
+ "protobuf 3.2.0",
  "protobuf-parse",
  "regex",
  "tempfile",
@@ -1943,7 +2022,7 @@ dependencies = [
  "anyhow",
  "indexmap",
  "log",
- "protobuf",
+ "protobuf 3.2.0",
  "protobuf-support",
  "tempfile",
  "thiserror",

@@ -1,12 +1,13 @@
-// Nachtwacht - A set of servers and client tools to monitor servers and services
-// Copyright (C) 2022  Dirk Strauss
+// Copyright (C) 2023 Dirk Strauss
 //
-// This program is free software: you can redistribute it and/or modify
+// This file is part of Nachtwacht.
+//
+// Nachtwacht is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// This program is distributed in the hope that it will be useful,
+// Nachtwacht is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -16,12 +17,13 @@
 
 use crate::errors::AgentErrors;
 use log::debug;
-use nachtwacht_models::n8w8::ProcMemInfo;
+use nachtwacht_models::generated::n8w8::ProcMemInfo;
 use std::fs::File;
 use std::io::{BufReader, Read};
 
+/// Parses /proc/meminfo and returns its values.
 #[cfg(target_os = "linux")]
-pub fn parse_proc_mem_info() -> Result<ProcMemInfo, AgentErrors> {
+pub async fn parse_proc_mem_info() -> Result<ProcMemInfo, AgentErrors> {
     debug!("Starting check for /proc/meminfo..");
     let mut str = String::new();
     let file = File::open("/proc/meminfo").expect("Error in reading /proc/meminfo");
@@ -83,11 +85,12 @@ pub fn parse_proc_mem_info() -> Result<ProcMemInfo, AgentErrors> {
 #[cfg(test)]
 mod tests {
     use crate::proc_meminfo::parse_proc_mem_info;
+    use futures::executor::block_on;
 
     #[test_log::test]
     #[cfg(target_os = "linux")]
     fn it_works() {
-        let result = parse_proc_mem_info();
+        let result = block_on(parse_proc_mem_info());
         assert!(result.is_ok());
         let result = result.unwrap();
         assert!(result.MemFree > 0);

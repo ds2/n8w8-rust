@@ -1,12 +1,13 @@
-// Nachtwacht - A set of servers and client tools to monitor servers and services
-// Copyright (C) 2022  Dirk Strauss
+// Copyright (C) 2023 Dirk Strauss
 //
-// This program is free software: you can redistribute it and/or modify
+// This file is part of Nachtwacht.
+//
+// Nachtwacht is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// This program is distributed in the hope that it will be useful,
+// Nachtwacht is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -16,11 +17,14 @@
 
 extern crate protobuf_codegen;
 
-fn main() {
+use std::error::Error;
+
+fn main() -> Result<(), Box<dyn Error>> {
     protobuf_codegen::Codegen::new()
         .protoc_path(&protoc_bin_vendored::protoc_bin_path().unwrap())
-        .out_dir("src")
+        .out_dir("src/generated")
         .includes(&["."])
         .inputs(&["n8w8.proto"])
         .run_from_script();
+    Ok(())
 }

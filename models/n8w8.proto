@@ -93,3 +93,20 @@ message ProcMemInfo {
   uint64 SwapTotal = 9;
   uint64 SwapFree = 10;
 }
+
+enum SeverityLevel {
+  // not set
+  NONE=0;
+  // ok
+  INFO=1;
+  // almost ok
+  WARN=2;
+  // better look for it
+  AVG=3;
+  // look for it
+  HIGH=4;
+  // Damages occur
+  CRITICAL=5;
+  //Desaster
+  DISASTER=6;
+}
