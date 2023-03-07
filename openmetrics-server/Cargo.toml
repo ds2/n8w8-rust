@@ -15,7 +15,7 @@ log = "0.4.17"
 env_logger = "0.10.0"
 async-stream = "0.3.3"
 clap = { version = "4.0.15", features = ["derive"] }
-prometheus = "0.13.2"
+prometheus = "0.13.3"
 lazy_static = "1.4.0"
 opentelemetry_api = "0.18.0"
 #opentelemetry-otlp = { version = "0.11.0", features = ["default"] }
