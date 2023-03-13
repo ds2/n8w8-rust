@@ -15,7 +15,7 @@ log = "0.4.17"
 clap = { version = "4.1.8", features = ["derive"] }
 http_req = "0.9.0"
 env_logger = "0.10.0"
-futures = "0.3.24"
+futures = "0.3.27"
 
 [[bin]]
 name="n8w8-http-check"
