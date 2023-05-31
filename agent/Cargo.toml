@@ -15,7 +15,7 @@ clap = { version = "4.1.11", features = ["derive"] }
 http_req = "0.9.1"
 env_logger = "0.10.0"
 daemonize = "0.5.0"
-chrono = "0.4.25"
+chrono = "0.4.26"
 sysinfo = "0.29.0"
 thiserror = "1.0.40"
 futures = "0.3.27"
