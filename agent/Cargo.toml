@@ -22,7 +22,7 @@ futures = "0.3.27"
 
 [dev-dependencies]
 env_logger = "0.10.0"
-test-log = "0.2.11"
+test-log = "0.2.12"
 
 [package.metadata.generate-rpm]
 assets = [
