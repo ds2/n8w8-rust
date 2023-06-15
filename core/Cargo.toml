@@ -17,4 +17,4 @@ clap={version="4.1.11", features=["derive"]}
 futures = "0.3.27"
 
 [dev-dependencies]
-test-log = "0.2.11"
+test-log = "0.2.12"
