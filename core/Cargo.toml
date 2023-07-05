@@ -14,7 +14,7 @@ log = "0.4.19"
 env_logger = "0.10.0"
 thiserror = "1.0.41"
 clap={version="4.1.11", features=["derive"]}
-futures = "0.3.27"
+futures = "0.3.28"
 
 [dev-dependencies]
 test-log = "0.2.12"
