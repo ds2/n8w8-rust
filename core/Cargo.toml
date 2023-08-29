@@ -13,7 +13,7 @@ nachtwacht-models = { path = "../models" }
 log = "0.4.20"
 env_logger = "0.10.0"
 thiserror = "1.0.47"
-clap={version="4.1.14", features=["derive"]}
+clap={version="4.4.1", features=["derive"]}
 futures = "0.3.28"
 
 [dev-dependencies]
