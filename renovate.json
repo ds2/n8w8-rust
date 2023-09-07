@@ -1,6 +1,19 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "timezone": "Europe/Berlin",
+  "schedule": "before 5am every weekday",
   "extends": [
     "config:base"
-  ]
+  ],
+  "commitMessagePrefix": "⬆️",
+    "labels": [
+        "dependencies"
+    ],
+    "reviewersFromCodeOwners": true,
+    "additionalReviewers": [
+		"lexxy23",
+		"rusty232"
+	],
+	"branchConcurrentLimit": 5,
+	"prConcurrentLimit": 9
 }
