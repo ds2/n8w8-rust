@@ -12,7 +12,7 @@ nachtwacht-checks = { path = "../checks" }
 nachtwacht-models = { path = "../models" }
 log = "0.4.20"
 clap = { version = "4.4.4", features = ["derive"] }
-http_req = "0.9.2"
+http_req = "0.9.3"
 env_logger = "0.10.0"
 
 [[bin]]
