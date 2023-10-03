@@ -13,7 +13,7 @@ nachtwacht-models = { path = "../models" }
 nachtwacht-core = { path = "../core" }
 log = "0.4.20"
 clap = { version = "4.4.6", features = ["derive"] }
-http_req = "0.9.3"
+http_req = "0.10.0"
 env_logger = "0.10.0"
 futures = "0.3.28"
 
