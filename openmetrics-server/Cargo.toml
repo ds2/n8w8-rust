@@ -12,7 +12,7 @@ nachtwacht-core = { path = "../core" }
 actix-web = "4.4.0"
 #actix-files = "0.6.2"
 log = "0.4.20"
-env_logger = "0.10.0"
+env_logger = "0.10.1"
 async-stream = "0.3.5"
 clap = { version = "4.4.8", features = ["derive"] }
 prometheus = "0.13.3"
