@@ -37,7 +37,7 @@ deploy-debug-rpm-azure:
     - package-debug-rpm
 
 deploy-debug-rpm-ol8-packagecloud:
-  extends: .deploy-rpm-packagecloud
+  extends: .deploy-packagecloud
   dependencies:
     - package-debug-rpm
   rules:
@@ -46,7 +46,9 @@ deploy-debug-rpm-ol8-packagecloud:
       when: never
     - if: $CI_COMMIT_BRANCH
   variables:
-    PACKAGECLOUD_PUSHSTRING: "ol/8"
+    PACKAGECLOUD_PUSHSTRING: "ol/8 el/8"
+    ARTIFACTS_PATTERN: "*.el8.x86_64.rpm"
+    IS_MASKED_BASE64: 1
 
 deploy-release-rpm-azure:
   extends: .deploy-azure
