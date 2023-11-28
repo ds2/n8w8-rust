@@ -7,7 +7,7 @@ sast:
 
 include:
   - project: 'ds_2/ci-templates'
-    ref: develop
+    ref: v0.1.19-alpha.1
     file:
       - '/templates/stages.yaml'
       - '/templates/global-vars.yaml'
@@ -21,26 +21,32 @@ include:
   - template: Security/Secret-Detection.gitlab-ci.yml
 
 package-debug-rpm:
-  extends: .package-debug-rpm-ol8
+  extends: .package-debug-rpm-el8
 
 package-release-rpm:
-  extends: .package-release-rpm-ol8
+  extends: .package-release-rpm-el8
 
 deploy-debug-rpm-azure:
   extends: .deploy-azure
   rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
     - if: $CI_COMMIT_BRANCH
   dependencies:
     - package-debug-rpm
 
-#deploy-debug-rpm-ol8-packagecloud:
-#  extends: .deploy-rpm-packagecloud
-#  dependencies:
-#    - package-debug-rpm
-#  rules:
-#    - if: $CI_COMMIT_BRANCH
-#  variables:
-#    PACKAGECLOUD_PUSHSTRING: "ol/8"
+deploy-debug-rpm-ol8-packagecloud:
+  extends: .deploy-rpm-packagecloud
+  dependencies:
+    - package-debug-rpm
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
+  variables:
+    PACKAGECLOUD_PUSHSTRING: "ol/8"
 
 deploy-release-rpm-azure:
   extends: .deploy-azure
