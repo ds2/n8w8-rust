@@ -14,11 +14,11 @@ actix-web = "4.4.0"
 log = "0.4.20"
 env_logger = "0.10.1"
 async-stream = "0.3.5"
-clap = { version = "4.4.8", features = ["derive"] }
+clap = { version = "4.4.10", features = ["derive"] }
 prometheus = "0.13.3"
 lazy_static = "1.4.0"
 opentelemetry_api = "0.20.0"
 #opentelemetry-otlp = { version = "0.11.0", features = ["default"] }
 #opentelemetry = { version = "0.18.0", features = ["rt-async-std"] }
-prost = "0.12.2"
+prost = "0.12.3"
 #protobuf = "3.2.0"
