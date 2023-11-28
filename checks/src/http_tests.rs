@@ -22,6 +22,7 @@ mod tests {
     use pretty_assertions::assert_eq;
 
     #[test]
+    #[ignore]
     fn test_url_exists() {
         let url = url::Url::parse("https://www.google.com/").unwrap();
         assert_eq!(
