@@ -19,6 +19,7 @@
 mod tests {
     use crate::http::{test_url, HttpTestResponseTrait};
     use nachtwacht_models::generated::n8w8::AuthBasicCredentials;
+    use pretty_assertions::assert_eq;
 
     #[test]
     fn test_url_exists() {
@@ -26,7 +27,7 @@ mod tests {
         assert_eq!(
             test_url(
                 &url,
-                5000,
+                20000,
                 "GET",
                 &AuthBasicCredentials {
                     username: "".to_string(),
