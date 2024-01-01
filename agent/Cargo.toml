@@ -17,7 +17,7 @@ env_logger = "0.10.1"
 daemonize = "0.5.0"
 chrono = "0.4.31"
 sysinfo = "0.30.3"
-thiserror = "1.0.51"
+thiserror = "1.0.53"
 futures = "0.3.30"
 
 [dev-dependencies]
