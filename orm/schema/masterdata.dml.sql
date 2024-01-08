@@ -1,4 +1,4 @@
--- Copyright (C) 2023 Dirk Strauss
+-- Copyright (C) 2024 Dirk Strauss
 --
 -- This file is part of Nachtwacht.
 --
