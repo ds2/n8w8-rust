@@ -25,7 +25,7 @@ use clap::Parser;
 use daemonize::Daemonize;
 use futures::executor::block_on;
 use log::info;
-use sysinfo::{DiskExt, System, SystemExt};
+use sysinfo::{Disks, System};
 
 use nachtwacht_core::proc_stat::parse_proc_stat;
 use nachtwacht_models::generated::n8w8::{AgentDiscData, AgentNodeData};
@@ -88,7 +88,9 @@ fn main() {
                 let date = format!("UTC now is: {}", now);
                 println!("Date is now {}", date);
                 let mut disk_vec: Vec<AgentDiscData> = Vec::new();
-                for disk in sys.disks() {
+                let mut disks = sysinfo::Disks::new();
+                disks.refresh();
+                for disk in &disks {
                     let this_disk_data = AgentDiscData {
                         device: disk.name().to_str().unwrap().to_string(),
                         mountpoint: disk.mount_point().to_str().unwrap().to_string(),
@@ -103,21 +105,21 @@ fn main() {
                     block_on(parse_proc_stat()).expect("Could not get /proc/stat details!");
                 info!("This machine has {} cores!", cpu_proc_stats.len());
                 let agent_node_data = AgentNodeData {
-                    hostname: sys.host_name().unwrap(),
-                    load1: sys.load_average().one,
-                    load5: sys.load_average().five,
-                    load15: sys.load_average().fifteen,
+                    hostname: System::host_name().unwrap(),
+                    load1: System::load_average().one,
+                    load5: System::load_average().five,
+                    load15: System::load_average().fifteen,
                     totalMemory: sys.total_memory(),
                     usedMemory: sys.used_memory(),
                     freeMemory: sys.free_memory(),
                     totalSwap: sys.total_swap(),
                     usedSwap: sys.used_swap(),
                     freeSwap: sys.free_swap(),
-                    kernelversion: sys.kernel_version().unwrap(),
+                    kernelversion: System::kernel_version().unwrap(),
                     cpudata: cpu_proc_stats,
                     disks: disk_vec,
-                    os_name: sys.name().unwrap(),
-                    os_version: sys.os_version().unwrap(),
+                    os_name: System::name().unwrap(),
+                    os_version: System::os_version().unwrap(),
                     special_fields: Default::default(),
                 };
                 println!("Node data is {}", agent_node_data);
