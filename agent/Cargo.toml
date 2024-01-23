@@ -11,9 +11,9 @@ description = "A host service to retrieve local health data and send it to N8w8"
 nachtwacht-models = { path = "../models" }
 nachtwacht-core = { path = "../core" }
 log = "0.4.20"
-clap = { version = "4.4.16", features = ["derive"] }
+clap = { version = "4.4.18", features = ["derive"] }
 http_req = "0.10.2"
-env_logger = "0.10.1"
+env_logger = "0.11.0"
 daemonize = "0.5.0"
 chrono = "0.4.31"
 sysinfo = "0.30.5"
@@ -21,7 +21,7 @@ thiserror = "1.0.51"
 futures = "0.3.30"
 
 [dev-dependencies]
-env_logger = "0.10.1"
+env_logger = "0.11.0"
 test-log = "0.2.14"
 
 [package.metadata.generate-rpm]
