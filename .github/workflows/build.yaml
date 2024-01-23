@@ -78,7 +78,7 @@ jobs:
       - name: generate rpm
         run: cargo generate-rpm -p agent
       - name: publish rpm package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: n8w8-agent-rpm
           path: |
@@ -113,7 +113,7 @@ jobs:
       - name: generate deb package
         run: cargo deb -p n8w8d
       - name: publish deb package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: n8w8-agent-deb
           path: |
