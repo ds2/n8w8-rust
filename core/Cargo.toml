@@ -11,9 +11,9 @@ description = "This package contains the core methods. Kind of Business logics."
 nachtwacht-checks = { path = "../checks" }
 nachtwacht-models = { path = "../models" }
 log = "0.4.20"
-env_logger = "0.10.1"
+env_logger = "0.11.0"
 thiserror = "1.0.51"
-clap={version="4.4.14", features=["derive"]}
+clap={version="4.4.18", features=["derive"]}
 futures = "0.3.30"
 
 [dev-dependencies]
