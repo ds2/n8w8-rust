@@ -15,22 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::io;
-use std::path::Path;
-
-use thiserror::Error;
-
-/// This enum contains all known errors so far.
-#[derive(Error, Debug)]
-pub enum AgentErrors {
-    /// Error to indicate a read error for the given file.
-    #[error("Could not access local file data from {0}")]
-    FailedToGetLocalInfo(String),
-    #[error("A required kube config at {0} was not found! Perhaps you need to configure this?")]
-    KubeConfigNotFound(Box<Path>),
-    #[error("data store disconnected")]
-    Disconnect(#[from] io::Error),
-    /// Error if something is not yet implemented.
-    #[error("This flow is not (yet) implemented!")]
-    NotImplemented(),
-}
+pub const DESKTOP_EMOJI: char = '\u{1F5A5}';
+pub const COMPUTERS_EMOJI: char = '\u{1F5A7}';
+pub const LAPTOP_EMOJI: char = '\u{1F4BB}';

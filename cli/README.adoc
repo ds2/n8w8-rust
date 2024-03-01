@@ -2,3 +2,18 @@
 
 This project contains some binaries that you can use to perform tests with a single binary. For each test,
 there may be a binary.
+
+=== Kubernetes Test Client
+
+There is a binary that can be used to inspect a running kubernetes cluster. To test it, run:
+
+[,shell]
+----
+export KUBECONFIG=$HOME/.kube/config
+cargo run -p nachtwacht-cli --bin n8w8-k8s-check -- --info cluster-info
+cargo run -p nachtwacht-cli --bin n8w8-k8s-check -- --info node-count
+cargo run -p nachtwacht-cli --bin n8w8-k8s-check -- --info node-info
+cargo run -p nachtwacht-cli --bin n8w8-k8s-check -- --info namespaces
+----
+
+There is a `--help` option as well.
