@@ -3,7 +3,7 @@
 %global tgt_src_dir %{getenv:CARGO_TARGET_DIR}
 %global tgt_profile %{getenv:RUST_PROFILE}
 
-Name:           n8w8-clis
+Name:           nachtwacht-clis
 Version:        %{getenv:RPM_VERSION}
 Release:        %{?getenv:RPM_RELEASE}%{?dist}
 Summary:        A set of command line interfaces for dealing with local health data.

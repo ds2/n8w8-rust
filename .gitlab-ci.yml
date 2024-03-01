@@ -1,6 +1,6 @@
 variables:
   RUST_BEFORESCRIPT: "apt-get update -yqq; apt-get install -yqq --no-install-recommends protobuf-compiler"
-  PACKAGECLOUD_REPOSITORY: "lexxy23/ds2-rpm"
+  RUST_EL8_IMAGE_TAG: "ol8-v0.1.0"
 
 sast:
   stage: test
@@ -34,6 +34,10 @@ deploy-debug-rpm-azure:
     - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
       when: never
     - if: $CI_COMMIT_BRANCH
+  variables:
+    ARTIFACTS_PATTERN: "*.el8.x86_64.rpm"
+    IS_MASKED_BASE64: 1
+    AZ_UPLOAD_URL: "https://ds2linuxrepo.blob.core.windows.net/el8"
   dependencies:
     - package-debug-rpm
 
@@ -49,11 +53,28 @@ deploy-debug-rpm-ol8-packagecloud:
   variables:
     PACKAGECLOUD_PUSHSTRING: "ol/8 el/8"
     ARTIFACTS_PATTERN: "*.el8.x86_64.rpm"
+    PACKAGECLOUD_REPOSITORY: "lexxy23/snapshots"
+    IS_MASKED_BASE64: 1
+
+deploy-release-rpm-ol8-packagecloud:
+  extends: .deploy-packagecloud
+  dependencies:
+    - package-release-rpm
+  rules:
+    - if: $CI_COMMIT_TAG
+  variables:
+    PACKAGECLOUD_PUSHSTRING: "ol/8 el/8"
+    ARTIFACTS_PATTERN: "*.el8.x86_64.rpm"
+    PACKAGECLOUD_REPOSITORY: "lexxy23/releases"
     IS_MASKED_BASE64: 1
 
 deploy-release-rpm-azure:
   extends: .deploy-azure
   rules:
     - if: $CI_COMMIT_TAG
+  variables:
+    ARTIFACTS_PATTERN: "*.el8.x86_64.rpm"
+    IS_MASKED_BASE64: 1
+    AZ_UPLOAD_URL: "https://ds2linuxrepo.blob.core.windows.net/el8"
   dependencies:
     - package-release-rpm
