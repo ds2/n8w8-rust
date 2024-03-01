@@ -20,6 +20,8 @@ use nachtwacht_checks::http::HttpCheckImpl;
 use nachtwacht_models::generated::n8w8::AuthBasicCredentials;
 use nachtwacht_models::{HttpTestParams, HttpTestResponse, N8w8Test};
 use std::process::exit;
+use tracing::level_filters::LevelFilter;
+use tracing::{debug, error, info};
 
 pub mod zabbix_mode;
 
@@ -47,8 +49,18 @@ struct Cli {
 }
 
 fn main() {
-    env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
-    log::debug!("Testing HTTP availability");
+    use tracing_subscriber::prelude::*;
+    tracing_subscriber::registry()
+        .with(tracing_subscriber::fmt::layer())
+        // Use RUST_LOG environment variable to set the tracing level
+        .with(
+            tracing_subscriber::EnvFilter::builder()
+                .with_default_directive(LevelFilter::INFO.into())
+                .from_env_lossy(),
+        )
+        // Sets this to be the default, global collector for this application.
+        .init();
+    debug!("Testing HTTP availability");
     let args = Cli::parse();
 
     let mut http_test = HttpCheckImpl {
@@ -65,7 +77,7 @@ fn main() {
     };
     let mut basic_auth = Default::default();
     if args.username.len() > 0 {
-        log::debug!(
+        debug!(
             "Found username {}, will setup credential object..",
             args.username
         );
@@ -86,17 +98,17 @@ fn main() {
     let http_result = http_test.run_test(2);
     if http_result.is_err() {
         let http_error = http_result.err().unwrap();
-        log::error!("A technical error occurred: {}", http_error);
+        error!("A technical error occurred: {}", http_error);
         exit(1);
     }
     let test_result = http_test.get_result();
     if test_result.successful {
-        log::info!(
+        info!(
             "test was successful, request took {}ms",
             test_result.results.duration
         )
     } else {
-        log::error!("test was not successful! {}", test_result.error_message);
+        error!("test was not successful! {}", test_result.error_message);
         exit(1);
     }
 }

@@ -15,15 +15,26 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use log::{info, warn};
 use nachtwacht_checks::http::HttpCheckImpl;
 use nachtwacht_models::{HttpTestParams, N8w8Test};
+use tracing::level_filters::LevelFilter;
+use tracing::{debug, info, warn};
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 fn main() {
-    env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
-    log::debug!("Nachtwacht Executor v{}", VERSION);
+    use tracing_subscriber::prelude::*;
+    tracing_subscriber::registry()
+        .with(tracing_subscriber::fmt::layer())
+        // Use RUST_LOG environment variable to set the tracing level
+        .with(
+            tracing_subscriber::EnvFilter::builder()
+                .with_default_directive(LevelFilter::INFO.into())
+                .from_env_lossy(),
+        )
+        // Sets this to be the default, global collector for this application.
+        .init();
+    debug!("Nachtwacht Executor v{}", VERSION);
     let http_test_params = HttpTestParams {
         url: "https://pcwelt.de/".to_string(),
         basic_auth: Default::default(),

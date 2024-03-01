@@ -16,10 +16,10 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use crate::errors::AgentErrors;
-use log::debug;
 use nachtwacht_models::generated::n8w8::ProcStatCpu;
 use std::fs::File;
 use std::io::{BufReader, Read};
+use tracing::debug;
 
 /// Returns the cpu entries from /proc/stat.
 #[cfg(target_os = "linux")]

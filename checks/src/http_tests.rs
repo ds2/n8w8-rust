@@ -21,9 +21,35 @@ mod tests {
     use nachtwacht_models::generated::n8w8::AuthBasicCredentials;
     use pretty_assertions::assert_eq;
 
+    use std::sync::Once;
+    use tracing::info;
+    use tracing::metadata::LevelFilter;
+
+    static INIT: Once = Once::new();
+    pub(crate) fn setup() {
+        // some setup code, like creating required files/directories, starting
+        // servers, etc.
+        println!("Would setup servers here..");
+        INIT.call_once(|| {
+            use tracing_subscriber::prelude::*;
+            tracing_subscriber::registry()
+                .with(tracing_subscriber::fmt::layer())
+                // Use RUST_LOG environment variable to set the tracing level
+                .with(
+                    tracing_subscriber::EnvFilter::builder()
+                        .with_default_directive(LevelFilter::INFO.into())
+                        .from_env_lossy(),
+                )
+                // Sets this to be the default, global collector for this application.
+                .init();
+            info!("Logger should be enabled now!");
+        });
+    }
+
     #[test]
     #[ignore]
     fn test_url_exists() {
+        setup();
         let url = url::Url::parse("https://www.google.com/").unwrap();
         assert_eq!(
             test_url(

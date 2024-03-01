@@ -25,6 +25,8 @@ use actix_web::{
     http::{header::ContentType, Method, StatusCode},
     middleware, web, App, Either, HttpRequest, HttpResponse, HttpServer, Responder, Result,
 };
+use tracing::info;
+use tracing::level_filters::LevelFilter;
 //use async_stream::stream;
 
 /// simple index handler
@@ -78,9 +80,19 @@ fn get_secret_key() -> Key {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    use tracing_subscriber::prelude::*;
+    tracing_subscriber::registry()
+        .with(tracing_subscriber::fmt::layer())
+        // Use RUST_LOG environment variable to set the tracing level
+        .with(
+            tracing_subscriber::EnvFilter::builder()
+                .with_default_directive(LevelFilter::INFO.into())
+                .from_env_lossy(),
+        )
+        // Sets this to be the default, global collector for this application.
+        .init();
     println!("Init..");
-    env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
-    log::info!("starting HTTP server at http://localhost:8080");
+    info!("starting HTTP server at http://localhost:8080");
     println!("Server should start soon");
     let secret_key = get_secret_key();
     HttpServer::new(move || {

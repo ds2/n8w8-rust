@@ -23,6 +23,7 @@ use std::time::Duration;
 
 use chrono::Local;
 use reqwest::redirect::Policy;
+use tracing::{debug, info, warn};
 
 use nachtwacht_models::generated::n8w8::AuthBasicCredentials;
 use nachtwacht_models::{
@@ -77,32 +78,31 @@ impl N8w8Test<HttpTestParams, HttpTestResponse> for HttpCheckImpl {
             let this_url = url.unwrap();
             let http_method = "GET";
             let max_timeout_value = self.local_params.connect_timeout;
-            log::info!(
+            info!(
                 "Checking url {} with connect timeout={:?}ms",
-                this_url,
-                max_timeout_value
+                this_url, max_timeout_value
             );
             let mut test_result = test_url(
                 &this_url,
                 max_timeout_value as u64,
-                http_method.borrow(),
+                http_method,
                 &self.local_params.basic_auth,
             );
             for _ in 1..probe_count {
                 if test_result.not_successful() {
-                    log::debug!("test before was unsuccessful, try retest..");
+                    debug!("test before was unsuccessful, try retest..");
                     thread::sleep(Duration::from_secs(5));
                     test_result = test_url(
                         &this_url,
                         max_timeout_value as u64,
-                        http_method.borrow(),
+                        http_method,
                         self.local_params.basic_auth.borrow(),
                     );
                 } else {
                     break;
                 }
             }
-            log::debug!("done with check thread");
+            debug!("done with check thread");
             if test_result.not_successful() {
                 self.error_msg = format!(
                     "Error http={} for {}",
@@ -117,7 +117,7 @@ impl N8w8Test<HttpTestParams, HttpTestResponse> for HttpCheckImpl {
                 self.local_params.url,
                 url_error.to_string()
             );
-            log::warn!("{}", self.error_msg);
+            warn!("{}", self.error_msg);
         }
         self.end_time = Local::now().timestamp_millis() as u64;
         Ok(())
@@ -156,11 +156,11 @@ pub fn test_url(
     http_method: &str,
     basic_auth: &AuthBasicCredentials,
 ) -> HttpTestResponse {
-    log::debug!("creating client with url={}, t0={}..", url, t0);
+    debug!("creating client with url={}, t0={}..", url, t0);
 
     let mut client_builder = reqwest::blocking::Client::builder().redirect(Policy::limited(20));
     if t0 > 0 {
-        log::debug!("Setting timeout to {}", t0);
+        debug!("Setting timeout to {}", t0);
         //this is all: read, connect etc.
         client_builder = client_builder.timeout(Some(Duration::from_secs(t0)));
         //this here is just connect
@@ -169,7 +169,7 @@ pub fn test_url(
     let client = client_builder.build().unwrap();
     let mut auth_string: String = "".to_string();
     if basic_auth.username.len() > 0 {
-        log::debug!(
+        debug!(
             "Username found, will convert to base64 the user {}",
             basic_auth.username
         );
@@ -178,15 +178,15 @@ pub fn test_url(
         let fmt1 = format!("Basic {}", basic_auth_value);
         auth_string = fmt1;
     }
-    log::debug!("note start time ..");
+    debug!("note start time ..");
     let start_time = Local::now();
-    log::debug!("Performing GET request with client..");
+    debug!("Performing GET request with client..");
     let res;
     match http_method {
         "GET" => {
             let mut req_b = client.get(url.to_string());
             if auth_string.len() > 0 {
-                log::debug!("Setting auth header {}", auth_string);
+                debug!("Setting auth header {}", auth_string);
                 req_b = req_b.header("Authorization", auth_string);
             }
             res = req_b.send();
@@ -195,10 +195,10 @@ pub fn test_url(
             todo!("This HTTP method is not yet supported!")
         }
     }
-    log::debug!("OK, having a result, parsing it..");
+    debug!("OK, having a result, parsing it..");
     let end_time = Local::now();
     let duration = end_time.signed_duration_since(start_time).to_std().unwrap();
-    log::debug!("Duration was {}", duration.as_millis());
+    debug!("Duration was {}", duration.as_millis());
     let mut response_object = HttpTestResponse {
         url: url.to_string(),
         duration: duration.as_millis() as u64,
@@ -207,16 +207,16 @@ pub fn test_url(
     };
     if res.is_ok() {
         let http_status_code = res.unwrap().status();
-        log::debug!("Status for {}: {}", url, http_status_code);
+        debug!("Status for {}: {}", url, http_status_code);
         response_object.response_code = to_u32(http_status_code.as_u16());
     } else {
-        log::warn!(
+        warn!(
             "- technical error when connecting to url: {:?}",
             res.err().unwrap()
         );
         response_object.connection_error = true
     }
-    log::debug!(
+    debug!(
         "Sending back response object: {}",
         response_object.to_string()
     );

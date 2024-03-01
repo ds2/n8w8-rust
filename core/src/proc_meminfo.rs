@@ -16,10 +16,10 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use crate::errors::AgentErrors;
-use log::debug;
 use nachtwacht_models::generated::n8w8::ProcMemInfo;
 use std::fs::File;
 use std::io::{BufReader, Read};
+use tracing::debug;
 
 /// Parses /proc/meminfo and returns its values.
 #[cfg(target_os = "linux")]
@@ -86,10 +86,34 @@ pub fn parse_proc_mem_info() -> Result<ProcMemInfo, AgentErrors> {
 mod tests {
     use crate::proc_meminfo::parse_proc_mem_info;
     use futures::executor::block_on;
+    use std::sync::Once;
+    use tracing::info;
+    use tracing::level_filters::LevelFilter;
 
-    #[test_log::test]
+    static INIT: Once = Once::new();
+    pub(crate) fn setup() {
+        // some setup code, like creating required files/directories, starting
+        // servers, etc.
+        println!("Would setup servers here..");
+        INIT.call_once(|| {
+            use tracing_subscriber::prelude::*;
+            tracing_subscriber::registry()
+                .with(tracing_subscriber::fmt::layer())
+                // Use RUST_LOG environment variable to set the tracing level
+                .with(
+                    tracing_subscriber::EnvFilter::builder()
+                        .with_default_directive(LevelFilter::INFO.into())
+                        .from_env_lossy(),
+                )
+                // Sets this to be the default, global collector for this application.
+                .init();
+            info!("Logger should be enabled now!");
+        });
+    }
+
     #[cfg(target_os = "linux")]
     fn it_works() {
+        setup();
         let result = block_on(parse_proc_mem_info());
         assert!(result.is_ok());
         let result = result.unwrap();

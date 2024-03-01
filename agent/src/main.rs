@@ -24,8 +24,9 @@ use chrono::{DateTime, Utc};
 use clap::Parser;
 use daemonize::Daemonize;
 use futures::executor::block_on;
-use log::info;
 use sysinfo::{Disks, System};
+use tracing::info;
+use tracing::level_filters::LevelFilter;
 
 use nachtwacht_core::proc_stat::parse_proc_stat;
 use nachtwacht_models::generated::n8w8::{AgentDiscData, AgentNodeData};
@@ -56,6 +57,17 @@ struct Args {
 
 #[cfg(target_os = "linux")]
 fn main() {
+    use tracing_subscriber::prelude::*;
+    tracing_subscriber::registry()
+        .with(tracing_subscriber::fmt::layer())
+        // Use RUST_LOG environment variable to set the tracing level
+        .with(
+            tracing_subscriber::EnvFilter::builder()
+                .with_default_directive(LevelFilter::INFO.into())
+                .from_env_lossy(),
+        )
+        // Sets this to be the default, global collector for this application.
+        .init();
     // Parse args first ;)
     let args = Args::parse();
 

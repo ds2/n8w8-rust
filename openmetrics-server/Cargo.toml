@@ -11,8 +11,6 @@ description = "The metrics-server is only to provide some health data metrics to
 nachtwacht-core = { path = "../core" }
 actix-web = "4.5.1"
 #actix-files = "0.6.2"
-log = "0.4.21"
-env_logger = "0.11.2"
 async-stream = "0.3.5"
 clap = { version = "4.5.1", features = ["derive"] }
 prometheus = "0.13.3"
@@ -21,4 +19,8 @@ opentelemetry_api = "0.20.0"
 #opentelemetry-otlp = { version = "0.11.0", features = ["default"] }
 #opentelemetry = { version = "0.18.0", features = ["rt-async-std"] }
 prost = "0.12.3"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
+tracing = "0.1.40"
+
+[dev-dependencies]
 #protobuf = "3.2.0"

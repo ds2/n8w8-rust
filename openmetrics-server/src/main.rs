@@ -21,8 +21,9 @@ use actix_web::http::StatusCode;
 use actix_web::{error, get, middleware, web, App, HttpServer, Responder};
 use clap::Parser;
 use lazy_static::lazy_static;
-use log::{error, info};
 use prometheus::{Gauge, HistogramOpts, HistogramVec, IntCounter, IntGauge, Registry};
+use tracing::level_filters::LevelFilter;
+use tracing::{error, info};
 
 use nachtwacht_core::proc_loadavg::parse_proc_loadavg;
 use nachtwacht_core::proc_meminfo::parse_proc_mem_info;
@@ -115,7 +116,17 @@ fn register_custom_metrics() {
 
 #[actix_web::main]
 async fn main() -> io::Result<()> {
-    env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
+    use tracing_subscriber::prelude::*;
+    tracing_subscriber::registry()
+        .with(tracing_subscriber::fmt::layer())
+        // Use RUST_LOG environment variable to set the tracing level
+        .with(
+            tracing_subscriber::EnvFilter::builder()
+                .with_default_directive(LevelFilter::INFO.into())
+                .from_env_lossy(),
+        )
+        // Sets this to be the default, global collector for this application.
+        .init();
     let cli_args = CliArgs::parse();
     info!("Init..");
     register_custom_metrics();

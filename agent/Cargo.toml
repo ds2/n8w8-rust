@@ -10,19 +10,15 @@ description = "A host service to retrieve local health data and send it to N8w8"
 [dependencies]
 nachtwacht-models = { path = "../models" }
 nachtwacht-core = { path = "../core" }
-log = "0.4.21"
 clap = { version = "4.5.1", features = ["derive"] }
 http_req = "0.10.2"
-env_logger = "0.11.2"
 daemonize = "0.5.0"
 chrono = "0.4.34"
 sysinfo = "0.30.5"
 thiserror = "1.0.57"
 futures = "0.3.30"
-
-[dev-dependencies]
-env_logger = "0.11.2"
-test-log = "0.2.15"
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 
 [package.metadata.generate-rpm]
 assets = [
@@ -34,8 +30,8 @@ alternative = "*"
 filesystem = ">= 3"
 
 [package.metadata.deb]
-maintainer = "DS/2 <info@ds-2.de>"
-copyright = "2022, Dirk Strauss <info@ds-2.de>"
+maintainer = "DS/2 <cpv5fhsq9@mozmail.com>"
+copyright = "2022, Dirk Strauss <cpv5fhsq9@mozmail.com>"
 license-file = ["../LICENSE", "4"]
 extended-description = """\
 A simple subcommand for the Cargo package manager for \
