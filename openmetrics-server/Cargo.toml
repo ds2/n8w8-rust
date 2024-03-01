@@ -11,7 +11,7 @@ description = "The metrics-server is only to provide some health data metrics to
 nachtwacht-core = { path = "../core" }
 actix-web = "4.4.1"
 #actix-files = "0.6.2"
-log = "0.4.20"
+log = "0.4.21"
 env_logger = "0.11.2"
 async-stream = "0.3.5"
 clap = { version = "4.4.18", features = ["derive"] }

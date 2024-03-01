@@ -11,7 +11,7 @@ description = "This is the frontend webapp server to configure and inspect N8w8.
 actix-web = "4.4.1"
 actix-files = "0.6.5"
 actix-session = {version="0.9.0", features=["cookie-session"]}
-log = "0.4.20"
+log = "0.4.21"
 env_logger = "0.11.2"
 async-stream = "0.3.5"
 prost = "0.12.3"
