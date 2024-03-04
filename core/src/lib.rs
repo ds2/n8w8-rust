@@ -19,6 +19,7 @@
 
 /// Some common errors that may occur.
 pub mod errors;
+pub mod longhorn;
 /// Module to load data from /proc/loadavg.
 pub mod proc_loadavg;
 /// Module to read /proc/meminfo.

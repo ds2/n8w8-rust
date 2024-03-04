@@ -21,11 +21,13 @@ A set of command line interfaces for dealing with local health data.
 rm -rf $RPM_BUILD_ROOT
 install -m 0755 -D %{tgt_src_dir}/%{rust_target_arch}/%{tgt_profile}/n8w8-simple-val $RPM_BUILD_ROOT/%{_bindir}/n8w8-simple-val
 install -m 0755 -D %{tgt_src_dir}/%{rust_target_arch}/%{tgt_profile}/n8w8-http-check $RPM_BUILD_ROOT/%{_bindir}/n8w8-http-check
+install -m 0755 -D %{tgt_src_dir}/%{rust_target_arch}/%{tgt_profile}/n8w8-http-check $RPM_BUILD_ROOT/%{_bindir}/n8w8-k8s
 
 
 %files
 %{_bindir}/n8w8-simple-val
 %{_bindir}/n8w8-http-check
+%{_bindir}/n8w8-k8s
 
 
 

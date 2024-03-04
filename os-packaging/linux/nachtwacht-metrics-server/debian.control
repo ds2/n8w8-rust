@@ -1,0 +1,9 @@
+Package: nachtwacht-metrics-server
+Section: utils
+Priority: optional
+Architecture: amd64
+License: gplv3
+Maintainer: DS/2, Dirk Strauss <cpv5fhsq9@mozmail.com>
+Description: A metrics server to offer some openmetrics data to calling entities (like Prometheus)
+Homepage: https://gitlab.com/ds_2/n8w8-rust-fe/
+Requires: systemd

@@ -34,6 +34,7 @@ header:
     - '**/*.repo'
     - '**/liquibase.*.flow'
     - '**/generated/*'
+    - '**/debian.control'
 
   comment: on-failure
 
