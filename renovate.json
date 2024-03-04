@@ -23,7 +23,7 @@
       "addLabels": ["optional"]
     }
   ],
-  "commitMessagePrefix": "⬆️",
+  "commitMessagePrefix": "build: ⬆️",
   "addLabels": ["dependencies"],
   "reviewersFromCodeOwners": true,
   "additionalReviewers": ["lexxy23", "rusty232"],
