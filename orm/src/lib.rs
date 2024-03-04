@@ -24,7 +24,6 @@ use sea_orm::*;
 
 use entities::state::Entity as State;
 use entities::state::Model as StateModel;
-pub use entities::{prelude::*, *};
 
 pub mod entities;
 

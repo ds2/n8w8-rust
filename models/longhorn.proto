@@ -1,0 +1,97 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+package models;
+
+message LonghornDisk {
+  string diskUUID = 1;
+  bool allowScheduling = 2;
+  bool evictionRequested = 3;
+  string path = 4;
+  uint64 storageAvailable = 5;
+  uint64 storageMaximum = 6;
+  uint64 storageReserved = 7;
+  uint64 storageScheduled = 8;
+  repeated string tags = 9;
+  ConditionsBlock conditions = 10;
+  map<string, uint64> scheduledReplica = 11;
+}
+
+message LonghornNode {
+  string id = 1;
+  string name = 2;
+  string zone = 3;
+  string region = 4;
+  repeated string tags = 5;
+  string address = 6;
+  bool allowScheduling = 7;
+  int32 engineManagerCPURequest = 8;
+  int32 replicaManagerCPURequest = 9;
+  bool evictionRequested = 10;
+  map<string, LonghornDisk> disks = 11;
+  Actions actions = 12;
+}
+
+message LonghornNodes {
+  repeated LonghornNode data = 1;
+  Links links = 2;
+  string resourceType = 3;
+  string type = 4;
+}
+
+message Links {
+  string self = 1;
+}
+
+message Actions {
+  string diskUpdate = 1;
+}
+
+enum TypeBlock {
+  Empty = 0;
+  Ready = 1;
+  Schedulable = 2;
+  node = 3;
+  MountPropagation = 4;
+  Error = 5;
+}
+
+message ReadyBlock {
+  string lastProbeTime = 1;
+  google.protobuf.Timestamp lastTransitionTime = 2;
+  string message = 3;
+  string reason = 4;
+  string status = 5;
+  string type = 10;
+}
+message SchedulableBlock {
+  string lastProbeTime = 1;
+  google.protobuf.Timestamp lastTransitionTime = 2;
+  string message = 3;
+  string reason = 4;
+  string status = 5;
+  string type = 6;
+}
+message MountPropagationBlock {
+  string lastProbeTime = 1;
+  google.protobuf.Timestamp lastTransitionTime = 2;
+  string message = 3;
+  string reason = 4;
+  string status = 5;
+  string type = 6;
+}
+
+message ConditionsBlock {
+  optional MountPropagationBlock MountPropagation = 1;
+  ReadyBlock Ready = 2;
+  SchedulableBlock Schedulable = 3;
+}
+
+message ErrorBlock {
+  string code = 1;
+  string detail = 2;
+  map<string, string> links = 3;
+  string message = 4;
+  uint32 status = 5;
+  string type = 6;
+}

@@ -26,12 +26,12 @@ A metrics server to offer some openmetrics data to calling entities (like Promet
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__install} -m 0755 -D %{tgt_src_dir}/%{rust_target_arch}/%{tgt_profile}/n8w8-openmetrics-server $RPM_BUILD_ROOT/%{_bindir}/n8w8-openmetrics-server
-%{__install} -m 644 -D %{orig_src_dir}/os-packaging/linux/files/metrics-server.service $RPM_BUILD_ROOT/%{_unitdir}/%{pkgname}.service
+%{__install} -m 0755 -D %{tgt_src_dir}/%{rust_target_arch}/%{tgt_profile}/n8w8-openmetrics-server $RPM_BUILD_ROOT/%{_bindir}/nachtwacht-metrics-server
+%{__install} -m 644 -D %{orig_src_dir}/os-packaging/linux/files/metrics-server.service $RPM_BUILD_ROOT/%{_unitdir}/nachtwacht-metrics-server.service
 
 %files
-%{_bindir}/n8w8-openmetrics-server
-%{_unitdir}/%{pkgname}.service
+%{_bindir}/nachtwacht-metrics-server
+%{_unitdir}/nachtwacht-metrics-server.service
 
 
 

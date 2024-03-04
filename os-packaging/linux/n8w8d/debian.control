@@ -1,0 +1,10 @@
+Package: n8w8d
+Section: utils
+Priority: optional
+Architecture: amd64
+License: gplv3
+Maintainer: DS/2, Dirk Strauss <cpv5fhsq9@mozmail.com>
+Description: A host service to retrieve local node health data and send it to N8w8
+    This package contains the n8w8 daemon that runs in the background, collects data and
+    ships it to the nachtwacht server for aggregation.
+Homepage: https://gitlab.com/ds_2/n8w8-rust-fe/

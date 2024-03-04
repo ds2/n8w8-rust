@@ -150,6 +150,7 @@ impl HttpTestResponseTrait for HttpTestResponse {
     }
 }
 
+/// A simple check to test if a given url answers with a non-error code.
 pub fn test_url(
     url: &url::Url,
     t0: u64,

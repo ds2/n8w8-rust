@@ -16,11 +16,11 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #[cfg(test)]
-mod tests {
-    use crate::http::{test_url, HttpTestResponseTrait};
+mod checks_http {
     use nachtwacht_models::generated::n8w8::AuthBasicCredentials;
     use pretty_assertions::assert_eq;
 
+    use crate::http::{test_url, HttpTestResponseTrait};
     use std::sync::Once;
     use tracing::info;
     use tracing::metadata::LevelFilter;
@@ -59,11 +59,12 @@ mod tests {
                 &AuthBasicCredentials {
                     username: "".to_string(),
                     password: "".to_string(),
-                    special_fields: Default::default()
-                }
+                    special_fields: Default::default(),
+                },
             )
             .not_successful(),
-            false
+            false,
+            "Could not access website??"
         );
     }
 }

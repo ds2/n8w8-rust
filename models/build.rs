@@ -24,7 +24,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         .protoc_path(&protoc_bin_vendored::protoc_bin_path().unwrap())
         .out_dir("src/generated")
         .includes(&["."])
-        .inputs(&["n8w8.proto"])
+        .inputs(&["n8w8.proto", "longhorn.proto"])
         .run_from_script();
     Ok(())
 }

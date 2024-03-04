@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 EnvironmentFile=-/etc/sysconfig/n8w8-metrics-server
-ExecStart=/usr/bin/n8w8-metrics-server
+ExecStart=/usr/bin/nachtwacht-metrics-server
 Restart=on-failure
 
 [Install]

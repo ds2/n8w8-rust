@@ -1,6 +1,7 @@
 variables:
   RUST_BEFORESCRIPT: "apt-get update -yqq; apt-get install -yqq --no-install-recommends protobuf-compiler"
   RUST_EL8_IMAGE_TAG: "ol8-v0.1.0"
+  RUST_UBUNTU_IMAGE_TAG: "jm-v0.1.0"
 
 sast:
   stage: test
@@ -21,11 +22,24 @@ include:
   - template: Security/Dependency-Scanning.gitlab-ci.yml
   - template: Security/Secret-Detection.gitlab-ci.yml
 
+spotbugs-sast:
+  variables:
+    FAIL_NEVER: 1
+
 package-debug-rpm:
   extends: .package-debug-rpm-el8
 
+package-debug-ubuntu:
+  extends: .package-debug-ubuntu
+
 package-release-rpm:
   extends: .package-release-rpm-el8
+
+package-release-ubuntu:
+  extends: .package-release-ubuntu
+
+# -------------------------------- DEPLOYMENTS ----------------------------
+########################### AZURE ##########
 
 deploy-debug-rpm-azure:
   extends: .deploy-azure
@@ -41,7 +55,45 @@ deploy-debug-rpm-azure:
   dependencies:
     - package-debug-rpm
 
-deploy-debug-rpm-ol8-packagecloud:
+deploy-debug-jammy-azure:
+  extends: .deploy-azure
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
+  variables:
+    ARTIFACTS_PATTERN: "*.deb"
+    IS_MASKED_BASE64: 1
+    AZ_UPLOAD_URL: "https://ds2linuxrepo.blob.core.windows.net/jammy"
+  dependencies:
+    - package-debug-ubuntu
+
+deploy-release-rpm-azure:
+  extends: .deploy-azure
+  rules:
+    - if: $CI_COMMIT_TAG
+  variables:
+    ARTIFACTS_PATTERN: "*.el8.x86_64.rpm"
+    IS_MASKED_BASE64: 1
+    AZ_UPLOAD_URL: "https://ds2linuxrepo.blob.core.windows.net/el8"
+  dependencies:
+    - package-release-rpm
+
+deploy-release-jammy-azure:
+  extends: .deploy-azure
+  rules:
+    - if: $CI_COMMIT_TAG
+  variables:
+    ARTIFACTS_PATTERN: "*.deb"
+    IS_MASKED_BASE64: 1
+    AZ_UPLOAD_URL: "https://ds2linuxrepo.blob.core.windows.net/jammy"
+  dependencies:
+    - package-release-ubuntu
+
+########################### PACKAGECLOUD ##########
+
+deploy-debug-rpm-el8-packagecloud:
   extends: .deploy-packagecloud
   dependencies:
     - package-debug-rpm
@@ -56,6 +108,22 @@ deploy-debug-rpm-ol8-packagecloud:
     PACKAGECLOUD_REPOSITORY: "lexxy23/snapshots"
     IS_MASKED_BASE64: 1
 
+deploy-debug-jammy-packagecloud:
+  extends: .deploy-packagecloud
+  dependencies:
+    - package-debug-ubuntu
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
+  variables:
+    PACKAGECLOUD_PUSHSTRING: "ubuntu/jammy"
+    ARTIFACTS_PATTERN: "*.deb"
+    PACKAGECLOUD_REPOSITORY: "lexxy23/snapshots"
+    IS_MASKED_BASE64: 1
+
+
 deploy-release-rpm-ol8-packagecloud:
   extends: .deploy-packagecloud
   dependencies:
@@ -68,13 +136,14 @@ deploy-release-rpm-ol8-packagecloud:
     PACKAGECLOUD_REPOSITORY: "lexxy23/releases"
     IS_MASKED_BASE64: 1
 
-deploy-release-rpm-azure:
-  extends: .deploy-azure
+deploy-release-jammy-packagecloud:
+  extends: .deploy-packagecloud
+  dependencies:
+    - package-release-ubuntu
   rules:
     - if: $CI_COMMIT_TAG
   variables:
-    ARTIFACTS_PATTERN: "*.el8.x86_64.rpm"
+    PACKAGECLOUD_PUSHSTRING: "ubuntu/jammy"
+    ARTIFACTS_PATTERN: "*.deb"
+    PACKAGECLOUD_REPOSITORY: "lexxy23/releases"
     IS_MASKED_BASE64: 1
-    AZ_UPLOAD_URL: "https://ds2linuxrepo.blob.core.windows.net/el8"
-  dependencies:
-    - package-release-rpm

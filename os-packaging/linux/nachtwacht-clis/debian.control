@@ -1,0 +1,9 @@
+Package: nachtwacht-clis
+Section: utils
+Priority: optional
+Architecture: amd64
+License: gplv3
+Maintainer: DS/2, Dirk Strauss <cpv5fhsq9@mozmail.com>
+Description: A set of command line interfaces (CLIs) for dealing with local node health data.
+    This package contains several binaries to access the health data of the local node.
+Homepage: https://gitlab.com/ds_2/n8w8-rust-fe/
