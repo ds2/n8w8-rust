@@ -1,6 +1,7 @@
 = Nachtwacht (N8w8) Rust Implementations
 Author Dirk Strauss <author@email.org>
 :toc:
+:toclevels: 3
 
 image:https://gitlab.com/ds_2/n8w8-rust-fe/badges/main/pipeline.svg[Static,100,link="https://gitlab.com/ds_2/n8w8-rust-fe/-/commits/main",title="pipeline status"]
 image:https://gitlab.com/ds_2/n8w8-rust-fe/-/badges/release.svg[Static,100,link="https://gitlab.com/ds_2/n8w8-rust-fe/-/releases",title="Latest Release"]
@@ -19,3 +20,4 @@ are doing nowadays with servers and clouds during the night.
 include::CHANGELOG.adoc[leveloffset=+1]
 
 include::docs/usage.adoc[leveloffset=+1]
+include::CONTRIBUTING.adoc[leveloffset=+1]
