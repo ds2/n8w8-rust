@@ -1,6 +1,5 @@
-FROM rust:latest as builder
-RUN apt-get update -yqq; apt-get install -yqq --no-install-recommends capnproto protobuf-compiler
+FROM quay.io/ds2/enterpriselinux-rust:oraclelinux8
 ENV DAPPER_OUTPUT target
-ENV DAPPER_SOURCE /src
+ENV DAPPER_SOURCE /work
 WORKDIR ${DAPPER_SOURCE}
 ENTRYPOINT ["./build.sh"]

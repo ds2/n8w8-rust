@@ -1,0 +1,154 @@
+# Copyright (C) 2024 Dirk Strauss
+#
+# This file is part of Nachtwacht.
+#
+# Nachtwacht is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Nachtwacht is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+databaseChangeLog:
+  - changeLogId: a0d927cf-1c42-44d8-bd76-f2b1d89c5b56
+  - changeSet:
+      id: 1
+      author: Lexxy
+      changes:
+        - createTable:
+            tableName: state
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: text
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: created
+                  type: timestamptz
+                  defaultValueComputed: "now()"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: modified
+                  type: timestamptz
+              - column:
+                  name: modified_by
+                  type: uuid
+  - changeSet:
+      id: 2
+      author: Lexxy
+      changes:
+        - createTable:
+            tableName: accounts
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+              - column:
+                  name: title
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: text
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: created
+                  type: timestamptz
+                  defaultValueComputed: "now()"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: modified
+                  type: timestamptz
+              - column:
+                  name: modified_by
+                  type: uuid
+              - column:
+                  name: state
+                  type: integer
+                  constraints:
+                    nullable: false
+                    foreignKeyName: ref_account_state
+                    referencedTableName: state
+                    referencedColumnNames: id
+  - changeSet:
+      id: 4
+      author: Lexxy
+      changes:
+        - createTable:
+            tableName: tenants
+            columns:
+              - column:
+                  name: state
+                  type: integer
+                  constraints:
+                    nullable: false
+                    foreignKeyName: ref_state
+                    referencedTableName: state
+                    referencedColumnNames: id
+              - column:
+                  name: email
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: timestamptz
+                  defaultValueComputed: "now()"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: modified
+                  type: timestamptz
+              - column:
+                  name: modified_by
+                  type: uuid
+              - column:
+                  name: name
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    tableName: tenants

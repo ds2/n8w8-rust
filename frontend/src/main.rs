@@ -1,3 +1,20 @@
+// Copyright (C) 2024 Dirk Strauss
+//
+// This file is part of Nachtwacht.
+//
+// Nachtwacht is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Nachtwacht is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 use std::io;
 
 use actix_files::{Files, NamedFile};
@@ -8,6 +25,8 @@ use actix_web::{
     http::{header::ContentType, Method, StatusCode},
     middleware, web, App, Either, HttpRequest, HttpResponse, HttpServer, Responder, Result,
 };
+use tracing::info;
+use tracing::level_filters::LevelFilter;
 //use async_stream::stream;
 
 /// simple index handler
@@ -61,9 +80,19 @@ fn get_secret_key() -> Key {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    use tracing_subscriber::prelude::*;
+    tracing_subscriber::registry()
+        .with(tracing_subscriber::fmt::layer())
+        // Use RUST_LOG environment variable to set the tracing level
+        .with(
+            tracing_subscriber::EnvFilter::builder()
+                .with_default_directive(LevelFilter::INFO.into())
+                .from_env_lossy(),
+        )
+        // Sets this to be the default, global collector for this application.
+        .init();
     println!("Init..");
-    env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
-    log::info!("starting HTTP server at http://localhost:8080");
+    info!("starting HTTP server at http://localhost:8080");
     println!("Server should start soon");
     let secret_key = get_secret_key();
     HttpServer::new(move || {

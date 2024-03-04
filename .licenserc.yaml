@@ -1,0 +1,46 @@
+header:
+  license:
+    spdx-id: GPL-3.0-or-later
+    copyright-owner: Dirk Strauss
+    software-name: Nachtwacht
+
+  paths-ignore:
+    - 'dist'
+    - 'licenses'
+    - 'go.mod'
+    - 'go.sum'
+    - 'LICENSE'
+    - 'NOTICE'
+    - 'CHANGELOG*'
+    - '.*/**'
+    - '.*'
+    - '.github'
+    - '**/.*'
+    - '**/*.md'
+    - '**/*.proto'
+    - '**/*.pb.go'
+    - '**/*.adoc'
+    - '**/*.spec'
+    - '**/*.toml'
+    - '**/*.lock'
+    - '**/*.dapper'
+    - '**/*.sh'
+    - '**/*.spdx'
+    - '**/*.json'
+    - '**/*Containerfile'
+    - '**/*Dockerfile'
+    - '**/*.bazel'
+    - '**/*.service'
+    - '**/*.repo'
+    - '**/liquibase.*.flow'
+    - '**/generated/*'
+    - '**/debian.control'
+
+  comment: on-failure
+
+dependency:
+  files:
+    - Cargo.toml
+  licenses:
+    - name: nachtwacht-orm
+      license: GPL-3.0-or-later

@@ -1,10 +1,12 @@
-== How to build the whole project
+= How to build the whole project
+:toc:
 
 First, update your rust implementation via:
 
 [,shell]
 ----
 rustup self update # to update rustup itself
+rustup toolchain install stable-$CARGO_BUILD_TARGET
 rustup update stable
 ----
 
@@ -15,16 +17,9 @@ For the local machine, run:
 [,shell]
 ----
 cargo clean
-cargo build --workspace
+cargo build --workspace --all-targets
 cargo test
 cargo fmt --all -- --check
-----
-
-To build the project via Dapper, you simply run:
-
-[,shell]
-----
-dapper
 ----
 
 == Build for different target architecture
@@ -36,3 +31,17 @@ You can set up your local build to build against a different target architecture
 # To get all architecture targets
 rustc --print target-list
 ----
+
+== Package Documentation
+
+You can start the local doc server via:
+
+[,shell]
+----
+cargo doc --open
+----
+
+This will open your default browser with the documentation of the project.
+
+include::env.adoc[leveloffset=+1]
+include::rhel8.adoc[leveloffset=+1]

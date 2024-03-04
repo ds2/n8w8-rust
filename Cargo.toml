@@ -1,2 +1,9 @@
 [workspace]
-members = ["models", "frontend", "cli", "orm", "checks", "executor", "agent"]
+members = ["models", "frontend", "cli", "orm", "checks", "executor", "agent", "core", "openmetrics-server"]
+resolver = "2"
+
+[profile.dev]
+opt-level = 0
+
+[profile.release]
+opt-level = 3

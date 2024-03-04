@@ -1,39 +1,35 @@
+// Copyright (C) 2024 Dirk Strauss
+//
+// This file is part of Nachtwacht.
+//
+// Nachtwacht is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Nachtwacht is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 use std::fs::File;
 use std::path::Path;
-use std::process::exit;
+use std::string::String;
 use std::{thread, time};
 
 use chrono::{DateTime, Utc};
-use clap::{Parser, ValueEnum};
+use clap::Parser;
 use daemonize::Daemonize;
-use log::info;
-use std::string::String;
-use sysinfo::{DiskExt, System, SystemExt};
+use futures::executor::block_on;
+use sysinfo::{Disks, System};
+use tracing::info;
+use tracing::level_filters::LevelFilter;
 
-use nachtwacht_models::n8w8::{AgentDiscData, AgentNodeData};
-
-use crate::errors::AgentErrors;
-use crate::proc_loadavg::parse_proc_loadavg;
-use crate::procstat::parse_proc_stat;
-use crate::zabbix_mode::get_zabbix_value;
-
-mod errors;
-mod proc_loadavg;
-mod procstat;
-mod zabbix_mode;
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
-pub enum ZabbixValue {
-    Load1,
-    Load5,
-    Load15,
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
-enum RunMode {
-    Agent,
-    Zabbix,
-}
+use nachtwacht_core::proc_stat::parse_proc_stat;
+use nachtwacht_models::generated::n8w8::{AgentDiscData, AgentNodeData};
 
 /// Simple program to greet a person
 #[derive(Parser, Debug)]
@@ -57,28 +53,24 @@ struct Args {
     /// Refresh timeout for the agent query loop.
     #[arg(short, long, value_parser, default_value_t = 5000)]
     refresh: u64,
-    /// Which health value should we print out.
-    #[arg(short, long, value_enum, default_value = "load1")]
-    zabbix_value: ZabbixValue,
-    /// defines the run mode for this agent. By default, we run in zabbix mode which means
-    /// we only print out one value at the stdout.
-    /// The other mode is the agent mode where the agent runs continuously in the background
-    /// and sends the health data to a n8w8 endpoint.
-    #[arg(short, long, value_enum, default_value = "zabbix")]
-    mode: RunMode,
 }
 
-#[cfg(not(windows))]
+#[cfg(target_os = "linux")]
 fn main() {
+    use tracing_subscriber::prelude::*;
+    tracing_subscriber::registry()
+        .with(tracing_subscriber::fmt::layer())
+        // Use RUST_LOG environment variable to set the tracing level
+        .with(
+            tracing_subscriber::EnvFilter::builder()
+                .with_default_directive(LevelFilter::INFO.into())
+                .from_env_lossy(),
+        )
+        // Sets this to be the default, global collector for this application.
+        .init();
     // Parse args first ;)
     let args = Args::parse();
 
-    if args.mode == RunMode::Zabbix {
-        let zabbix_val =
-            get_zabbix_value(args.zabbix_value).expect("Error when retrieving the zbx value!");
-        println!("{}", zabbix_val);
-        exit(0);
-    }
     let stdout = File::create(args.outfile.as_str()).unwrap();
     let stderr = File::create(args.errfile.as_str()).unwrap();
     let sleep_time = time::Duration::from_millis(args.refresh);
@@ -92,15 +84,10 @@ fn main() {
     );
     let daemonize = Daemonize::new()
         .pid_file(p) // Every method except `new` and `start`
-        // .chown_pid_file(true) // is optional, see `Daemonize` documentation
         .working_directory(Path::new(args.workdir.as_str())) // for default behaviour.
         .user(args.user.as_str())
-        // .group("adm") // Group name
-        // .group(2) // or group id.
-        // .umask(0o777) // Set umask, `0o027` by default.
         .stdout(stdout) // Redirect stdout to `/tmp/daemon.out`.
         .stderr(stderr) // Redirect stderr to `/tmp/daemon.err`.
-        .exit_action(|| println!("Should be running now. Please check via pid file! :)"))
         .privileged_action(|| println!("Will enter loop now.."));
 
     match daemonize.start() {
@@ -113,7 +100,9 @@ fn main() {
                 let date = format!("UTC now is: {}", now);
                 println!("Date is now {}", date);
                 let mut disk_vec: Vec<AgentDiscData> = Vec::new();
-                for disk in sys.disks() {
+                let mut disks = sysinfo::Disks::new();
+                disks.refresh();
+                for disk in &disks {
                     let this_disk_data = AgentDiscData {
                         device: disk.name().to_str().unwrap().to_string(),
                         mountpoint: disk.mount_point().to_str().unwrap().to_string(),
@@ -124,24 +113,25 @@ fn main() {
                     disk_vec.push(this_disk_data);
                 }
 
-                let cpu_proc_stats = parse_proc_stat().expect("TODO: panic message");
+                let cpu_proc_stats =
+                    block_on(parse_proc_stat()).expect("Could not get /proc/stat details!");
                 info!("This machine has {} cores!", cpu_proc_stats.len());
                 let agent_node_data = AgentNodeData {
-                    hostname: sys.host_name().unwrap(),
-                    load1: sys.load_average().one,
-                    load5: sys.load_average().five,
-                    load15: sys.load_average().fifteen,
+                    hostname: System::host_name().unwrap(),
+                    load1: System::load_average().one,
+                    load5: System::load_average().five,
+                    load15: System::load_average().fifteen,
                     totalMemory: sys.total_memory(),
                     usedMemory: sys.used_memory(),
                     freeMemory: sys.free_memory(),
                     totalSwap: sys.total_swap(),
                     usedSwap: sys.used_swap(),
                     freeSwap: sys.free_swap(),
-                    kernelversion: sys.kernel_version().unwrap(),
+                    kernelversion: System::kernel_version().unwrap(),
                     cpudata: cpu_proc_stats,
                     disks: disk_vec,
-                    os_name: sys.name().unwrap(),
-                    os_version: sys.os_version().unwrap(),
+                    os_name: System::name().unwrap(),
+                    os_version: System::os_version().unwrap(),
                     special_fields: Default::default(),
                 };
                 println!("Node data is {}", agent_node_data);

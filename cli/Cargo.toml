@@ -1,6 +1,6 @@
 [package]
 name = "nachtwacht-cli"
-version = "0.1.1-rc.1"
+version = "0.3.0-alpha.1"
 edition = "2021"
 license = "GPLv3"
 description = "This package contains all the client binaries to run some tests alone without the server."
@@ -10,11 +10,31 @@ description = "This package contains all the client binaries to run some tests a
 [dependencies]
 nachtwacht-checks = { path = "../checks" }
 nachtwacht-models = { path = "../models" }
-log = "0.4.17"
-clap = { version = "4.0.9", features = ["derive"] }
-http_req = "0.8.1"
-env_logger = "0.9.1"
+nachtwacht-core = { path = "../core" }
+clap = { version = "4.5.1", features = ["derive"] }
+http_req = "0.10.2"
+futures = "0.3.30"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
+tracing = "0.1.40"
+# kube with rustls is currently not possible due to rustls not being able to use ip addresses as cname! See https://github.com/rustls/rustls/issues/184
+kube = { version = "0.78.0", default-features = false, features = ["runtime", "derive", "client", "openssl-tls"] }
+kube-client = "0.78.0"
+k8s-openapi = { version = "0.17.0", features = ["v1_25"] }
+tokio = { version = "1.27.0", features = ["rt-multi-thread", "macros"] }
+url = "2.5.0"
 
 [[bin]]
-name="nachtwacht-http-check"
-path= "src/http-check-bin.rs"
+name = "n8w8-http-check"
+path = "src/http-check-bin.rs"
+
+[[bin]]
+name="n8w8-k8s"
+path= "src/k8s.rs"
+
+[[bin]]
+name="n8w8-simple-val"
+path= "src/simple-val-bin.rs"
+
+[[bin]]
+name = "n8w8-k8s-check"
+path = "src/k8s-check-bin.rs"
