@@ -18,27 +18,4 @@ are doing nowadays with servers and clouds during the night.
 
 include::CHANGELOG.adoc[leveloffset=+1]
 
-include::docs/env.adoc[leveloffset=+1]
-
-include::docs/building.adoc[leveloffset=+1]
-
-include::docs/testing.adoc[leveloffset=+1]
-
-include::docs/container.adoc[leveloffset=+1]
-
-include::executor/README.adoc[leveloffset=+1]
-
-include::docs/releasing.adoc[leveloffset=+1]
-include::agent/Create-RPM.adoc[leveloffset=+1]
-include::agent/Create-Debian.adoc[leveloffset=+1]
-
-== Documentation
-
-You can start the local doc server via:
-
-[,shell]
-----
-cargo doc --open
-----
-
-This will open your default browser with the documentation of the project.
+include::docs/usage.adoc[leveloffset=+1]

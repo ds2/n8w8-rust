@@ -1,4 +1,4 @@
-== Creating RPMs
+= Creating RPMs
 
 To create an rpm of the agent, install some tools before:
 

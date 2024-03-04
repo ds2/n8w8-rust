@@ -1,0 +1,7 @@
+= Usage
+
+Here we talk about how to use the several packages of the project.
+
+include::usage.clis.adoc[leveloffset=+1]
+include::usage.metricsserver.adoc[leveloffset=+1]
+include::usage.n8w8d.adoc[leveloffset=+1]

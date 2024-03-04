@@ -1,4 +1,4 @@
-== Building for RHEL 8
+= Building for RHEL 8
 
 We can use OracleLinux 8 to create RPMs for RHEL8.
 

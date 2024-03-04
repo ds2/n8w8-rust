@@ -1,8 +1,8 @@
-== Testing the license headers
+= Testing the license headers
 
 We try to use SPDX to address license issues.
 
-=== How to test
+== How to test
 
 Run:
 

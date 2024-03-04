@@ -1,0 +1,10 @@
+= Contributing
+:toc:
+
+Here we discuss the build process, ci process and release process.
+
+include::docs/building.adoc[leveloffset=+1]
+include::docs/container.adoc[leveloffset=+1]
+include::docs/testing.adoc[leveloffset=+1]
+
+include::docs/releasing.adoc[leveloffset=+1]
