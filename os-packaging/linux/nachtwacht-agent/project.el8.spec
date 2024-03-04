@@ -3,7 +3,7 @@
 %global tgt_src_dir %{getenv:CARGO_TARGET_DIR}
 %global tgt_profile %{getenv:RUST_PROFILE}
 
-Name:           n8w8d
+Name:           nachtwacht-agent
 Version:        %{getenv:RPM_VERSION}
 Release:        %{?getenv:RPM_RELEASE}%{?dist}
 Summary:        A host service to retrieve local health data and send it to N8w8

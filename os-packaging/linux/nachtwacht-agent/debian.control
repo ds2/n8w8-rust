@@ -1,4 +1,4 @@
-Package: n8w8d
+Package: nachtwacht-agent
 Section: utils
 Priority: optional
 Architecture: amd64

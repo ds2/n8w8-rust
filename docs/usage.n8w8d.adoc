@@ -1,3 +1,0 @@
-= The Nachtwacht Demon
-
-This application is to push metrics of the current node to the nachtwacht server. It is therefore the opposite of the nachtwacht metrics server.
