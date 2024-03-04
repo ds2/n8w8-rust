@@ -18,6 +18,7 @@ include:
       - '/templates/check-license.yaml'
       - '/templates/generate-sbom-cyclonedx.yaml'
       - 'templates/deploy-packagecloud.yaml'
+      - 'templates/release-marker.yaml'
   - template: Security/SAST.gitlab-ci.yml
   - template: Security/Dependency-Scanning.gitlab-ci.yml
   - template: Security/Secret-Detection.gitlab-ci.yml

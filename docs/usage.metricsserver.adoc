@@ -1,0 +1,4 @@
+= The Metrics Server
+
+This server is a simple metrics server that can be used to expose metrics from the
+system to the outside world.
