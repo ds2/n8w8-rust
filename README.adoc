@@ -1,5 +1,6 @@
 = Nachtwacht (N8w8) Rust Implementations
 Author Dirk Strauss <author@email.org>
+:toc:
 
 image:https://gitlab.com/ds_2/n8w8-rust-fe/badges/main/pipeline.svg[Static,100,link="https://gitlab.com/ds_2/n8w8-rust-fe/-/commits/main",title="pipeline status"]
 image:https://gitlab.com/ds_2/n8w8-rust-fe/-/badges/release.svg[Static,100,link="https://gitlab.com/ds_2/n8w8-rust-fe/-/releases",title="Latest Release"]
@@ -8,7 +9,6 @@ image:https://gitlab.com/ds_2/n8w8-rust-fe/-/badges/release.svg[Static,100,link=
 [.lead]
 This project contains all subprojects to perform the n8w8 tests.
 
-:toc:
 
 == The name
 
@@ -16,19 +16,21 @@ _Nachtwacht_ is the german name for _nightwatch_. It comes from the people
 who were watching over a city at night. Similar to what DevOps people
 are doing nowadays with servers and clouds during the night.
 
-include::docs/env.adoc[leveloffset=1]
+include::CHANGELOG.adoc[leveloffset=+1]
 
-include::docs/building.adoc[]
+include::docs/env.adoc[leveloffset=+1]
 
-include::docs/testing.adoc[]
+include::docs/building.adoc[leveloffset=+1]
 
-include::docs/container.adoc[]
+include::docs/testing.adoc[leveloffset=+1]
 
-include::executor/README.adoc[]
+include::docs/container.adoc[leveloffset=+1]
 
-include::docs/releasing.adoc[]
-include::agent/Create-RPM.adoc[]
-include::agent/Create-Debian.adoc[]
+include::executor/README.adoc[leveloffset=+1]
+
+include::docs/releasing.adoc[leveloffset=+1]
+include::agent/Create-RPM.adoc[leveloffset=+1]
+include::agent/Create-Debian.adoc[leveloffset=+1]
 
 == Documentation
 
