@@ -38,7 +38,7 @@ footer = """
         [unreleased]: https://gitlab.com/ds_2/n8w8-rust-fe\
             /compare?from={{ release.previous.version }}&to=HEAD
     {% endif -%}
-{% endfor %}
+{% endfor %}\n
 """
 # remove the leading and trailing whitespace from the templates
 trim = true
