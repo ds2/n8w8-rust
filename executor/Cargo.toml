@@ -1,6 +1,6 @@
 [package]
 name = "executor"
-version = "0.2.0"
+version = "0.2.1-rc.1"
 edition = "2021"
 license = "GPLv3"
 description="An executor to execute given tests at specific times."

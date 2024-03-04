@@ -1097,7 +1097,7 @@ checksum = "0206175f82b8d6bf6652ff7d71a1e27fd2e4efde587fd368662814d6ec1d9ce0"
 
 [[package]]
 name = "executor"
-version = "0.2.0"
+version = "0.2.1-rc.1"
 dependencies = [
  "clap",
  "http_req",
@@ -1974,7 +1974,7 @@ dependencies = [
 
 [[package]]
 name = "n8w8-openmetrics-server"
-version = "0.2.0"
+version = "0.2.1-rc.1"
 dependencies = [
  "actix-web",
  "async-stream",
@@ -1990,7 +1990,7 @@ dependencies = [
 
 [[package]]
 name = "n8w8d"
-version = "0.2.0"
+version = "0.2.1-rc.1"
 dependencies = [
  "chrono",
  "clap",
@@ -2007,7 +2007,7 @@ dependencies = [
 
 [[package]]
 name = "nachtwacht-checks"
-version = "0.2.0"
+version = "0.2.1-rc.1"
 dependencies = [
  "base64 0.22.0",
  "chrono",
@@ -2021,7 +2021,7 @@ dependencies = [
 
 [[package]]
 name = "nachtwacht-cli"
-version = "0.2.0"
+version = "0.2.1-rc.1"
 dependencies = [
  "clap",
  "futures",
@@ -2040,7 +2040,7 @@ dependencies = [
 
 [[package]]
 name = "nachtwacht-core"
-version = "0.2.0"
+version = "0.2.1-rc.1"
 dependencies = [
  "clap",
  "futures",
@@ -2059,7 +2059,7 @@ dependencies = [
 
 [[package]]
 name = "nachtwacht-frontend"
-version = "0.2.0"
+version = "0.2.1-rc.1"
 dependencies = [
  "actix-files",
  "actix-session",
@@ -2073,7 +2073,7 @@ dependencies = [
 
 [[package]]
 name = "nachtwacht-models"
-version = "0.2.0"
+version = "0.2.1-rc.1"
 dependencies = [
  "protobuf 3.4.0",
  "protobuf-codegen",
@@ -2082,7 +2082,7 @@ dependencies = [
 
 [[package]]
 name = "nachtwacht-orm"
-version = "0.2.0"
+version = "0.2.1-rc.1"
 dependencies = [
  "futures",
  "nachtwacht-models",
