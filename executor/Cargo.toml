@@ -10,7 +10,7 @@ description="An executor to execute given tests at specific times."
 [dependencies]
 nachtwacht-checks = { path = "../checks" }
 nachtwacht-models = { path = "../models" }
-clap = { version = "4.5.1", features = ["derive"] }
+clap = { version = "4.5.2", features = ["derive"] }
 http_req = "0.10.2"
 tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 tracing = "0.1.40"
