@@ -13,7 +13,7 @@ nachtwacht-core = { path = "../core" }
 clap = { version = "4.5.1", features = ["derive"] }
 http_req = "0.10.2"
 daemonize = "0.5.0"
-chrono = "0.4.34"
+chrono = "0.4.37"
 sysinfo = "0.30.6"
 thiserror = "1.0.57"
 futures = "0.3.30"
