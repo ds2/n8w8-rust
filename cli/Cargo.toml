@@ -12,7 +12,7 @@ nachtwacht-checks = { path = "../checks" }
 nachtwacht-models = { path = "../models" }
 nachtwacht-core = { path = "../core" }
 clap = { version = "4.5.1", features = ["derive"] }
-http_req = "0.10.2"
+http_req = "0.10.3"
 futures = "0.3.30"
 tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 tracing = "0.1.40"
