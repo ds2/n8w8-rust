@@ -19,7 +19,7 @@ tracing = "0.1.40"
 # kube with rustls is currently not possible due to rustls not being able to use ip addresses as cname! See https://github.com/rustls/rustls/issues/184
 kube = { version = "0.78.0", default-features = false, features = ["runtime", "derive", "client", "openssl-tls"] }
 kube-client = "0.78.0"
-k8s-openapi = { version = "0.17.0", features = ["v1_25"] }
+k8s-openapi = { version = "0.22.0", features = ["v1_25"] }
 tokio = { version = "1.27.0", features = ["rt-multi-thread", "macros"] }
 url = "2.5.0"
 
