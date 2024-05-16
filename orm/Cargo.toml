@@ -8,6 +8,6 @@ edition = "2021"
 [dependencies]
 sea-orm = { version = "0.12.14", features = [ "sqlx-postgres", "runtime-actix-rustls", "macros" ] }
 nachtwacht-models = { path = "../models" }
-serde = "1.0.197"
+serde = "1.0.202"
 futures = "0.3.30"
 tracing = "0.1.40"
