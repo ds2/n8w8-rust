@@ -161,9 +161,10 @@ async fn get_all_pods_from_namespace(
         label_selector: None,
         field_selector: None,
         timeout: None,
-        bookmarks: false,
         limit: None,
         continue_token: None,
+        version_match: None,
+        resource_version: None,
     };
     pod_api.list(&params).await
 }
@@ -174,9 +175,10 @@ async fn get_all_namespaces(client: Client) -> Result<ObjectList<Namespace>, Err
         label_selector: None,
         field_selector: None,
         timeout: None,
-        bookmarks: false,
         limit: None,
         continue_token: None,
+        version_match: None,
+        resource_version: None,
     };
     pod_api.list(&params).await
 }

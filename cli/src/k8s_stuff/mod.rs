@@ -70,9 +70,10 @@ async fn get_all_nodes(client: Client) -> Result<ObjectList<Node>, Error> {
         label_selector: None,
         field_selector: None,
         timeout: None,
-        bookmarks: false,
         limit: None,
         continue_token: None,
+        version_match: None,
+        resource_version: None,
     };
     pod_api.list(&params).await
 }
