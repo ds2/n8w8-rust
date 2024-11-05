@@ -24,7 +24,7 @@ use chrono::{DateTime, Utc};
 use clap::Parser;
 use daemonize::Daemonize;
 use futures::executor::block_on;
-use sysinfo::{Disks, System};
+use sysinfo::System;
 use tracing::info;
 use tracing::level_filters::LevelFilter;
 
