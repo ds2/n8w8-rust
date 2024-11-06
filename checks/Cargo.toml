@@ -15,5 +15,5 @@ tracing = "0.1.40"
 base64 = "0.22.0"
 
 [dev-dependencies]
-pretty_assertions = "1.4.0"
+pretty_assertions = "1.4.1"
 tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
