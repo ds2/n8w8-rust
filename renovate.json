@@ -5,6 +5,10 @@
     "config:recommended",
     "schedule:nonOfficeHours"
   ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": "after 10pm on sunday"
+  },
   "packageRules": [
     {
       "description": "Automatically merge minor and patch-level updates",
