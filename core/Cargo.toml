@@ -10,7 +10,7 @@ description = "This package contains the core methods. Kind of Business logics."
 [dependencies]
 nachtwacht-checks = { path = "../checks" }
 nachtwacht-models = { path = "../models" }
-thiserror = "1.0.57"
+thiserror = "2.0.0"
 clap = { version = "4.5.20", features = ["derive"] }
 futures = "0.3.30"
 tracing = "0.1.40"
