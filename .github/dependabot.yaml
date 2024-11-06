@@ -10,8 +10,9 @@ updates:
     open-pull-requests-limit: 20
     reviewers: # you can also use assignees
       - "lexxy23"
+      - "rusty232"
     commit-message:
-      prefix: "⬆️"
+      prefix: "build(deps): ⬆️"
     # here you define the labels, if required. You may also omit them to rely on dependabots default values!
     labels:
       - "rust"  # you may also use java, rust, go
@@ -25,9 +26,10 @@ updates:
       timezone: "Europe/Berlin"
     reviewers: # you can also use assignees
       - "lexxy23"
+      - "rusty232"
     labels:
       - "githubactions"
       - "updates"
     open-pull-requests-limit: 5
     commit-message:
-      prefix: "🔨"
+      prefix: "ci(deps): 🔨"
