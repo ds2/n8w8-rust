@@ -5,14 +5,18 @@ on:
     branches:
       - develop
   merge_group:
+  push:
+    branches:
+      - "renovate/**"
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-cargo
   cancel-in-progress: true
 
 env:
   # Share the target dir to try to cache a few build-time deps.
   CARGO_TARGET_DIR: target
+  CI: 1
 
 jobs:
   build:
