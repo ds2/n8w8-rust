@@ -5,6 +5,80 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+== [Unreleased]
+
+=== Added
+
+- Add GHA for checking license
+- Add gitattributes config
+
+=== Changed
+
+- Update renovate config
+- ⬆️ Update Rust crate base64 to v0.22.1
+- ⬆️ Update Rust crate chrono to v0.4.38
+- Update lock file
+- ⬆️ Update docker.io/postgres Docker tag to v17
+- ⬆️ Update dependency ubuntu to v24
+- ⬆️ Update Rust crate sea-orm to v1
+- Update reqwest lib to v0.12.x
+- ⬆️ Update dependency ds_2/ci-templates to v0.3.2
+- Update dependabot config to use conventional commits
+- 🔨 bump ossf/scorecard-action from 2.3.3 to 2.4.0
+- Allow autoMerge via merge groups
+- Latest lockfile update
+- ⬆️ Update actions/upload-artifact action to v4.4.3
+- ⬆️ Update alpine Docker tag to v3.20
+- Allow lockfile maintenance
+- ⬆️ Update Rust crate lazy_static to v1.5.0
+- Allow renovate to schedule anytime
+- :arrow_up: bump url from 2.5.0 to 2.5.3
+- :arrow_up: bump futures from 0.3.30 to 0.3.31
+- :arrow_up: bump actix-files from 0.6.5 to 0.6.6
+- :arrow_up: bump tokio from 1.41.0 to 1.41.1
+- Enable action on renovate branches
+- ⬆️ Update Rust crate async-stream to v0.3.6
+- :arrow_up: bump actix-session from 0.9.0 to 0.10.1
+- Also check license when pushing to develop
+- ⬆️ Update actions/checkout action to v4
+- ⬆️ Update Rust crate http_req to 0.13.0
+- ⬆️ Lock file maintenance
+- ⬆️ Update Rust crate thiserror to v2.0.1
+- ⬆️ Update Rust crate thiserror to v2.0.2
+- ⬆️ Update Rust crate thiserror to v2.0.3
+- ⬆️ Lock file maintenance
+- ⬆️ Update Rust crate serde to v1.0.215
+- ⬆️ Update Rust crate clap to v4.5.21
+- ⬆️ Lock file maintenance
+- ⬆️ Update Rust crate kube-client to 0.97.0 (#465)
+- ⬆️ Update Rust crate kube to 0.97.0
+
+=== Fixed
+
+- Update time dependency due to Rust Upgrade
+- Move rust config to new location
+- Upgrade k8s to support v1.26 at least
+
+=== Removed
+
+- Remove unused import
+- Remove kube-client
+
+== [0.2.1] - 2024-03-04
+
+=== Added
+
+- Add release marker
+- Add newline to changelog footer
+
+=== Changed
+
+- Update changelog
+- Update docs
+- Change the way how updates are notified
+- Update docs
+- The n8w8d package became the nachtwacht-agent package
+
 == [0.2.1-rc.1] - 2024-03-04
 
 === Changed
@@ -24,4 +98,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Remove sec-audit due to no longer maintained
 
+[unreleased]: https://gitlab.com/ds_2/n8w8-rust-fe/compare?from=v0.2.1&to=HEAD
+[0.2.1]: https://gitlab.com/ds_2/n8w8-rust-fe/compare?from=v0.2.1-rc.1&to=v0.2.1
 [0.2.1-rc.1]: https://gitlab.com/ds_2/n8w8-rust-fe/compare?from=v0.1.1-rc.1&to=v0.2.1-rc.1
