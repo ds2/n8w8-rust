@@ -2341,7 +2341,6 @@ dependencies = [
  "http_req",
  "k8s-openapi",
  "kube",
- "kube-client",
  "nachtwacht-checks",
  "nachtwacht-core",
  "nachtwacht-models",

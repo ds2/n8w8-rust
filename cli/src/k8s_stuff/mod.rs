@@ -17,7 +17,8 @@
 
 use k8s_openapi::api::core::v1::Node;
 use kube::api::{ListParams, ObjectList};
-use kube_client::{Api, Client, Error};
+use kube::{Api, Client, Error};
+// use kube_client::{Api, Client, Error};
 use tracing::debug;
 
 use crate::emojis::{COMPUTERS_EMOJI, DESKTOP_EMOJI};
