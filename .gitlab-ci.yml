@@ -1,6 +1,6 @@
 variables:
   RUST_BEFORESCRIPT: "apt-get update -yqq; apt-get install -yqq --no-install-recommends protobuf-compiler"
-  AZURE_CLI_T0: 300
+  AZURE_CLI_T0: 600
 
 sast:
   stage: test
