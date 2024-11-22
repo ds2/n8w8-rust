@@ -7,7 +7,7 @@ sast:
 
 include:
   - project: 'ds_2/ci-templates'
-    ref: v0.3.2
+    ref: feature/azure-timeout
     file:
       - '/templates/stages.yaml'
       - '/templates/global-vars.yaml'
