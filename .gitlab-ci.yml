@@ -1,7 +1,6 @@
 variables:
   RUST_BEFORESCRIPT: "apt-get update -yqq; apt-get install -yqq --no-install-recommends protobuf-compiler"
-  # RUST_EL8_IMAGE_TAG: "ol8-v0.1.0"
-  # RUST_UBUNTU_IMAGE_TAG: "jm-v0.1.0"
+  AZURE_CLI_T0: 300
 
 sast:
   stage: test
