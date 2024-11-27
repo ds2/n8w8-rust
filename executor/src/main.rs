@@ -46,7 +46,7 @@ fn main() {
     info!("Init test..");
     let mut http_test = HttpCheckImpl::new();
     http_test.set_params(http_test_params);
-    http_test.run_test(3).expect("Failed test");
+    http_test.run_test().expect("Failed test");
     let test_result = http_test.get_result();
     if test_result.successful {
         //yeah

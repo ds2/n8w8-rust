@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// This crate contains the business logic for N8w8.
+// This crate contains the business logic for N8w8.
 
 /// Some common errors that may occur.
 pub mod errors;

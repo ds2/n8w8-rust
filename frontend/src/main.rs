@@ -32,12 +32,12 @@ use tracing::level_filters::LevelFilter;
 /// simple index handler
 #[get("/welcome")]
 async fn welcome(req: HttpRequest, session: Session) -> Result<HttpResponse> {
-    println!("{:?}", req);
+    println!("{req:?}");
 
     // session
     let mut counter = 1;
     if let Some(count) = session.get::<i32>("counter")? {
-        println!("SESSION value: {}", count);
+        println!("SESSION value: {count}");
         counter = count + 1;
     }
 
@@ -53,7 +53,7 @@ async fn welcome(req: HttpRequest, session: Session) -> Result<HttpResponse> {
 #[get("/{id}/{name}/index.html")]
 async fn index(params: web::Path<(u32, String)>) -> impl Responder {
     let (id, name) = params.into_inner();
-    format!("Hello {}! id:{}", name, id)
+    format!("Hello {name}! id:{id}")
 }
 
 /// favicon handler

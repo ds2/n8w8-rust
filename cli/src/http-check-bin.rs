@@ -95,7 +95,7 @@ fn main() {
         http_method: "GET".to_string(),
         http_payload: "".to_string(),
     });
-    let http_result = http_test.run_test(2);
+    let http_result = http_test.run_test();
     if http_result.is_err() {
         let http_error = http_result.err().unwrap();
         error!("A technical error occurred: {}", http_error);

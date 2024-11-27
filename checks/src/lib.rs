@@ -18,3 +18,5 @@
 pub mod dns;
 pub mod http;
 mod http_tests;
+pub mod oci;
+mod unit_tests;

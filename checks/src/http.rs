@@ -71,7 +71,7 @@ impl N8w8Test<HttpTestParams, HttpTestResponse> for HttpCheckImpl {
         self.local_params = params;
     }
 
-    fn run_test(&mut self, probe_count: u8) -> BoxResult<()> {
+    fn run_test(&mut self) -> BoxResult<()> {
         self.start_time = Local::now().timestamp_millis() as u64;
         let url = url::Url::parse(&self.local_params.url);
         if url.is_ok() {
@@ -88,7 +88,7 @@ impl N8w8Test<HttpTestParams, HttpTestResponse> for HttpCheckImpl {
                 http_method,
                 &self.local_params.basic_auth,
             );
-            for _ in 1..probe_count {
+            for _ in 1..3 {
                 if test_result.not_successful() {
                     debug!("test before was unsuccessful, try retest..");
                     thread::sleep(Duration::from_secs(5));

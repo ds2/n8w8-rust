@@ -2315,11 +2315,17 @@ dependencies = [
 name = "nachtwacht-checks"
 version = "0.3.0-alpha.1"
 dependencies = [
+ "anyhow",
+ "async-trait",
  "base64 0.22.1",
  "chrono",
  "nachtwacht-models",
  "pretty_assertions",
  "reqwest",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tokio-test",
  "tracing",
  "tracing-subscriber",
  "url",
@@ -2329,6 +2335,7 @@ dependencies = [
 name = "nachtwacht-cli"
 version = "0.3.0-alpha.1"
 dependencies = [
+ "anyhow",
  "clap",
  "futures",
  "http_req",
@@ -2380,9 +2387,13 @@ dependencies = [
 name = "nachtwacht-models"
 version = "0.3.0-alpha.1"
 dependencies = [
+ "async-trait",
  "protobuf 3.7.1",
  "protobuf-codegen",
  "protoc-bin-vendored",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.3",
 ]
 
 [[package]]

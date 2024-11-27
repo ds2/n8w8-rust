@@ -17,14 +17,11 @@
 
 extern crate protobuf_codegen;
 
-use std::error::Error;
-
-fn main() -> Result<(), Box<dyn Error>> {
+fn main() {
     protobuf_codegen::Codegen::new()
-        .protoc_path(&protoc_bin_vendored::protoc_bin_path().unwrap())
+        .protoc_path(&protoc_bin_vendored::protoc_bin_path().expect("Protoc binary"))
         .out_dir("src/generated")
-        .includes(&["."])
-        .inputs(&["n8w8.proto", "longhorn.proto"])
+        .includes(["."])
+        .inputs(["n8w8.proto", "longhorn.proto"])
         .run_from_script();
-    Ok(())
 }
