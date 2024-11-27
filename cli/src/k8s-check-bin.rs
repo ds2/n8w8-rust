@@ -67,17 +67,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .init();
     let cli = CmdArgs::parse();
     let kube_config = Kubeconfig::read().expect("Could not read kube config!");
-    let this_context_name: String;
-    if kube_config.current_context.is_some() {
-        this_context_name = kube_config
+
+    let this_context_name: String = if kube_config.current_context.is_some() {
+        kube_config
             .current_context
             .as_ref()
             .expect("Could not get current context from kubeconfig file!")
-            .to_string();
+            .to_string()
     } else {
         let ctx_opt: Option<String> = cli.context;
-        this_context_name = ctx_opt.expect("Could not unpack the context from the args!");
-    }
+        ctx_opt.expect("Could not unpack the context from the args!")
+    };
     debug!("Selected context is {}", this_context_name);
     let kco = KubeConfigOptions {
         context: Some(this_context_name),

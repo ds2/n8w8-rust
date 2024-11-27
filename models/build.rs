@@ -19,7 +19,7 @@ extern crate protobuf_codegen;
 
 fn main() {
     protobuf_codegen::Codegen::new()
-        .protoc_path(&protoc_bin_vendored::protoc_bin_path().expect("Protoc binary"))
+        .protoc_path(&protoc_bin_vendored::protoc_bin_path().expect("Protoc not found!!"))
         .out_dir("src/generated")
         .includes(["."])
         .inputs(["n8w8.proto", "longhorn.proto"])

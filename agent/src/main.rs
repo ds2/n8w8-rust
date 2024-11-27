@@ -71,8 +71,8 @@ fn main() {
     // Parse args first ;)
     let args = Args::parse();
 
-    let stdout = File::create(args.outfile.as_str()).unwrap();
-    let stderr = File::create(args.errfile.as_str()).unwrap();
+    let stdout = File::create(args.outfile.as_str()).expect("Could not open stdout!");
+    let stderr = File::create(args.errfile.as_str()).expect("Could not open stderr!");
     let sleep_time = time::Duration::from_millis(args.refresh);
     let p = Path::new(args.pidfile.as_str());
 

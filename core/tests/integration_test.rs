@@ -32,12 +32,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use tokio_test::block_on;
-//use futures::executor::block_on;
 use nachtwacht_core::longhorn::{get_node_by_id, get_nodes};
+use tokio_test::block_on;
 use url::Url;
 
-#[test_log::test]
 #[ignore]
 fn test_get_lh_nodes() {
     let lh_url = Url::parse("http://localhost:11080/v1").unwrap();
@@ -49,7 +47,6 @@ fn test_get_lh_nodes() {
     println!("Result: {:?}", result);
 }
 
-#[test_log::test]
 #[ignore]
 fn test_get_lh_node() {
     let lh_url = Url::parse("http://localhost:11080/v1").unwrap();

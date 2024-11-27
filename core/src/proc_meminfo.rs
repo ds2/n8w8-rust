@@ -21,7 +21,7 @@ use std::fs::File;
 use std::io::{BufReader, Read};
 use tracing::debug;
 
-/// Parses /proc/meminfo and returns its values.
+/// Parses /proc/meminfo and returns its values. Also contains swap data.
 #[cfg(target_os = "linux")]
 pub async fn parse_proc_mem_info() -> Result<ProcMemInfo, AgentErrors> {
     debug!("Starting check for /proc/meminfo..");
@@ -33,17 +33,7 @@ pub async fn parse_proc_mem_info() -> Result<ProcMemInfo, AgentErrors> {
         .expect("Unable to read line");
     debug!("We got these lines: {}", str);
     let lines = str.lines();
-    let mut mem_info = ProcMemInfo {
-        MemTotal: 0,
-        MemFree: 0,
-        MemAvailable: 0,
-        Buffers: 0,
-        Cached: 0,
-        SwapCached: 0,
-        SwapTotal: 0,
-        SwapFree: 0,
-        special_fields: Default::default(),
-    };
+    let mut mem_info = ProcMemInfo::default();
     for this_line in lines {
         debug!("Line to parse is: {}", this_line);
         let mut splits = this_line.split_whitespace();

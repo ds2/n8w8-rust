@@ -21,12 +21,13 @@ use actix_web::http::StatusCode;
 use actix_web::{error, get, middleware, web, App, HttpServer, Responder};
 use clap::Parser;
 use lazy_static::lazy_static;
-use prometheus::{Gauge, HistogramOpts, HistogramVec, IntCounter, IntGauge, Registry};
+use prometheus::{Encoder, Gauge, HistogramOpts, HistogramVec, IntCounter, IntGauge, Registry};
 use tracing::level_filters::LevelFilter;
 use tracing::{error, info};
 
 use nachtwacht_core::proc_loadavg::parse_proc_loadavg;
 use nachtwacht_core::proc_meminfo::parse_proc_mem_info;
+use nachtwacht_core::swap::get_swap_usage;
 
 lazy_static! {
     pub static ref REGISTRY: Registry = Registry::new();
@@ -35,6 +36,9 @@ lazy_static! {
     pub static ref FREE_MEMORY: IntGauge =
         IntGauge::new("free_memory", "The value of free memory, I hope in bytes")
             .expect("Error when setting up the gauge!");
+    pub static ref SWAP_USED: IntGauge =
+        IntGauge::new("swap_used", "The value of used swap, in bytes")
+            .expect("metric can not be created");
     pub static ref INCOMING_REQUESTS: IntCounter =
         IntCounter::new("incoming_requests", "Incoming Requests").expect("metric can be created");
     pub static ref RESPONSE_TIME_COLLECTOR: HistogramVec = HistogramVec::new(
@@ -66,37 +70,31 @@ async fn collect_metrics() -> impl Responder {
         .expect("Error when getting load5!");
     LOAD5.set(curr_load_info.load5);
     FREE_MEMORY.set(curr_memory_info.MemFree as i64);
-    use prometheus::Encoder;
+    SWAP_USED.set((curr_memory_info.SwapTotal - curr_memory_info.SwapFree) as i64);
     let encoder = prometheus::TextEncoder::new();
 
     let mut buffer = Vec::new();
     if let Err(e) = encoder.encode(&REGISTRY.gather(), &mut buffer) {
         error!("could not encode custom metrics: {:?}", e);
     };
-    let mut res = match String::from_utf8(buffer.clone()) {
-        Ok(v) => v,
-        Err(e) => {
-            error!("custom metrics could not be from_utf8'd: {}", e);
-            String::default()
-        }
-    };
+    let mut res = String::from_utf8(buffer.clone()).unwrap_or_else(|e| {
+        error!("custom metrics could not be from_utf8'd: {}", e);
+        String::default()
+    });
     buffer.clear();
 
     let mut buffer = Vec::new();
     if let Err(e) = encoder.encode(&prometheus::gather(), &mut buffer) {
         error!("could not encode prometheus metrics: {:?}", e);
     };
-    let res_custom = match String::from_utf8(buffer.clone()) {
-        Ok(v) => v,
-        Err(e) => {
-            error!("prometheus metrics could not be from_utf8'd: {}", e);
-            String::default()
-        }
-    };
+    let res_custom = String::from_utf8(buffer.clone()).unwrap_or_else(|e| {
+        error!("prometheus metrics could not be from_utf8'd: {}", e);
+        String::default()
+    });
     buffer.clear();
 
     res.push_str(&res_custom);
-    format!("{}", res)
+    format!("{res}")
 }
 
 fn register_custom_metrics() {
@@ -111,6 +109,9 @@ fn register_custom_metrics() {
         .expect("Error when registering the gauge!");
     REGISTRY
         .register(Box::new(FREE_MEMORY.clone()))
+        .expect("Error when registering the gauge!");
+    REGISTRY
+        .register(Box::new(SWAP_USED.clone()))
         .expect("Error when registering the gauge!");
 }
 

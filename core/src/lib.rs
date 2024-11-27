@@ -26,3 +26,4 @@ pub mod proc_loadavg;
 pub mod proc_meminfo;
 /// Module to contain reader methods for /proc/stat.
 pub mod proc_stat;
+pub mod swap;
