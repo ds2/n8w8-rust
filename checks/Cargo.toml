@@ -14,7 +14,7 @@ nachtwacht-models = { path = "../models" }
 tracing = "0.1.40"
 base64 = "0.22.0"
 async-trait = "0.1.83"
-serde = { version = "1.0.214", features = ["derive"] }
+serde = { version = "1.0.216", features = ["derive"] }
 serde_json = "1.0.132"
 
 [dev-dependencies]
