@@ -14,7 +14,7 @@ clap = { version = "4.5.20", features = ["derive"] }
 http_req = "0.13.0"
 daemonize = "0.5.0"
 chrono = "0.4.34"
-sysinfo = "0.33.0"
+sysinfo = "0.35.0"
 thiserror = "2.0.0"
 futures = "0.3.31"
 tracing = "0.1.40"
