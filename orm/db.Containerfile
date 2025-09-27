@@ -1,4 +1,4 @@
-FROM docker.io/postgres:17
+FROM docker.io/postgres:18
 ENV POSTGRES_USER=n8w8adm
 ENV POSTGRES_PASSWORD=n8w8admpw
 ENV POSTGRES_DB=n8w8db
